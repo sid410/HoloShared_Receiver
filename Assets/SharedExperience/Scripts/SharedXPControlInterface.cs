@@ -17,8 +17,8 @@ public class SharedXPControlInterface : MonoBehaviour
     public BaseClient baseClient;
     public GameObject ImageTargetGO;
     public GameObject StonesOriginGO;
+    public GameObject UtensilParent;
     public GameObject TableOriginGO;
-
     public GameObject[] Utensils;
 
     private void Start()
@@ -29,6 +29,15 @@ public class SharedXPControlInterface : MonoBehaviour
         Receiver = GameObject.FindObjectOfType<OSCReceiver>();
         //Receiver.Bind("/destroyObjects", DestroyAllExistingUtensils);
         Receiver.Bind("/spawnObject", SpawnUtensilFromOtherHolo);
+
+        //DEBUG : disable later
+        Receiver.Bind("/CalibrateSharedSpace/Receiver", (message) =>
+        {
+            Debug.Log("received calibration DEBUG message");
+            bool value = message.Values[0].BoolValue;
+            if (value) StartCalibration();
+            else StopCalibration();
+        });
     }
 
     private void OnEnable()
@@ -48,22 +57,30 @@ public class SharedXPControlInterface : MonoBehaviour
         if (topic == "M2MQTT/CalibrateSharedSpace/Receiver" && message == "true") StartCalibration();
         if (topic == "M2MQTT/CalibrateSharedSpace/Receiver" && message == "false") StopCalibration();
     }
-    
 
     public void StartCalibration()
     {
+        Debug.Log("Received a start calibration message");
         ImageTargetGO.SetActive(true);
         StartVuforiaCamera();
+
     }
 
     public void StopCalibration()
     {
+        if (LocalItemSpawner.SINGLE_HOLO_BEHAVIOUR)
+        {
+            EventHandler.Instance.OnLog("Calibration yielded new transform : " + ImageTargetGO.transform.position.ToString());
+            EventHandler.Instance.OnLog("Calibration yielded new rotation : " + ImageTargetGO.transform.rotation.ToString());
+        }
         TableOriginGO.transform.position = ImageTargetGO.transform.position;
         TableOriginGO.transform.rotation = ImageTargetGO.transform.rotation;
 
         originAnchor.SaveAnchor();
 
         ImageTargetGO.SetActive(false);
+
+        EventHandler.Instance.OnCalibrationDone(ImageTargetGO.transform.position, ImageTargetGO.transform.rotation); //we inform the rest of the app that the calibration is over.
         StopVuforiaCamera();
     }
     
@@ -106,8 +123,10 @@ public class SharedXPControlInterface : MonoBehaviour
             if (tagInt == -1) return;
 
             GameObject myUtensil = Instantiate(Utensils[tagInt]) as GameObject;
-            myUtensil.transform.parent = StonesOriginGO.transform;
             myUtensil.name = message.Values[i + 1].StringValue;
+            myUtensil.transform.parent = UtensilParent.transform;
+    
+            if (LocalItemSpawner.SINGLE_HOLO_BEHAVIOUR) myUtensil.transform.localPosition = new Vector3(0.2f + ((tagInt == 4)? 0.4f :tagInt * 0.2f), 0, -0.3f); //TODO : here test for spawning accuracy
         }
     }
 

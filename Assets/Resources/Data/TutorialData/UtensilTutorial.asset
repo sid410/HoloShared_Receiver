@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8e58de5985ea6441b0406ea410f6b53, type: 3}
+  m_Name: UtensilTutorial
+  m_EditorClassIdentifier: 
+  steps:
+  - duration: 0
+    faceExpression: 1
+    message: Welcome to this exercice. I will be your guide for you to clearly understand
+      your tasks.
+    spawnables: []
+  - duration: 0
+    faceExpression: 1
+    message: This is a brief introduction. When the exercice starts, You will see
+      white utensil models spawn on the Table.
+    spawnables: []
+  - duration: 0
+    faceExpression: 1
+    message: Your task is to pick utensils from your left side and place them on
+      the correct location.
+    spawnables: []
+  - duration: 0
+    faceExpression: 1
+    message: The exercice will end when you finish placing all the utensils ! Take
+      your time and have fun.
+    spawnables: []

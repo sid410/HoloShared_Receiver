@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d965c6b96edeebf448c9df86d482c0b2, type: 3}
+  m_Name: MazeExercise
+  m_EditorClassIdentifier: 
+  steps:
+  - faceExpression: 0
+    message: Guide the Beam towards the objective
+    objectives: {fileID: 11400000, guid: 1d44864b4d9e19842beb4d3713dd9ecf, type: 2}
+    spawnEntry: {fileID: 11400000, guid: 6fcf5035abfa4bc4894bbda0315b846b, type: 2}

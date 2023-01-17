@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig>
+<Tracking>
+<ModelTarget name="Fork" motionHint="adaptive" trackingMode="default"/>
+
+</Tracking>
+
+<Assembly name="Forks_assembly" assemblyId="61fe83cb8b0443d3be55ef46bf849fdb">
+<Part name="Fork" translation="0 0 0" rotation="AD: 0 0 1 0"/>
+<EntryPoint name="viewpoint_0000" translation="0.0360836 0.0213721 0.429914" rotation="AD: 0.9175805786753268 -0.4581872411959365 1.834092280468962 192.451" trained="yes">
+
+</EntryPoint>
+
+</Assembly>
+
+</QCARConfig>

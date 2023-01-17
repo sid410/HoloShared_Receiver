@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 781417369046181643}
   - component: {fileID: 3259710840345039809}
   - component: {fileID: 4083095421287392819}
+  - component: {fileID: -1272204326353176078}
   m_Layer: 0
   m_Name: Dish
   m_TagString: Dish
@@ -92,5 +93,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6faafe1e73c169941b4976618d7a246d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-1272204326353176078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3908048935745106452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4dd81d162e04e940bede94170fce3cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

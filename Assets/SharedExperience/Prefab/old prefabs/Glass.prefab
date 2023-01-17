@@ -97,12 +97,10 @@ GameObject:
   - component: {fileID: 6467418077410352949}
   - component: {fileID: 6467418077410352906}
   - component: {fileID: 6467418077410352907}
-  - component: {fileID: 6467418077410352904}
-  - component: {fileID: 6467418077410352905}
+  - component: {fileID: 6488480144797232532}
   - component: {fileID: 6467418077410352950}
   - component: {fileID: 6467418077410352944}
   - component: {fileID: 6467418077410352945}
-  - component: {fileID: -3817486613215611610}
   m_Layer: 0
   m_Name: Glass
   m_TagString: Glass
@@ -274,7 +272,7 @@ MonoBehaviour:
   onHoverExited:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &6467418077410352904
+--- !u!114 &6488480144797232532
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -283,26 +281,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6467418077410352910}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4e846d6cb66a5d4d841da4c9c531171, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ddee1a817856a0449343d3069382e7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6467418077410352905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6467418077410352910}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84903682d2e80634b978ece2037c0774, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lineMaterial: {fileID: 2100000, guid: 27e9b72fffe2fb34ab5ca31487b22eb7, type: 2}
-  AxisAngle: {fileID: 1491131142679249205, guid: edc3fa2f54d930640a5dc0c26372d60f,
-    type: 3}
-  AxisNoAngle: {fileID: 8183368334047242627, guid: 8ae34f2f68878ea479781e8640cd680e,
-    type: 3}
+  lineMaterial: {fileID: 0}
+  AxisAngle: {fileID: 0}
+  AxisNoAngle: {fileID: 0}
   isWithAngle: 0
 --- !u!114 &6467418077410352950
 MonoBehaviour:
@@ -352,17 +336,3 @@ MonoBehaviour:
   proximityType: 3
   constraintOnRotation: 2
   useLocalSpaceForConstraint: 0
---- !u!114 &-3817486613215611610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6467418077410352910}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cccc26df0a8b6124a923d3b65524047f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  allAxis: 1
-  xzAxis: 0

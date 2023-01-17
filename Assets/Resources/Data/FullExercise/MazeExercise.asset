@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 255b1a5812e37f34ca4523e79e739edd, type: 3}
+  m_Name: MazeExercise
+  m_EditorClassIdentifier: 
+  exerciseType: 1
+  tutorial: {fileID: 11400000, guid: a993326a80912e746aab720701259ea5, type: 2}
+  exercice: {fileID: 11400000, guid: 213cfafafc6210049b1fb3dfdd439976, type: 2}
+  kinectResultHandler: {fileID: 11400000, guid: 182587fd1b6b87e40a71ffeb183a1ad9,
+    type: 2}
+  scoreCalculator: {fileID: 11400000, guid: f505de679d3168147a595d88c4900f29, type: 2}

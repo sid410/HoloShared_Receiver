@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARInfo>
+<TargetSet version="20.0" toolVersion="9.8.5">
+<ModelTarget name="Fork" targetId="b20f72bd71454cf08fb2f78b7e686e68" version="11.1" toolVersion="9.8.5" bbox="-0.012662 -0.001457 -0.102890 0.012701 0.008706 0.103548" previewImage="b20f72bd71454cf08fb2f78b7e686e68_preview.jpg"/>
+
+</TargetSet>
+
+<Assembly name="Forks_assembly" assemblyId="61fe83cb8b0443d3be55ef46bf849fdb">
+<Part name="Fork" translation="0 0 0" rotation="AD: 0 0 1 0"/>
+<EntryPoint name="viewpoint_0000" translation="0.0360836 0.0213721 0.429914" rotation="AD: 0.9175805786753268 -0.4581872411959365 1.834092280468962 192.451" image="Fork_viewpoint_0000.png" trained="yes">
+
+</EntryPoint>
+
+</Assembly>
+
+</QCARInfo>

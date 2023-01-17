@@ -21,6 +21,7 @@ public class TransformReceiver : MonoBehaviour
     {
         _address = GetFullName(this.gameObject);
         Receiver = GameObject.FindObjectOfType<OSCReceiver>();
+        EventHandler.Instance.OnLog("binding to adress : " + _address);
         Receiver.Bind(_address, UpdateTransform);
     }
 
@@ -33,9 +34,11 @@ public class TransformReceiver : MonoBehaviour
         
         var trasformStructure = OSCUtilities.ByteToStruct<TransformMarshallingStructure>(bytes);
 
-        transform.localPosition = trasformStructure.PosValue;
-        transform.localRotation = trasformStructure.RotValue;
-        
+        //transform.localPosition = trasformStructure.PosValue;
+        //transform.localRotation = trasformStructure.RotValue;
+        EventHandler.Instance.OnLog("Object "  + gameObject.name + " received position " + trasformStructure.PosValue.ToString());
+        EventHandler.Instance.OnLog("Object " + gameObject.name + " received rotation " + trasformStructure.RotValue.ToString());
+
     }
 
     private static string GetFullName(GameObject go)

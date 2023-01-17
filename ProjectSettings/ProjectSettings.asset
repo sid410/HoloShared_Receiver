@@ -626,7 +626,7 @@ PlayerSettings:
   metroCertificatePassword: 
   metroCertificateSubject: IMD
   metroCertificateIssuer: IMD
-  metroCertificateNotAfter: 00ffb081e496d801
+  metroCertificateNotAfter: 801ac422b001da01
   metroApplicationDescription: created with mrtk 2020
   wsaImages:
     65636: Assets/Common/Icons/UWP/StoreLogo.scale-100.png
@@ -706,10 +706,10 @@ PlayerSettings:
       PointOfService: False
       RecordedCallsFolder: False
       Contacts: False
-      Proximity: False
       InternetClient: True
       CodeGeneration: False
       BackgroundMediaPlayback: False
+      Proximity: False
   metroTargetDeviceFamilies:
     Desktop: False
     Holographic: True

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARInfo>
+<TargetSet version="20.0" toolVersion="9.8.5">
+<ModelTarget name="Cup" targetId="e4a112381bc84d2c914ee45e84f66ccd" version="11.1" toolVersion="9.8.5" bbox="-0.054824 0.000028 -0.035000 0.035176 0.055028 0.035000" previewImage="e4a112381bc84d2c914ee45e84f66ccd_preview.jpg"/>
+
+</TargetSet>
+
+<Assembly name="Cups_assembly" assemblyId="1e99f6fb2088497ebc76eb214650f8fc">
+<Part name="Cup" translation="0 0 0" rotation="AD: 0 0 1 0"/>
+<EntryPoint name="viewpoint_0000" translation="0.00957487 0.0272238 0.163149" rotation="AD: 0.6774145135640233 -0.7460404015283694 5.981330941148592 181.596" image="Cup_viewpoint_0000.png" trained="yes">
+
+</EntryPoint>
+
+</Assembly>
+
+</QCARInfo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig>
+<Tracking>
+<ModelTarget name="Cup" motionHint="adaptive" trackingMode="scan"/>
+
+</Tracking>
+
+<Assembly name="Cups_assembly" assemblyId="1e99f6fb2088497ebc76eb214650f8fc">
+<Part name="Cup" translation="0 0 0" rotation="AD: 0 0 1 0"/>
+<EntryPoint name="viewpoint_0000" translation="0.00957487 0.0272238 0.163149" rotation="AD: 0.6774145135640233 -0.7460404015283694 5.981330941148592 181.596" trained="yes">
+
+</EntryPoint>
+
+</Assembly>
+
+</QCARConfig>
