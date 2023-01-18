@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using static ExerciceData;
 using static TutorialData;
@@ -9,35 +7,30 @@ public class EventHandler : MonoBehaviour
 {
     public static EventHandler Instance { get; private set; }
 
-    //Item spawning and objective handling (DEPRECATED MOSTLY)
-    public static event Action<UtensilBehaviour> ObjectiveCompleted;
-    public static event Action<UtensilBehaviour> ObjectiveFailed; //when objective is failed after being completed (item moved out
-    public static event Action<UtensilBehaviour> NewUtensilSpawned;
+    public static event Action<Vector3, Quaternion> OnCalibrationDone; //called after the calibration using vuforia is done.
 
-    public static event Action<Vector3, Quaternion> calibrationDone; //called after the calibration using vuforia is done.
-
-    public static event Action<int, GameObject> ObjectiveCompletedU;
-    public static event Action<int, GameObject> ObjectiveFailedU; //when objective is failed after being completed (item moved out
-    public static event Action<GameObject> NewItemSpawned;
+    public static event Action<int, GameObject> OnObjectiveCompleted;
+    public static event Action<int, GameObject> OnObjectiveFailed; //when objective is failed after being completed (item moved out
+    public static event Action<GameObject> OnItemSpawned;
 
     //DATA LOADING STEP
-    public static event Action<FullExerciceData> Exercise_Loaded;
+    public static event Action<FullExerciceData> OnExerciseLoaded;
     //Tutorial Steps
-    public static event Action Tutorial_over;
-    public static event Action<TutorialData> Tutorial_started;
-    public static event Action<TutorialStep> Tutorial_step;
+    public static event Action OnTutorialOver;
+    public static event Action<TutorialData> OnTutorialStarted;
+    public static event Action<TutorialStep> OnTutorialStepStarted;
 
     //exercice steps
-    public static event Action Exercice_over;
-    public static event Action<ExerciceData> Exercice_started;
-    public static event Action<ExerciceStep> Exercice_step;
+    public static event Action OnExerciseOver;
+    public static event Action<ExerciceData> OnExerciseStarted;
+    public static event Action<ExerciceStep> OnExerciseStepStarted;
     //kinect events
-    public static event Action MatlabResultsReceived; //called every time we get matlab resutls
-    public static event Action PostExerciceMatlabResultsReceived; //this is called for matlab results that happen after an exercice is over. Which basically marks the official end of the exercice
+    public static event Action OnMatlabDataReceived; //called every time we get matlab resutls
+    public static event Action OnFinalMatlabDataReceived; //this is called for matlab results that happen after an exercice is over. Which basically marks the official end of the exercice
 
     //debug events
-    public static event Action<string> LogDataUpdated;
-    public static event Action ResetApp;
+    public static event Action<string> OnLog;
+    public static event Action OnAppReset;
 
 
     private void Awake()
@@ -47,124 +40,94 @@ public class EventHandler : MonoBehaviour
     }
 
 
-    public virtual void OnExerciseLoaded(FullExerciceData loadedExercise) // called when an exercise is loaded, all different parts are passed to all scripts
+    public virtual void LoadExercise(FullExerciceData loadedExercise) // called when an exercise is loaded, all different parts are passed to all scripts
     { 
-        Exercise_Loaded?.Invoke(loadedExercise);
+        OnExerciseLoaded?.Invoke(loadedExercise);
     }
 
     #region Tutorial step events
 
 
-    public virtual void OnTutorialOver() //called to inform that the current exercice is over.
+    public virtual void EndTutorial() //called to inform that the current exercice is over.
     {
-        Tutorial_over?.Invoke();
+        OnTutorialOver?.Invoke();
     }
 
-    public virtual void OnTutorialStarted(TutorialData tutorialData) // called when an exercice is started
+    public virtual void StartTutorial(TutorialData tutorialData) // called when an exercice is started
     {
-        Tutorial_started?.Invoke(tutorialData);
+        OnTutorialStarted?.Invoke(tutorialData);
     }
 
-    public virtual void OnNewTutorialStepStarted(TutorialStep tutorialStep)
+    public virtual void StartTutorialStep(TutorialStep tutorialStep)
     {
-        Tutorial_step?.Invoke(tutorialStep);
+        OnTutorialStepStarted?.Invoke(tutorialStep);
     }
 
     #endregion
     #region Exercice step events
-    public virtual void OnExerciceOver() //called to inform that the current exercice is over.
+    public virtual void EndExercise() //called to inform that the current exercice is over.
     {
-        Exercice_over?.Invoke();
+        OnExerciseOver?.Invoke();
     }
 
-    public virtual void OnExerciceStarted(ExerciceData exerciseData)// ExerciceData exerciceData // called when an exercice is started
+    public virtual void StartExercise(ExerciceData exerciseData)// ExerciceData exerciceData // called when an exercice is started
     {
-        Exercice_started?.Invoke(exerciseData);
+        OnExerciseStarted?.Invoke(exerciseData);
     }
 
-    public virtual void OnNewExerciceStepStarted(ExerciceStep exerciceStep)
+    public virtual void StartExerciseStep(ExerciceStep exerciceStep)
     {
-        Exercice_step?.Invoke(exerciceStep);
-    }
-
-
-    #endregion
-
-    #region Utensil spawning and utensil events (THIS MUST BE REWORKED)
-    public virtual void OnNewUtensilSpawned(UtensilBehaviour newUtensil)
-    {
-        NewUtensilSpawned?.Invoke(newUtensil);
-    }
-
-    public virtual void OnUtensilObjectiveCompleted(UtensilBehaviour completedUtensil)
-    {
-        ObjectiveCompleted?.Invoke(completedUtensil);
-    }
-
-    public virtual void OnUtensilObjectiveFailed(UtensilBehaviour failedUtensil)
-    {
-        ObjectiveFailed?.Invoke(failedUtensil);
+        OnExerciseStepStarted?.Invoke(exerciceStep);
     }
 
 
     #endregion
-
     #region reworked utensil stuff for extensibility
 
-    public virtual void OnNewItemSpawned(GameObject newItem)
+    public virtual void SpawnItem(GameObject newItem)
     {
-        NewItemSpawned?.Invoke(newItem);
+        OnItemSpawned?.Invoke(newItem);
     }
 
-    public virtual void OnObjectiveCompleted(int index, GameObject declarer)
+    public virtual void SetObjectiveAsComplete(int index, GameObject declarer)
     {
-        ObjectiveCompletedU?.Invoke(index, declarer);
+        OnObjectiveCompleted?.Invoke(index, declarer);
     }
 
-    public virtual void OnObjectiveFailed(int index, GameObject declarer)
+    public virtual void SetObjectiveAsUncomplete(int index, GameObject declarer)
     {
-        ObjectiveFailedU?.Invoke(index, declarer);
-    }
-
-    public virtual void OnUtensilTriggerEnter(UtensilBehaviour triggeredUtensil, GameObject collider)
-    {
-        ObjectiveCompleted?.Invoke(triggeredUtensil);
-    }
-
-    public virtual void OnUtensilTriggerExit(UtensilBehaviour leftUtensil, GameObject exitedCollider)
-    {
-        ObjectiveFailed?.Invoke(leftUtensil);
+        OnObjectiveFailed?.Invoke(index, declarer);
     }
 
     #endregion
 
     #region Other related external to exercice events
 
-    public virtual void OnMatlabResultsReceived() //does not pass any data. Called when matlab results have been received and correctly applied to all utensils.
+    public virtual void TriggerMatlabReceived() //does not pass any data. Called when matlab results have been received and correctly applied to all utensils.
     {
-        MatlabResultsReceived?.Invoke();
+        OnMatlabDataReceived?.Invoke();
     }
 
-    public virtual void OnFinalMatlabResultsReceived() //does not pass any data. Called when matlab results have been received and correctly applied to all utensils.
+    public virtual void TriggerFinalMatlabReceived() //does not pass any data. Called when matlab results have been received and correctly applied to all utensils.
     {
-        PostExerciceMatlabResultsReceived?.Invoke();
+        OnFinalMatlabDataReceived?.Invoke();
     }
 
-    public virtual void OnCalibrationDone(Vector3 position, Quaternion rotation) //does not pass any data. Called when matlab results have been received and correctly applied to all utensils.
+    public virtual void TriggerCalibrationEnded(Vector3 position, Quaternion rotation) //does not pass any data. Called when matlab results have been received and correctly applied to all utensils.
     {
-        calibrationDone?.Invoke(position, rotation);
+        OnCalibrationDone?.Invoke(position, rotation);
     }
     #endregion
 
     #region Debug
-    public virtual void OnLog(string logMessage) // called to log data, maybe in the future send it for display
+    public virtual void LogMessage(string logMessage) // called to log data, maybe in the future send it for display
     {
-        LogDataUpdated?.Invoke(logMessage);
+        OnLog?.Invoke(logMessage);
     }
 
-    public virtual void OnReset() //called to reset the app to the starting state (no exercise)
+    public virtual void ResetApp() //called to reset the app to the starting state (no exercise)
     {
-        ResetApp?.Invoke();
+        OnAppReset?.Invoke();
     }
     #endregion
 

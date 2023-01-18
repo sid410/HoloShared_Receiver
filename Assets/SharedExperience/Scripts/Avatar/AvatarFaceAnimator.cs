@@ -28,12 +28,12 @@ public class AvatarFaceAnimator : MonoBehaviour
 
     private void OnEnable()
     {
-        EventHandler.Tutorial_step += OnNewTutorialStep;
+        EventHandler.OnTutorialStepStarted += OnNewTutorialStep;
     }
 
     private void OnDisable()
     {
-        EventHandler.Tutorial_step -= OnNewTutorialStep;
+        EventHandler.OnTutorialStepStarted -= OnNewTutorialStep;
     }
 
     private void OnNewTutorialStep(TutorialData.TutorialStep ts) => ChangeFace(ts.faceExpression);

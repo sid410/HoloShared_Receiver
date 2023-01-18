@@ -45,12 +45,12 @@ public class FullExerciceHandler : MonoBehaviour
     #region subscriptions
     private void OnEnable()
     {
-        EventHandler.Tutorial_over += StartExercise;
+        EventHandler.OnTutorialOver += StartExercise;
     }
 
     private void OnDisable()
     {
-        EventHandler.Tutorial_over -= StartExercise;
+        EventHandler.OnTutorialOver -= StartExercise;
     }
     #endregion
 
@@ -77,7 +77,7 @@ public class FullExerciceHandler : MonoBehaviour
         
         ExercisePreset exercisePreset = loadedExercises.Find((ex) => ex.exerciseEnum == exerciseType); //we get the associated exercise data
         currentExercise = exercisePreset.exerciseDataObject;
-        EventHandler.Instance.OnExerciseLoaded(currentExercise); //we inform all listeners of the loaded exercise
+        EventHandler.Instance.LoadExercise(currentExercise); //we inform all listeners of the loaded exercise
         //if we skip the tutorial, we start the exercise.
         if (!SkipTutorial) StartTutorial();
         else StartExercise();
@@ -88,8 +88,8 @@ public class FullExerciceHandler : MonoBehaviour
     void StartExercise()
     {
         //TODO : start exercise after delay
-        EventHandler.Instance.OnExerciceStarted(currentExercise.exercice);
-        EventHandler.Instance.OnNewExerciceStepStarted(currentExercise.exercice.steps[0]); //TODO : fix the distinction between steps and exercise to be less convuluted, also multiple steps 
+        EventHandler.Instance.StartExercise(currentExercise.exercice);
+        EventHandler.Instance.StartExerciseStep(currentExercise.exercice.steps[0]); //TODO : fix the distinction between steps and exercise to be less convuluted, also multiple steps 
     }
 
 
@@ -100,6 +100,6 @@ public class FullExerciceHandler : MonoBehaviour
             StartExercise();
             return;
         }
-        EventHandler.Instance.OnTutorialStarted(currentExercise.tutorial);
+        EventHandler.Instance.StartTutorial(currentExercise.tutorial);
     }
 }

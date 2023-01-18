@@ -15,16 +15,16 @@ public class MazeLaserShot : MonoBehaviour
 
     private void OnEnable()
     {
-        EventHandler.Exercice_started += StartLaser;
-        EventHandler.Exercice_over += EndLaser;
-        EventHandler.MatlabResultsReceived += UpdateLaser;
+        EventHandler.OnExerciseStarted += StartLaser;
+        EventHandler.OnExerciseOver += EndLaser;
+        EventHandler.OnMatlabDataReceived += UpdateLaser;
     }
 
     private void OnDisable()
     {
-        EventHandler.Exercice_started -= StartLaser;
-        EventHandler.Exercice_over -= EndLaser;
-        EventHandler.MatlabResultsReceived -= UpdateLaser;
+        EventHandler.OnExerciseStarted -= StartLaser;
+        EventHandler.OnExerciseOver -= EndLaser;
+        EventHandler.OnMatlabDataReceived -= UpdateLaser;
         if (laserInstance != null) Destroy(laserInstance.getSpawnedObj()); //we destroy the laser if this is ever disabled
     }
 

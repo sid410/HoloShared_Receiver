@@ -20,18 +20,18 @@ public class ExerciseItemInstantiater : MonoBehaviour
 
     private void OnEnable()
     {
-        EventHandler.calibrationDone += SaveCalibrationData;
-        EventHandler.Tutorial_step += SpawnTutorialItems;
-        EventHandler.Exercice_step += SpawnExerciseItems; //we spawn items for exercises
-        EventHandler.ResetApp += DeleteSpawnedItems;
+        EventHandler.OnCalibrationDone += SaveCalibrationData;
+        EventHandler.OnTutorialStepStarted += SpawnTutorialItems;
+        EventHandler.OnExerciseStepStarted += SpawnExerciseItems; //we spawn items for exercises
+        EventHandler.OnAppReset += DeleteSpawnedItems;
     }
 
     private void OnDisable()
     {
-        EventHandler.calibrationDone -= SaveCalibrationData;
-        EventHandler.Tutorial_step -= SpawnTutorialItems;
-        EventHandler.Exercice_step -= SpawnExerciseItems; //we spawn items for exercises
-        EventHandler.ResetApp -= DeleteSpawnedItems;
+        EventHandler.OnCalibrationDone -= SaveCalibrationData;
+        EventHandler.OnTutorialStepStarted -= SpawnTutorialItems;
+        EventHandler.OnExerciseStepStarted -= SpawnExerciseItems; //we spawn items for exercises
+        EventHandler.OnAppReset -= DeleteSpawnedItems;
     }
 
     private void SaveCalibrationData(Vector3 positionOffset, Quaternion rotation) => rotationCalibrationY = rotation.eulerAngles.y;

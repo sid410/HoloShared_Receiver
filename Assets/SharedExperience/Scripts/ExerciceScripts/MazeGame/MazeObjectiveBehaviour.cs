@@ -10,12 +10,12 @@ public class MazeObjectiveBehaviour : MonoBehaviour
 
     private void OnEnable()
     {
-        EventHandler.ObjectiveCompletedU += OnGoalReached;
+        EventHandler.OnObjectiveCompleted += OnGoalReached;
     }
 
     private void OnDisable()
     {
-        EventHandler.ObjectiveCompletedU -= OnGoalReached;
+        EventHandler.OnObjectiveCompleted -= OnGoalReached;
     }
 
     void OnGoalReached(int objectiveCode, GameObject caller)

@@ -70,8 +70,8 @@ public class SharedXPControlInterface : MonoBehaviour
     {
         if (LocalItemSpawner.SINGLE_HOLO_BEHAVIOUR)
         {
-            EventHandler.Instance.OnLog("Calibration yielded new transform : " + ImageTargetGO.transform.position.ToString());
-            EventHandler.Instance.OnLog("Calibration yielded new rotation : " + ImageTargetGO.transform.rotation.ToString());
+            EventHandler.Instance.LogMessage("Calibration yielded new transform : " + ImageTargetGO.transform.position.ToString());
+            EventHandler.Instance.LogMessage("Calibration yielded new rotation : " + ImageTargetGO.transform.rotation.ToString());
         }
         TableOriginGO.transform.position = ImageTargetGO.transform.position;
         TableOriginGO.transform.rotation = ImageTargetGO.transform.rotation;
@@ -80,7 +80,7 @@ public class SharedXPControlInterface : MonoBehaviour
 
         ImageTargetGO.SetActive(false);
 
-        EventHandler.Instance.OnCalibrationDone(ImageTargetGO.transform.position, ImageTargetGO.transform.rotation); //we inform the rest of the app that the calibration is over.
+        EventHandler.Instance.TriggerCalibrationEnded(ImageTargetGO.transform.position, ImageTargetGO.transform.rotation); //we inform the rest of the app that the calibration is over.
         StopVuforiaCamera();
     }
     

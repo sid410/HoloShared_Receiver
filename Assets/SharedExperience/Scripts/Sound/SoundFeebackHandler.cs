@@ -42,14 +42,21 @@ public class SoundFeebackHandler : MonoBehaviour
             audioSound.soundSource.volume = audioSound.volume;
         }
     }
-    void Start()
+
+    #region subscriptions
+    private void OnEnable()
     {
-        EventHandler.ObjectiveCompleted += (_) => PlayObjectiveCompletedSound();
+        EventHandler.OnObjectiveCompleted += PlayObjectiveCompletedSound;
     }
 
+    private void OnDisable()
+    {
+        EventHandler.OnObjectiveCompleted -= PlayObjectiveCompletedSound;
+    }
 
+    #endregion
     //plays a small sound to announce an objective was completed
-    private void PlayObjectiveCompletedSound() => PlaySound(SoundClipType.OBJECTIVE_DONE);
+    private void PlayObjectiveCompletedSound(int a, GameObject b) => PlaySound(SoundClipType.OBJECTIVE_DONE);
 
 
 

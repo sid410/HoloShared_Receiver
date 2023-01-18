@@ -17,7 +17,7 @@ public class TableCalibrator : MonoBehaviour
         ObjectManipulator objectManip = GetComponent<ObjectManipulator>();
         objectManip.OnManipulationStarted.AddListener(onManipulationStart);
         objectManip.OnManipulationEnded.AddListener(onManipulationEnd);
-        EventHandler.Instance.OnLog("Calibrator " + gameObject.name + " spawned ! ");
+        EventHandler.Instance.LogMessage("Calibrator " + gameObject.name + " spawned ! ");
 
     }
 
@@ -35,12 +35,12 @@ public class TableCalibrator : MonoBehaviour
 
     private void onManipulationStart(ManipulationEventData eventData)
     {
-        EventHandler.Instance.OnLog("Start manipulating the boundary : " + gameObject.name);
+        EventHandler.Instance.LogMessage("Start manipulating the boundary : " + gameObject.name);
     }
 
     private void onManipulationEnd(ManipulationEventData eventData)
     {
-        EventHandler.Instance.OnLog("Finished manipulating the boundary : " + gameObject.name 
+        EventHandler.Instance.LogMessage("Finished manipulating the boundary : " + gameObject.name 
             + " , New location is (" + gameObject.transform.position.x + "," + gameObject.transform.position.y + ")");
     }
 }

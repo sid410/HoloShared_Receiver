@@ -31,14 +31,14 @@ public class TutorialHandler : MonoBehaviour
     #region subscriptions
     private void OnEnable()
     {
-        EventHandler.Tutorial_started += InitTutorial;
-        EventHandler.ResetApp += OnReset;
+        EventHandler.OnTutorialStarted += InitTutorial;
+        EventHandler.OnAppReset += OnReset;
     }
 
     private void OnDisable()
     {
-        EventHandler.Tutorial_started -= InitTutorial;
-        EventHandler.ResetApp -= OnReset;
+        EventHandler.OnTutorialStarted -= InitTutorial;
+        EventHandler.OnAppReset -= OnReset;
     }
 
     #endregion
@@ -73,7 +73,7 @@ public class TutorialHandler : MonoBehaviour
     {
         if (currentStepIndex == -1) return;
         currentStepDuration = tutorialStep.duration > 0 ? tutorialStep.duration : CalculateTutorialStepLength(tutorialStep.message); // we calculate the duration of this tutorial step.
-        EventHandler.Instance.OnNewTutorialStepStarted(tutorialStep); //we inform all other listeners about the new step.
+        EventHandler.Instance.StartTutorialStep(tutorialStep); //we inform all other listeners about the new step.
         countdown = currentStepDuration; //we start the countdown
     }
 
@@ -82,7 +82,7 @@ public class TutorialHandler : MonoBehaviour
         if (currentStepIndex == -1) return;
         currentStepIndex = -1;
         currentTutorial = null;
-        EventHandler.Instance.OnTutorialOver();
+        EventHandler.Instance.EndTutorial();
     }
 
     private float CalculateTutorialStepLength(string message)

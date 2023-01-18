@@ -51,7 +51,7 @@ public class LocalItemSpawner : MonoBehaviour
 
        //StartCoroutine(TriggerExerciceStart());
 
-        EventHandler.calibrationDone += (p,r) => { StartCoroutine(TriggerExerciceStart()); }; //for debugging purposes we trigger the exercice start after 4 seconds
+        EventHandler.OnCalibrationDone += (p,r) => { StartCoroutine(TriggerExerciceStart()); }; //for debugging purposes we trigger the exercice start after 4 seconds
 
     }
 
@@ -86,7 +86,7 @@ public class LocalItemSpawner : MonoBehaviour
     {
         if (debug_spawnEntry == null) return;
         var objListMsg = new OSCMessage("/spawnObject");
-        EventHandler.Instance.OnLog("Spawning objects");
+        EventHandler.Instance.LogMessage("Spawning objects");
         objListMsg.AddValue(OSCValue.Int(debug_spawnEntry.spawnPoints.Count)); //objectSpawner.GetCollidingGameObjectsList()
 
         int i = 0;
@@ -106,7 +106,7 @@ public class LocalItemSpawner : MonoBehaviour
         //Receiver.Bind("/loadexercise", LoadExercice); //we bind to the receiver, this will trigger the exercise from the phone app eventually.
         var exerciseTriggerMessage = new OSCMessage("/loadexercise");
         exerciseTriggerMessage.AddValue(OSCValue.Int((int)exercise.exerciseType)); //we simply pass the exercise's enum number, should be consistent betweens apps
-        EventHandler.Instance.OnLog("Triggering the start of the exercise " + exercise.exerciseType);
+        EventHandler.Instance.LogMessage("Triggering the start of the exercise " + exercise.exerciseType);
         Transmitter.Send(exerciseTriggerMessage);
     }
 
@@ -124,7 +124,7 @@ public class LocalItemSpawner : MonoBehaviour
             var message = new OSCMessage(adress);
             trasformStructure.PosValue = new Vector3(utensilSpawnPoint.PosX, 0, -utensilSpawnPoint.PosY);
             trasformStructure.RotValue = Quaternion.Euler(utensilSpawnPoint.rotation);
-            EventHandler.Instance.OnLog("Sending position " + trasformStructure.PosValue.ToString() + " to adress " + adress);
+            EventHandler.Instance.LogMessage("Sending position " + trasformStructure.PosValue.ToString() + " to adress " + adress);
             var bytes = OSCUtilities.StructToByte(trasformStructure);
             message.AddValue(OSCValue.Blob(bytes));
 
@@ -136,7 +136,7 @@ public class LocalItemSpawner : MonoBehaviour
     public void SpawnDebugSenderItem()
     {
         if (debugSenderPrefab == null) return;
-        EventHandler.Instance.OnLog("Spawning holdable cup");
+        EventHandler.Instance.LogMessage("Spawning holdable cup");
         GameObject SenderPrefab = Instantiate(debugSenderPrefab, StoneOrigin.transform.position, Quaternion.identity);
         SenderPrefab.transform.parent = StoneOrigin.transform;
     }
@@ -145,7 +145,7 @@ public class LocalItemSpawner : MonoBehaviour
     public void SendStartCalibration()
     {
         var objListMsg = new OSCMessage("/CalibrateSharedSpace/Receiver");
-        EventHandler.Instance.OnLog("Starting calibration");
+        EventHandler.Instance.LogMessage("Starting calibration");
         objListMsg.AddValue(OSCValue.Bool(true)); //objectSpawner.GetCollidingGameObjectsList()
         Transmitter.Send(objListMsg);
         //StartCoroutine(SpamFunctionAFterDelay());
@@ -155,12 +155,17 @@ public class LocalItemSpawner : MonoBehaviour
     public void SendEndCalibration()
     {
         var objListMsg = new OSCMessage("/CalibrateSharedSpace/Receiver");
-        EventHandler.Instance.OnLog("Ending Calibration");
+        EventHandler.Instance.LogMessage("Ending Calibration");
         objListMsg.AddValue(OSCValue.Bool(false)); //objectSpawner.GetCollidingGameObjectsList()
         Transmitter.Send(objListMsg);
         //StopAllCoroutines();
     }
 
+    //Resets the app to the state it is at the start (no exercise loaded)
+    public void ResetApp()
+    {
+        EventHandler.Instance.ResetApp();
+    }
 
     //************************ UI Swap scripts *******************************//
 
@@ -170,6 +175,15 @@ public class LocalItemSpawner : MonoBehaviour
         if (UIPrefabs == null || UIPrefabs.Length == 0) return;
 
         EnabledUIIndex = (EnabledUIIndex + 1) % UIPrefabs.Length;
+        SpawnUI();
+    }
+
+
+    public void GoToPreviousUI()
+    {
+        if (UIPrefabs == null || UIPrefabs.Length == 0) return;
+
+        EnabledUIIndex = ((EnabledUIIndex - 1) < 0 )? UIPrefabs.Length - 1 : EnabledUIIndex - 1;
         SpawnUI();
     }
 

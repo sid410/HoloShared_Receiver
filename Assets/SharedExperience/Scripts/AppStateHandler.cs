@@ -26,15 +26,15 @@ public class AppStateHandler : MonoBehaviour
     #region subscriptions
     private void OnEnable()
     {
-        EventHandler.Tutorial_started += TutorialPhase;
-        EventHandler.Exercice_started += ExercisePhase;
-        EventHandler.Exercice_over += ResultsPhase;
+        EventHandler.OnTutorialStarted += TutorialPhase;
+        EventHandler.OnExerciseStarted += ExercisePhase;
+        EventHandler.OnExerciseOver += ResultsPhase;
     }
     private void OnDisable()
     {
-        EventHandler.Tutorial_started -= TutorialPhase;
-        EventHandler.Exercice_started -= ExercisePhase;
-        EventHandler.Exercice_over -= ResultsPhase;
+        EventHandler.OnTutorialStarted -= TutorialPhase;
+        EventHandler.OnExerciseStarted -= ExercisePhase;
+        EventHandler.OnExerciseOver -= ResultsPhase;
     }
 
     #endregion

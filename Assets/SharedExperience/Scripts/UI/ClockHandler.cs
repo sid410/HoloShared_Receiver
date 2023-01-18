@@ -25,14 +25,14 @@ public class ClockHandler : MonoBehaviour
     #region subscriptions
     private void OnEnable()
     {
-        EventHandler.Exercice_started += StartClock;
-        EventHandler.Exercice_over += EndClock;
+        EventHandler.OnExerciseStarted += StartClock;
+        EventHandler.OnExerciseOver += EndClock;
     }
 
     private void OnDisable()
     {
-        EventHandler.Exercice_started -= StartClock;
-        EventHandler.Exercice_over -= EndClock;
+        EventHandler.OnExerciseStarted -= StartClock;
+        EventHandler.OnExerciseOver -= EndClock;
     }
     #endregion
     private void Update()

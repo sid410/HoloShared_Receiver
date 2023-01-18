@@ -23,16 +23,16 @@ public class AvatarChat : MonoBehaviour
     #region subscriptions
     private void OnEnable()
     {
-        EventHandler.Tutorial_step += DisplayTutorialStepMessage;
-        EventHandler.Tutorial_over += HideChatBox; //we hide the chatbox if the tutorial is over
-        EventHandler.Exercice_over += DisplayExerciseOverMessage;
+        EventHandler.OnTutorialStepStarted += DisplayTutorialStepMessage;
+        EventHandler.OnTutorialOver += HideChatBox; //we hide the chatbox if the tutorial is over
+        EventHandler.OnExerciseOver += DisplayExerciseOverMessage;
     }
 
     private void OnDisable()
     {
-        EventHandler.Tutorial_step -= DisplayTutorialStepMessage;
-        EventHandler.Tutorial_over -= HideChatBox; //we hide the chatbox if the tutorial is over
-        EventHandler.Exercice_over -= DisplayExerciseOverMessage;
+        EventHandler.OnTutorialStepStarted -= DisplayTutorialStepMessage;
+        EventHandler.OnTutorialOver -= HideChatBox; //we hide the chatbox if the tutorial is over
+        EventHandler.OnExerciseOver -= DisplayExerciseOverMessage;
     }
 
     #endregion

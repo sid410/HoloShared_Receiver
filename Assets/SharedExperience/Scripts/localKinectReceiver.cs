@@ -101,17 +101,17 @@ public class localKinectReceiver : MonoBehaviour
     private void OnEnable()
     {
         baseClient.RegisterTopicHandler("M2MQTT/Matlab/DataResults", HandleMatlabResults);
-        EventHandler.Exercise_Loaded += LoadExerciseHandler; //we get the kinect handler from the exercise data //TODO : also destroy old one
-        EventHandler.Exercice_over += OnExerciseOver; 
-        EventHandler.NewItemSpawned += RegisterSpawnedItem; //we register all spawned items in a local list
+        EventHandler.OnExerciseLoaded += LoadExerciseHandler; //we get the kinect handler from the exercise data //TODO : also destroy old one
+        EventHandler.OnExerciseOver += OnExerciseOver; 
+        EventHandler.OnItemSpawned += RegisterSpawnedItem; //we register all spawned items in a local list
     }
 
     private void OnDisable()
     {
         baseClient.UnregisterTopicHandler("M2MQTT/Matlab/DataResults", HandleMatlabResults);
-        EventHandler.Exercise_Loaded -= LoadExerciseHandler; 
-        EventHandler.Exercice_over -= OnExerciseOver;
-        EventHandler.NewItemSpawned -= RegisterSpawnedItem;
+        EventHandler.OnExerciseLoaded -= LoadExerciseHandler; 
+        EventHandler.OnExerciseOver -= OnExerciseOver;
+        EventHandler.OnItemSpawned -= RegisterSpawnedItem;
     }
     #endregion
 
@@ -128,10 +128,10 @@ public class localKinectReceiver : MonoBehaviour
 
     private void HandleMatlabResults(string topic, string message)
     {
-        EventHandler.Instance.OnLog("Matlab results came in !");
+        EventHandler.Instance.LogMessage("Matlab results came in !");
         //ClearKinectUtensils(); //we clear the old utensils
         if (!waiting_for_final_results && (AppStateHandler.appState != AppStateHandler.AppState.EXERCICE)) return; //TODO : enable this, block any kinect result usage if its not an exercice
-        EventHandler.Instance.OnLog("Matlab results accepted !");
+        EventHandler.Instance.LogMessage("Matlab results accepted !");
         List<GameObject> virtualObjectsList = new List<GameObject>(spawnedUtensils);//getChildrenOfGO//new List<GameObject>(objectSpawner.GetCollidingGameObjectsList());
         string[] results = message.Split('\n');
 
@@ -155,10 +155,10 @@ public class localKinectReceiver : MonoBehaviour
         if (waiting_for_final_results)
         {
             waiting_for_final_results = false;
-            EventHandler.Instance.OnFinalMatlabResultsReceived();
+            EventHandler.Instance.TriggerFinalMatlabReceived();
             return;
         }
-        EventHandler.Instance.OnMatlabResultsReceived(); //we inform that matlab results have been received and all utensils updated
+        EventHandler.Instance.TriggerMatlabReceived(); //we inform that matlab results have been received and all utensils updated
 
         //RefreshEvaluationData();
     }

@@ -13,14 +13,14 @@ public class PerfSumSwapper : MonoBehaviour
 
     private void OnEnable()
     {
-        EventHandler.Tutorial_started += DisplayObjectives;
-        EventHandler.Exercice_over += DisplayScores;
+        EventHandler.OnTutorialStarted += DisplayObjectives;
+        EventHandler.OnExerciseOver += DisplayScores;
     }
 
     private void OnDisable()
     {
-        EventHandler.Tutorial_started -= DisplayObjectives;
-        EventHandler.Exercice_over -= DisplayScores;
+        EventHandler.OnTutorialStarted -= DisplayObjectives;
+        EventHandler.OnExerciseOver -= DisplayScores;
     }
 
 

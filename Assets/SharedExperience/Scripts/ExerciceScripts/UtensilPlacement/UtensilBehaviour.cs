@@ -39,7 +39,7 @@ public class UtensilBehaviour : UtensilAbs
         itemID = st_itemID++; //we set our ID and increment this.
 
         InstantiateRealObject();
-        EventHandler.Instance.OnNewItemSpawned(this.gameObject);
+        EventHandler.Instance.SpawnItem(this.gameObject);
     }
     
     //instantiates the real gameobject
@@ -60,13 +60,13 @@ public class UtensilBehaviour : UtensilAbs
         //for angled object we get the forward direction
         virtualForward = gameObject.transform.Find("Xaxis").transform.Find("forwardDir").gameObject;
         realForward = realGoInstance.transform.Find("Xaxis").transform.Find("forwardDir").gameObject;
-        EventHandler.Instance.OnLog("Finished Instantiating real object ! " + gameObject.name);
+        EventHandler.Instance.LogMessage("Finished Instantiating real object ! " + gameObject.name);
     }
 
     //uses data received from the kinect to reposition the Gameobject tied to this
     public override void RepositionRealGameobject(Vector3 tablePos, float tableRot)
     {
-        EventHandler.Instance.OnLog("Repositioning real gameobject ! " + gameObject.name);
+        EventHandler.Instance.LogMessage("Repositioning real gameobject ! " + gameObject.name);
         if (realGoInstance == null) return;
         realItemDetected = true;
         realGoInstance.transform.localPosition = tablePos;
@@ -111,7 +111,7 @@ public class UtensilBehaviour : UtensilAbs
             //EventHandler.Instance.OnUtensilObjectiveCompleted(this);
 
             //new
-            EventHandler.Instance.OnObjectiveCompleted(itemID, this.gameObject);
+            EventHandler.Instance.SetObjectiveAsComplete(itemID, this.gameObject);
         }
     }
 
@@ -119,7 +119,7 @@ public class UtensilBehaviour : UtensilAbs
     private void OnTriggerExit(Collider collision)
     {
         if (!realItemDetected) return;
-        EventHandler.Instance.OnLog("Collision exit " + type.ToString());
+        EventHandler.Instance.LogMessage("Collision exit " + type.ToString());
 
         LiveModelCollision hitModel = collision.gameObject.GetComponent<LiveModelCollision>();
         if (hitModel == null) return;
@@ -127,9 +127,9 @@ public class UtensilBehaviour : UtensilAbs
         {
             resultPack.succeeded = false;
             meshRenderer.material = defaultMaterial;
-            EventHandler.Instance.OnUtensilObjectiveFailed(this);
+            //EventHandler.Instance.OnUtensilObjectiveFailed(this);
 
-            EventHandler.Instance.OnObjectiveFailed(itemID, this.gameObject);
+            EventHandler.Instance.SetObjectiveAsUncomplete(itemID, this.gameObject);
         }
     }
 }

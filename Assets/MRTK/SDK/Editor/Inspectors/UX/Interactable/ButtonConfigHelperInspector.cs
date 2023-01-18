@@ -283,7 +283,7 @@ namespace Microsoft.MixedReality.Toolkit.Inspectors
             if (iconSet != null)
             {
                 Sprite newIconSprite;
-                if (iconSet.EditorDrawSpriteIconSelector(currentIconSprite, out newIconSprite, 1))
+                if (iconSet.EditorDrawSpriteIconSelector(currentIconSprite, out _, out newIconSprite, 1))
                 {
                     iconSpriteProp.objectReferenceValue = newIconSprite;
                     cb.SetSpriteIcon(newIconSprite);
@@ -380,7 +380,7 @@ namespace Microsoft.MixedReality.Toolkit.Inspectors
             if (iconSet != null)
             {
                 uint newIconChar;
-                if (iconSet.EditorDrawCharIconSelector(currentIconChar, out newIconChar, 1))
+                if (iconSet.EditorDrawCharIconSelector(currentIconChar, out _, out newIconChar, 1))
                 {
                     iconCharProp.longValue = newIconChar;
                     SerializedObject iconSetObject = new SerializedObject(iconSet);

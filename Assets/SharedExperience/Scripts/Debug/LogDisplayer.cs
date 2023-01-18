@@ -26,9 +26,9 @@ public class LogDisplayer : MonoBehaviour
             logBillboard.SetActive(false);
             return;
         }
-        EventHandler.LogDataUpdated += UpdatelogTexts;
-        EventHandler.Exercice_started += (ed) => UpdatelogTexts("Exercice started");
-        EventHandler.Exercice_over += () => UpdatelogTexts("Exercice Over");
+        EventHandler.OnLog += UpdatelogTexts;
+        EventHandler.OnExerciseStarted += (ed) => UpdatelogTexts("Exercice started");
+        EventHandler.OnExerciseOver += () => UpdatelogTexts("Exercice Over");
     }
 
     public void UpdatelogTexts(string message)

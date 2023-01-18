@@ -34,7 +34,6 @@ public class ObjectiveUpdater : MonoBehaviour
 
     public ObjectiveBehaviour objectivePrefab; //prefab for UI visualisation of objectives
 
-    [SerializeField] private ScrollingObjectCollection scrollingObjectCollection;
     [SerializeField] private GridObjectCollection gridObjectCollection; //used for 3D list isplay of objectives
 
     private IObjectiveHandler exerciseObjectiveHandler = null; //Class implemented interface, should contain the basic behaviours when spawning objectives
@@ -43,18 +42,20 @@ public class ObjectiveUpdater : MonoBehaviour
 
     private void OnEnable()
     {
-        EventHandler.Exercice_step += OnExerciseStepStarted;
-        EventHandler.NewItemSpawned += OnItemSpawned;
-        EventHandler.ObjectiveCompletedU += OnObjectiveCompleted;
-        EventHandler.ObjectiveFailedU += OnObjectiveFailed;
+        EventHandler.OnExerciseStepStarted += OnExerciseStepStarted;
+        EventHandler.OnItemSpawned += OnItemSpawned;
+        EventHandler.OnObjectiveCompleted += OnObjectiveCompleted;
+        EventHandler.OnObjectiveFailed += OnObjectiveFailed;
+        EventHandler.OnAppReset += ResetObjectives;
     }
 
     private void OnDisable()
     {
-        EventHandler.Exercice_step -= OnExerciseStepStarted;
-        EventHandler.NewItemSpawned -= OnItemSpawned;
-        EventHandler.ObjectiveCompletedU -= OnObjectiveCompleted;
-        EventHandler.ObjectiveFailedU -= OnObjectiveFailed;
+        EventHandler.OnExerciseStepStarted -= OnExerciseStepStarted;
+        EventHandler.OnItemSpawned -= OnItemSpawned;
+        EventHandler.OnObjectiveCompleted -= OnObjectiveCompleted;
+        EventHandler.OnObjectiveFailed -= OnObjectiveFailed;
+        EventHandler.OnAppReset -= ResetObjectives;
 
     }
 
@@ -96,7 +97,7 @@ public class ObjectiveUpdater : MonoBehaviour
 
         if (completedObjectives >= objectiveList.Count) //if all objectives are done, we trigger the end of the exercice
         {
-            EventHandler.Instance.OnLog("All objectives are completed declaring exercice over in 2 seconds");
+            EventHandler.Instance.LogMessage("All objectives are completed declaring exercice over in 2 seconds");
             Invoke("InformAllObjectivesCompleted", 2f);
         }
     }
@@ -122,7 +123,7 @@ public class ObjectiveUpdater : MonoBehaviour
 
         if (completedObjectives >= objectiveList.Count) //if all objectives are done, we trigger the end of the exercice
         {
-            EventHandler.Instance.OnLog("All objectives are completed declaring exercice over in 2 seconds");
+            EventHandler.Instance.LogMessage("All objectives are completed declaring exercice over in 2 seconds");
             Invoke("InformAllObjectivesCompleted", 2f);
         }
     }
@@ -147,8 +148,8 @@ public class ObjectiveUpdater : MonoBehaviour
     private void InformAllObjectivesCompleted()
     {
         if (completedObjectives < objectiveList.Count) return;
-        EventHandler.Instance.OnLog("Objective completed ! exercice closing");
-        EventHandler.Instance.OnExerciceOver();
+        EventHandler.Instance.LogMessage("Objective completed ! exercice closing");
+        EventHandler.Instance.EndExercise();
     }
 
     //intantiate an Objective object and append it to the objective list
@@ -160,6 +161,7 @@ public class ObjectiveUpdater : MonoBehaviour
         //TODO : maybe keep track
 
     }
+
 
     //resets the objectives and the display
     private void ResetObjectives()
