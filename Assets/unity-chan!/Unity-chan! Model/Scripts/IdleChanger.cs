@@ -38,7 +38,7 @@ namespace UnityChan
 		}
 	
 		// Update is called once per frame
-		void  Update ()
+		/*void  Update ()
 		{
 			// ↑キー/スペースが押されたら、ステートを次に送る処理
 			if (Input.GetKeyDown ("up") || Input.GetButton ("Jump")) {
@@ -80,7 +80,7 @@ namespace UnityChan
 				anim.SetBool ("Next", true);
 			if (GUI.Button (new Rect (Screen.width - 100, 70, 80, 20), "Back"))
 				anim.SetBool ("Back", true);
-		}
+		}*/
 
 
 		// ランダム判定用関数

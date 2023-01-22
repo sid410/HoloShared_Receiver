@@ -19,7 +19,6 @@ public class AvatarChat : MonoBehaviour
     private Coroutine messageDisplayingCoroutine = null;
 
 
-
     #region subscriptions
     private void OnEnable()
     {
@@ -49,12 +48,15 @@ public class AvatarChat : MonoBehaviour
             return;
         }
         if (messageDisplayingCoroutine != null) StopCoroutine(messageDisplayingCoroutine);
-        messageDisplayingCoroutine = StartCoroutine(DisplayMessageStepByStep(message));
+
+        //if this item is disabled for any reason, we don't start the coroutine but set the text directly
+        if (gameObject.activeSelf) messageDisplayingCoroutine = StartCoroutine(DisplayMessageStepByStep(message));
+        else chatDisplaytext.text = message;
     }
 
     private void HideChatBox()
     {
-        chatDisplayPanel.SetActive(false);
+        //chatDisplayPanel.SetActive(false);
     }
 
     private void ShowChatBox()

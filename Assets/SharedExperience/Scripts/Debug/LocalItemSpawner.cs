@@ -46,12 +46,12 @@ public class LocalItemSpawner : MonoBehaviour
         
         Transmitter = GameObject.FindObjectOfType<OSCTransmitter>();
         SetRemoteHost("127.0.0.1"); //try to send receiver to localHost
-        SpawnUI(); //we spawn the UI, 
+        SpawnUI();
 
 
        //StartCoroutine(TriggerExerciceStart());
 
-        EventHandler.OnCalibrationDone += (p,r) => { StartCoroutine(TriggerExerciceStart()); }; //for debugging purposes we trigger the exercice start after 4 seconds
+        //EventHandler.OnCalibrationDone += (p,r) => { StartCoroutine(TriggerExerciceStart()); }; //for debugging purposes we trigger the exercice start after 4 seconds
 
     }
 
@@ -70,7 +70,10 @@ public class LocalItemSpawner : MonoBehaviour
         }
     }
 
-    
+    public void StartUtensilExercise() => TriggerExerciseStart(ExerciseType.UTENSIL);
+
+    public void StartMazeExercise() => TriggerExerciseStart(ExerciseType.MAZE);
+
     //sets the address.
     private void SetRemoteHost(string rcvrAddress)
     {
@@ -101,12 +104,13 @@ public class LocalItemSpawner : MonoBehaviour
     }
 
 
-    public void TriggerExerciseStart(FullExerciceData exercise)
+    public void TriggerExerciseStart(ExerciseType exerciseType)
     {
+        ResetApp();
         //Receiver.Bind("/loadexercise", LoadExercice); //we bind to the receiver, this will trigger the exercise from the phone app eventually.
         var exerciseTriggerMessage = new OSCMessage("/loadexercise");
-        exerciseTriggerMessage.AddValue(OSCValue.Int((int)exercise.exerciseType)); //we simply pass the exercise's enum number, should be consistent betweens apps
-        EventHandler.Instance.LogMessage("Triggering the start of the exercise " + exercise.exerciseType);
+        exerciseTriggerMessage.AddValue(OSCValue.Int((int)exerciseType)); //we simply pass the exercise's enum number, should be consistent betweens apps
+        EventHandler.Instance.LogMessage("Triggering the start of the exercise " + exerciseType);
         Transmitter.Send(exerciseTriggerMessage);
     }
 
@@ -183,19 +187,21 @@ public class LocalItemSpawner : MonoBehaviour
     {
         if (UIPrefabs == null || UIPrefabs.Length == 0) return;
 
-        EnabledUIIndex = ((EnabledUIIndex - 1) < 0 )? UIPrefabs.Length - 1 : EnabledUIIndex - 1;
+        EnabledUIIndex = ((EnabledUIIndex - 1) < 0) ? UIPrefabs.Length - 1 : EnabledUIIndex - 1;
         SpawnUI();
+
     }
 
-
+    //Changed this to not spawn but disable enable UIs so subscriptions don't disppear and dada is passed
     private void SpawnUI()
     {
         if (UIPrefabs == null || UIPrefabs.Length == 0) return;
-        if (currentEnabledUI != null) Destroy(currentEnabledUI);
+        if (currentEnabledUI != null) Destroy(currentEnabledUI.gameObject);
 
         currentEnabledUI = Instantiate(UIPrefabs[EnabledUIIndex]);
         currentEnabledUI.transform.parent = StoneOrigin.transform; //we set the parent as the stone origin
-        currentEnabledUI.transform.localPosition = Vector3.zero; //we set the location as 0
+        currentEnabledUI.transform.localPosition = new Vector3(0, 0, 0.02f); //we set the location as 0
+        currentEnabledUI.transform.localRotation = Quaternion.identity;
 
     }
 }

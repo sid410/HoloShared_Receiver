@@ -255,7 +255,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6708778001270912429}
-  m_Text: 
+  m_Text: Reach the objective using the laser
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1

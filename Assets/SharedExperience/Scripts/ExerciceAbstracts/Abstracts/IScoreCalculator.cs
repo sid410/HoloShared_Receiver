@@ -9,5 +9,5 @@ using UnityEngine;
 public abstract class IScoreCalculator : ScriptableObject
 {
     //calculate score and returns the string to display
-    public abstract string CalculateScore(List<GameObject> spawnedItemList, ClockHandler exercice_clock);
+    public abstract ScoreCalculator.PerformanceSummary CalculateScore(List<GameObject> spawnedItemList, ClockHandler exercice_clock);
 }

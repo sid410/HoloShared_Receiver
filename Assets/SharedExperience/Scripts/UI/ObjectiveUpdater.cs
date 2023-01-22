@@ -27,6 +27,7 @@ public class ObjectiveUpdater : MonoBehaviour
         }
     }
 
+
     #region Private data
     private List<ObjectiveBehaviour> objectiveList = new List<ObjectiveBehaviour>();
     private int completedObjectives = 0; //we track how many objectives have been completed
@@ -40,13 +41,14 @@ public class ObjectiveUpdater : MonoBehaviour
     // Start is called before the first frame update
 
 
-    private void OnEnable()
+    private void OnEnable() //todo : remake it into onEnable
     {
         EventHandler.OnExerciseStepStarted += OnExerciseStepStarted;
         EventHandler.OnItemSpawned += OnItemSpawned;
         EventHandler.OnObjectiveCompleted += OnObjectiveCompleted;
         EventHandler.OnObjectiveFailed += OnObjectiveFailed;
         EventHandler.OnAppReset += ResetObjectives;
+        
     }
 
     private void OnDisable()

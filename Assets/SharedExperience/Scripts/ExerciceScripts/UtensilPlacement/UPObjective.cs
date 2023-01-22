@@ -5,7 +5,7 @@ using UnityEngine;
 
 //utensil placement objective handler, for special behaviour and generting objectives
 
-[CreateAssetMenu(fileName = "Assets/Resources/Data/ObjectiveHandlers/MazeObjectiveH.asset", menuName = "ScriptableObjects/Objective Handlers/Maze Exercise", order = 100)]
+[CreateAssetMenu(fileName = "Assets/Resources/Data/ObjectiveHandlers/UtensilObjectiveH.asset", menuName = "ScriptableObjects/Objective Handlers/Utensil Exercise", order = 100)]
 public class UPObjective : IObjectiveHandler
 {
     

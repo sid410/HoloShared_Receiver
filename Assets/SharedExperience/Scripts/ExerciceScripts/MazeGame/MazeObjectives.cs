@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "Assets/Resources/Data/ObjectiveHandlers/mazeObjective.asset", menuName = "ScriptableObjects/Objective Handlers/Mze Exercise", order = 101)]
 public class MazeObjectives : IObjectiveHandler
 {
 

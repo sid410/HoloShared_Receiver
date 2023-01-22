@@ -17,7 +17,7 @@ public class ClockHandler : MonoBehaviour
     public float exercice_timer { private set; get; }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         exercice_in_progress = false;
     }

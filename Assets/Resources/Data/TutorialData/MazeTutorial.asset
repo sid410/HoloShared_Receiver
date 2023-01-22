@@ -14,6 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   steps:
   - duration: 0
-    faceExpression: 0
-    message: Guide the beam towards the destination
-    spawnables: []
+    faceExpression: 1
+    message: Welcome to the maze Game ! Your goal is to guide the laser beem towards
+      the objectives
+    tutorialitems: {fileID: 0}
+  - duration: 10
+    faceExpression: 1
+    message: The following items will be part of the exercise ! Utensils create mirrors
+      that reflect the light !
+    tutorialitems: {fileID: 11400000, guid: 4fb60b75e25a1a24abe08c72bb1e8af5, type: 2}

@@ -91,7 +91,9 @@ public class MazeLaser
                 break;
 
             case MazeObstacleType.GOAL:
-                EventHandler.Instance.SetObjectiveAsComplete(MazeObjectives.INIT_OBJECTIVE_INDEX, null);
+                laserIndices.Add(hitInfo.point);
+                UpdateLaser();
+                //EventHandler.Instance.SetObjectiveAsComplete(MazeObjectives.INIT_OBJECTIVE_INDEX, null);
                 break;
         }
 

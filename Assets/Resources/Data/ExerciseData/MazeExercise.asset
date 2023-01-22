@@ -15,5 +15,5 @@ MonoBehaviour:
   steps:
   - faceExpression: 0
     message: Guide the Beam towards the objective
-    objectives: {fileID: 11400000, guid: 1d44864b4d9e19842beb4d3713dd9ecf, type: 2}
+    objectives: {fileID: 11400000, guid: 1b223806bf8f81840874d03b634f1cd3, type: 2}
     spawnEntry: {fileID: 11400000, guid: 6fcf5035abfa4bc4894bbda0315b846b, type: 2}

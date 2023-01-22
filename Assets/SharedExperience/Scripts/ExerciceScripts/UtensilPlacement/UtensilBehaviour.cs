@@ -17,6 +17,10 @@ public class UtensilBehaviour : UtensilAbs
 
     private GameObject virtualForward, realForward, virtualOrigin, realOrigin;
 
+    //leniancy for the results
+    private const float distanceErrorMargin = 1f;
+    private const float angularErrorMargin = 1f;
+
     //TODO : Think about how to reset data when a new matlab event comes.
     public class ResultPack
     {
@@ -81,6 +85,7 @@ public class UtensilBehaviour : UtensilAbs
     {
         float dist = Vector3.Distance(virtualOrigin.transform.position, realOrigin.transform.position) * 1000;
         ///distanceText.text = dist.ToString("N1") + "mm";
+        EventHandler.Instance.LogMessage("Utensil : " + type + " position error is " + dist);
         resultPack._distanceError = dist;
     }
 

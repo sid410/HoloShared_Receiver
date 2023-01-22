@@ -11,7 +11,12 @@ public class PerfSumSwapper : MonoBehaviour
 
     // Start is called before the first frame update
 
-    private void OnEnable()
+    private void Awake()
+    {
+        EventHandler.OnTutorialStarted += DisplayObjectives;
+        EventHandler.OnExerciseOver += DisplayScores;
+    }
+    /*private void OnEnable()
     {
         EventHandler.OnTutorialStarted += DisplayObjectives;
         EventHandler.OnExerciseOver += DisplayScores;
@@ -21,7 +26,7 @@ public class PerfSumSwapper : MonoBehaviour
     {
         EventHandler.OnTutorialStarted -= DisplayObjectives;
         EventHandler.OnExerciseOver -= DisplayScores;
-    }
+    }*/
 
 
     private void DisplayObjectives(TutorialData td) => SwapUI(ScoreHideable, ObjectiveHideable);

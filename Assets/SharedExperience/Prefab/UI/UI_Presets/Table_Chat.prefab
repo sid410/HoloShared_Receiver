@@ -186,7 +186,7 @@ PrefabInstance:
     - target: {fileID: 7970242601936873557, guid: 7890d8be76810264eac705e2f1264b1f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.18840003
+      value: 0.254
       objectReference: {fileID: 0}
     - target: {fileID: 7970242601936873557, guid: 7890d8be76810264eac705e2f1264b1f,
         type: 3}
@@ -231,7 +231,7 @@ PrefabInstance:
     - target: {fileID: 7970242601937171893, guid: 7890d8be76810264eac705e2f1264b1f,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7890d8be76810264eac705e2f1264b1f, type: 3}
@@ -382,6 +382,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 'Chat '
+      objectReference: {fileID: 0}
+    - target: {fileID: 6708625726486660183, guid: aa159819f96c16845b4dc383c7585be7,
+        type: 3}
+      propertyPath: PivotAxis
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa159819f96c16845b4dc383c7585be7, type: 3}

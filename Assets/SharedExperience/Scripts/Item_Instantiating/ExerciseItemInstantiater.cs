@@ -45,6 +45,7 @@ public class ExerciseItemInstantiater : MonoBehaviour
         //For the purpose of exercises, it is preferable to use full maps, since its better for rotation everything on the table with the same rotation vector
         //For maps and for Flexibility
         DeleteSpawnedItems(); //we remove previous items
+        if (spawnEntrys == null) return;
         foreach (ItemsSpawnEntry.SpawnPoint spawn in spawnEntrys.spawnPoints)
         {
             //we instantiate the prefab, set the stonesOrigin as parent and fix all rotations/transform problems
@@ -56,14 +57,16 @@ public class ExerciseItemInstantiater : MonoBehaviour
             Vector3 rotation = (spawn.rotation.Equals(Vector3.zero)) ? spawn.itemPrefab.transform.rotation.eulerAngles : spawn.rotation;
             spawnedObject.transform.rotation = Quaternion.Euler(rotation + new Vector3(0, rotationCalibrationY, 0));
 
-            if (spawn.message != null) //if the message is not null, we spawn a billboard on top the item and set the text
+            spawnedItems.Enqueue(spawnedObject);
+            if (spawn.message != null && spawn.message.Length != 0) //if the message is not null, we spawn a billboard on top the item and set the text
             {
-                ItemTextHandler itemText = Instantiate(item3DTextPrefab, spawnedObject.transform);
+                ItemTextHandler itemText = Instantiate(item3DTextPrefab);
 
                 //now we position the text, if the gameobject has a direct child that's name is "TextPosition", it is used to position the Text 3D display. Otherwise we put a default position of 0.1f on the Y
-                GameObject textSpawnPoint = spawnedObject.transform.Find("TextPosition").gameObject; 
-                itemText.transform.localPosition = (textSpawnPoint == null) ? new Vector3(0, 0.1f, 0) : textSpawnPoint.transform.localPosition;
+                Transform textSpawnPoint = spawnedObject.transform.Find("TextPosition"); 
+                itemText.transform.position = spawnedObject.transform.position + ((textSpawnPoint == null) ? (new Vector3(0, 0.1f, 0)) : textSpawnPoint.localPosition);
                 itemText.DisplayText(spawn.message); //we finally set the text.
+                spawnedItems.Enqueue(itemText.gameObject);
             }
         }
     }
