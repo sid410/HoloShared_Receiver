@@ -19,4 +19,8 @@ public class TestScoreCalculator : IScoreCalculator
         summary.totalPerformancePourcent = 98;
         return summary;
     }
+
+    public override void Cleanup() { }
+
+    public override void Init() { }
 }

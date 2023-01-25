@@ -9,7 +9,7 @@ using UnityEngine;
  */
 public class AvatarChat : MonoBehaviour
 {
-    private const int MAX_LETTER_PER_LINE = 42;
+    private const int MAX_LETTER_PER_LINE = 40;
     private const int LINES = 3;
     private const float letterTimeDelay = 0.06f; //time in seconds between each letter being displayed
 
@@ -24,6 +24,7 @@ public class AvatarChat : MonoBehaviour
     {
         EventHandler.OnTutorialStepStarted += DisplayTutorialStepMessage;
         EventHandler.OnTutorialOver += HideChatBox; //we hide the chatbox if the tutorial is over
+        EventHandler.OnExerciseStepStarted += DisplayExerciseStepMessage;
         EventHandler.OnExerciseOver += DisplayExerciseOverMessage;
     }
 
@@ -31,6 +32,7 @@ public class AvatarChat : MonoBehaviour
     {
         EventHandler.OnTutorialStepStarted -= DisplayTutorialStepMessage;
         EventHandler.OnTutorialOver -= HideChatBox; //we hide the chatbox if the tutorial is over
+        EventHandler.OnExerciseStepStarted -= DisplayExerciseStepMessage;
         EventHandler.OnExerciseOver -= DisplayExerciseOverMessage;
     }
 
@@ -38,6 +40,7 @@ public class AvatarChat : MonoBehaviour
      
     private void DisplayTutorialStepMessage(TutorialData.TutorialStep step) => DisplayMessage(step.message); //each tutorial step has a message
 
+    private void DisplayExerciseStepMessage(ExerciceData.ExerciceStep step) => DisplayMessage(step.message);
     private void DisplayExerciseOverMessage() => DisplayMessage("Well done ! The exercise is over ! You can see your results on the right"); // we simply say the exercise is over
 
     private void DisplayMessage(string message)
@@ -50,7 +53,7 @@ public class AvatarChat : MonoBehaviour
         if (messageDisplayingCoroutine != null) StopCoroutine(messageDisplayingCoroutine);
 
         //if this item is disabled for any reason, we don't start the coroutine but set the text directly
-        if (gameObject.activeSelf) messageDisplayingCoroutine = StartCoroutine(DisplayMessageStepByStep(message));
+        if (gameObject.activeSelf) messageDisplayingCoroutine = StartCoroutine(DisplayMessageWordByWord(message));
         else chatDisplaytext.text = message;
     }
 
@@ -63,6 +66,8 @@ public class AvatarChat : MonoBehaviour
     {
         chatDisplayPanel.SetActive(true);
     }
+
+
     //coroutine that handles displaying the message. We display letter by letter and for each end line we handle it differently
     IEnumerator DisplayMessageStepByStep(string message)
     {
@@ -98,5 +103,38 @@ public class AvatarChat : MonoBehaviour
         yield break;
     }
 
-    
+
+    //different coroutine where words do not get split up if they don't fit. wastes space because of no word splitting but more consistent and easier to make work beautifully.
+    IEnumerator DisplayMessageWordByWord(string message)
+    {
+        int LineLetterENum = 0; //calculates number of letter per line (so to know when to jump to next line)
+        chatDisplaytext.text = ""; //we reset the chat box
+        string[] words = message.Split(' ');
+        ShowChatBox(); //we show the chat box
+        for (int i = 0; i < words.Length; i++)
+        {
+            //we iterate each word
+            string actualWord = words[i];
+
+            //if this word will overflow we go to next line
+            if (LineLetterENum + actualWord.Length > MAX_LETTER_PER_LINE)
+            {
+                chatDisplaytext.text += '\n'; //we go to the next line
+                LineLetterENum = 0; //we reset the counter
+            }
+
+            for (int j = 0; j < actualWord.Length; j++) //we do all letters (with a delay)
+            {
+                chatDisplaytext.text += actualWord[j];
+                LineLetterENum++; //we increase the letter count
+                yield return new WaitForSeconds(letterTimeDelay); //we put the same delay
+            }
+
+            //we add a space
+            chatDisplaytext.text += ' ';
+            LineLetterENum++; //we increase the letter count
+        }
+        yield break;
+    }
+
 }

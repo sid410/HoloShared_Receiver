@@ -15,10 +15,10 @@ MonoBehaviour:
   steps:
   - duration: 0
     faceExpression: 1
-    message: Welcome to the maze Game ! Your goal is to guide the laser beem towards
-      the objectives
+    message: Welcome to the maze Game ! Your goal is to guide the laser beam towards
+      the objective.
     tutorialitems: {fileID: 0}
-  - duration: 10
+  - duration: 12
     faceExpression: 1
     message: The following items will be part of the exercise ! Utensils create mirrors
       that reflect the light !

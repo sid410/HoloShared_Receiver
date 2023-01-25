@@ -92,8 +92,8 @@ public class MazeLaser
 
             case MazeObstacleType.GOAL:
                 laserIndices.Add(hitInfo.point);
+                EventHandler.Instance.SetObjectiveAsComplete(MazeObjectives.INIT_OBJECTIVE_INDEX, null);
                 UpdateLaser();
-                //EventHandler.Instance.SetObjectiveAsComplete(MazeObjectives.INIT_OBJECTIVE_INDEX, null);
                 break;
         }
 

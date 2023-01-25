@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectiveHideable: {fileID: 9134244859750238888}
   ScoreHideable: {fileID: 7936395068623636421}
+  clockHideable: {fileID: 8258486280114646478}
 --- !u!1 &8331175778931902410
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,6 +169,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 606b5f1a2a4c6564db0f5d47f0270fd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8258486280114646478 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7983608305624532182, guid: d7eddcd2cb53987429a354f367366bcb,
+    type: 3}
+  m_PrefabInstance: {fileID: 2042225133442066712}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3352819656533866674
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -496,6 +503,11 @@ PrefabInstance:
       propertyPath: exercice_clock
       value: 
       objectReference: {fileID: 8331175780420613842}
+    - target: {fileID: 1295484872674135553, guid: b1cfe68f96e291e4ab537dae21f4fc80,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1cfe68f96e291e4ab537dae21f4fc80, type: 3}
 --- !u!4 &8331175780155063808 stripped

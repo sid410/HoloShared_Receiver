@@ -25,7 +25,8 @@ public class EventHandler : MonoBehaviour
     public static event Action<ExerciceData> OnExerciseStarted;
     public static event Action<ExerciceStep> OnExerciseStepStarted;
     //kinect events
-    public static event Action OnMatlabDataReceived; //called every time we get matlab resutls
+    public static event Action OnBeforeMatlabDataReceived; //called every time we get matlab resutls
+    public static event Action OnAfterMatlabDataReceived; //called every time we get matlab resutls
     public static event Action OnFinalMatlabDataReceived; //this is called for matlab results that happen after an exercice is over. Which basically marks the official end of the exercice
 
     //debug events
@@ -103,9 +104,13 @@ public class EventHandler : MonoBehaviour
 
     #region Other related external to exercice events
 
-    public virtual void TriggerMatlabReceived() //does not pass any data. Called when matlab results have been received and correctly applied to all utensils.
+    public virtual void TriggerBeforeMatlabReceived() //called before matlab data is used (so before any object/ exercise kinect data handler uses the data)
     {
-        OnMatlabDataReceived?.Invoke();
+        OnBeforeMatlabDataReceived?.Invoke();
+    }
+    public virtual void TriggerAfterMatlabReceived() //does not pass any data. Called when matlab results have been received and correctly applied to all utensils.
+    {
+        OnAfterMatlabDataReceived?.Invoke();
     }
 
     public virtual void TriggerFinalMatlabReceived() //does not pass any data. Called when matlab results have been received and correctly applied to all utensils.

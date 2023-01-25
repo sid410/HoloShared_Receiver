@@ -5,7 +5,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Assets/Resources/Data/ScoreCalculators/MazeScoreCalc.asset", menuName = "ScriptableObjects/Score Calculators/Maze Exercise", order = 1)]
 public class MazeScoreCalculator : IScoreCalculator
 {
-    private const float worstTimeInS = 60; //worst time possible in seconds (basically a 0%)
+    private const float worstTimeInS = 600; //worst time possible in seconds (basically a 0%)
+
+    List<GameObject> spawnedObjects = new List<GameObject>(); //TODO : remove responsibility of saving objects from the main score calculator
+
+    public override void Init()
+    {
+        spawnedObjects = new List<GameObject>();
+        EventHandler.OnBeforeMatlabDataReceived += ResetItemList;
+        EventHandler.OnItemSpawned += RegisterItem;
+    }
+
+
+    private void RegisterItem(GameObject item) => spawnedObjects.Add(item);
+    private void ResetItemList() { spawnedObjects.Clear(); }
 
     public override ScoreCalculator.PerformanceSummary CalculateScore(List<GameObject> spawnedItemList, ClockHandler exercice_clock)
     {
@@ -22,5 +35,11 @@ public class MazeScoreCalculator : IScoreCalculator
         //we set the total performance
         summary.totalPerformancePourcent = timePercent;
         return summary;
+    }
+
+    public override void Cleanup()
+    {
+        EventHandler.OnBeforeMatlabDataReceived -= ResetItemList;
+        EventHandler.OnItemSpawned -= RegisterItem;
     }
 }

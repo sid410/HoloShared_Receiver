@@ -102,7 +102,11 @@ public class ScoreCalculator : MonoBehaviour
 
     //private void OnTutorialStarted(TutorialData data) {performance_hideable.SetActive(false); performance_name_text.text = "Tutorial in progress";}//we simply change the text displayed
 
-    private void OnExerciseLoaded(FullExerciceData exercise) => exerciseScoreCalculator = exercise.scoreCalculator; //we updated the calculator to the one related to the exercise
+    private void OnExerciseLoaded(FullExerciceData exercise)
+    {
+        if (exerciseScoreCalculator != null) exerciseScoreCalculator.Cleanup(); //we cleanup the script in case it is needed
+        exerciseScoreCalculator = exercise.scoreCalculator; //we updated the calculator to the one related to the exercise
+    }
 
     private void OnItemSpawned(GameObject item) => registeredSpawnedItems.Add(item); //we register spawned utensils
 
@@ -126,17 +130,6 @@ public class ScoreCalculator : MonoBehaviour
             performanceEntry.UpdateUI(entry.Key, entry.Value);
             spawnedPerfLineQueue.Enqueue(performanceEntry.gameObject); //we save the spawned lines to delete later
         }
-        //stars
-        //int totalStars = getTotalStars(summary.totalPerformancePourcent);
-        //for (int i = 0; i < totalStars; i++)
-        //{
-        //    starMeshes[i].material = yellowStarMaterial;
-        //}
-
-        //total
-        //performance_total_text.text = "" + summary.totalPerformancePourcent;
-        //gradient.Evaluate((float)summary.totalPerformancePourcent / 100f); //we set the color based on the value //TODO : animate it
-        //performance_hideable.SetActive(true);
 
         AnimateTotal(summary.totalPerformancePourcent);
 

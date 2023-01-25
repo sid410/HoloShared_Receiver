@@ -12,26 +12,23 @@ public class PerfSumSwapper : MonoBehaviour
 
     // Start is called before the first frame update
 
-    private void Awake()
+    private void OnEnable()
     {
         EventHandler.OnTutorialStarted += TutorialUI;
+        EventHandler.OnExerciseStarted += ExerciseUI;
         EventHandler.OnExerciseOver += ExerciseOverUI;
-    }
-    /*private void OnEnable()
-    {
-        EventHandler.OnTutorialStarted += DisplayObjectives;
-        EventHandler.OnExerciseOver += DisplayScores;
     }
 
     private void OnDisable()
     {
-        EventHandler.OnTutorialStarted -= DisplayObjectives;
-        EventHandler.OnExerciseOver -= DisplayScores;
-    }*/
+        EventHandler.OnTutorialStarted -= TutorialUI;
+        EventHandler.OnExerciseStarted -= ExerciseUI;
+        EventHandler.OnExerciseOver -= ExerciseOverUI;
+    }
 
 
-    private void TutorialUI(TutorialData td) => SwapUI(new List<GameObject> { ScoreHideable}, 
-                 new List<GameObject> { clockHideable, ObjectiveHideable });
+    private void TutorialUI(TutorialData td) => SwapUI(new List<GameObject> { ScoreHideable, clockHideable, ObjectiveHideable }, 
+                 new List<GameObject> { });
 
     private void ExerciseUI(ExerciceData ed) => SwapUI(new List<GameObject> { ScoreHideable },
                  new List<GameObject> { clockHideable, ObjectiveHideable });

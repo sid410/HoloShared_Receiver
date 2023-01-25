@@ -60,4 +60,8 @@ public class UtensilScoreCalculator : IScoreCalculator
 
         return summary;
     }
+
+    public override void Cleanup(){ }
+
+    public override void Init(){ }
 }

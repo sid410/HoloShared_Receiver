@@ -132,7 +132,7 @@ public class localKinectReceiver : MonoBehaviour
         //ClearKinectUtensils(); //we clear the old utensils
         if (!waiting_for_final_results && (AppStateHandler.appState != AppStateHandler.AppState.EXERCICE)) return; //TODO : enable this, block any kinect result usage if its not an exercice
         EventHandler.Instance.LogMessage("Matlab results accepted !");
-        List<GameObject> virtualObjectsList = new List<GameObject>(spawnedUtensils);//getChildrenOfGO//new List<GameObject>(objectSpawner.GetCollidingGameObjectsList());
+        EventHandler.Instance.TriggerBeforeMatlabReceived(); //we inform listeners that matlab results are going to be parsed
         string[] results = message.Split('\n');
 
         //we parse the data and pass it to the listener if needed
@@ -158,9 +158,7 @@ public class localKinectReceiver : MonoBehaviour
             EventHandler.Instance.TriggerFinalMatlabReceived();
             return;
         }
-        EventHandler.Instance.TriggerMatlabReceived(); //we inform that matlab results have been received and all utensils updated
-
-        //RefreshEvaluationData();
+        EventHandler.Instance.TriggerAfterMatlabReceived(); //we inform that matlab results have been received and all utensils updated
     }
 
 

@@ -9,7 +9,7 @@ public class MazeObjectives : IObjectiveHandler
     public static int INIT_OBJECTIVE_INDEX = 1;
     public override ObjectiveUpdater.ObjectiveData getExerciseInitObjective()
     {
-        return new ObjectiveUpdater.ObjectiveData(INIT_OBJECTIVE_INDEX, "Guide the Light beam towards the objective !");
+        return new ObjectiveUpdater.ObjectiveData(INIT_OBJECTIVE_INDEX, "Guide the Light beam to the goal!");
     }
 
     public override ObjectiveUpdater.ObjectiveData getObjectiveFromSpawnedItem(GameObject spawnedItem)
