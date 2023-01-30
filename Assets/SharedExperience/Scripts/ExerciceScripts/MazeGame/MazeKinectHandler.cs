@@ -8,7 +8,10 @@ using System.Linq;
 [CreateAssetMenu(fileName = "Assets/Resources/Data/KinectHandlers/MazeKinectH.asset", menuName = "ScriptableObjects/Kinect Handlers/Maze Kinect Handler", order = 2)]
 public class MazeKinectHandler : KinectResultsAbs
 {
+    [Header("prefabs")]
     public GameObject utensilMirrorPrefab;
+    public GameObject utensilRefactorPrefab;
+
     private GameObject StoneOrigin;
     Queue<GameObject> spawnedMirrors = new Queue<GameObject>();
     public override void Init()
@@ -24,12 +27,29 @@ public class MazeKinectHandler : KinectResultsAbs
         foreach (localKinectReceiver.KinectUtensilData kr in kinectResults)
         {
             if (kr.type == UtensilExtension.UtensilType.UNDETECTED) continue;
-            GameObject spawnedIMirror = Instantiate(utensilMirrorPrefab);
-            spawnedIMirror.transform.parent = StoneOrigin.transform;
-            UtensilAbs mirrorUtensilBehaviour = spawnedIMirror.GetComponent<UtensilAbs>();
-            mirrorUtensilBehaviour.RepositionRealGameobject(kr.position, kr.orientation);
+            GameObject spawnedItem;
+            float rotation;
 
-            spawnedMirrors.Enqueue(spawnedIMirror);
+            //we get the relevant data from the type of object
+            switch (kr.type)
+            {
+                case UtensilExtension.UtensilType.CUP:
+                case UtensilExtension.UtensilType.BOTTLE:
+                    spawnedItem = Instantiate(utensilRefactorPrefab);
+                    spawnedItem.transform.parent = StoneOrigin.transform;
+                    rotation = 0;
+                    break;
+                default:
+                    spawnedItem = Instantiate(utensilMirrorPrefab);
+                    spawnedItem.transform.parent = StoneOrigin.transform;
+                    rotation = kr.orientation;
+                    break;
+            }
+
+            //we save the object
+            UtensilAbs utensilBehaviour = spawnedItem.GetComponent<UtensilAbs>();
+            utensilBehaviour.RepositionRealGameobject(kr.position, rotation);
+            spawnedMirrors.Enqueue(spawnedItem);
         }
     }
 

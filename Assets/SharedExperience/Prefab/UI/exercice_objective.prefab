@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textdisplay: {fileID: 2816007903314972890}
-  DoneQuestDisplay: {fileID: 3983548120278955113}
+  doneColor: {r: 0, g: 1, b: 0.016062737, a: 1}
 --- !u!1 &3983548120278955113
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,7 +127,7 @@ GameObject:
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2419672508481573858
 Transform:
   m_ObjectHideFlags: 0

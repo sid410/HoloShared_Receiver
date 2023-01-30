@@ -35,6 +35,8 @@ public class FullExerciceHandler : MonoBehaviour
 
     private FullExerciceData currentExercise = null;
 
+    private int currentExerciseStepIndex = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,11 +48,14 @@ public class FullExerciceHandler : MonoBehaviour
     private void OnEnable()
     {
         EventHandler.OnTutorialOver += StartExercise;
+        EventHandler.OnFinalMatlabDataReceived += GoToNextExerciseStep; //the order is stepOver => Kinect results received => New step (so we can calculate scores effectively)
+
     }
 
     private void OnDisable()
     {
         EventHandler.OnTutorialOver -= StartExercise;
+        EventHandler.OnFinalMatlabDataReceived -= GoToNextExerciseStep;
     }
     #endregion
 
@@ -87,12 +92,22 @@ public class FullExerciceHandler : MonoBehaviour
     //
     void StartExercise()
     {
-        //TODO : start exercise after delay
+        //we announce the start of the exercise phase
         EventHandler.Instance.StartExercise(currentExercise.exercice);
-        EventHandler.Instance.StartExerciseStep(currentExercise.exercice.steps[0]); //TODO : fix the distinction between steps and exercise to be less convuluted, also multiple steps 
+
+        //we start the first step
+        currentExerciseStepIndex = 0;
+        EventHandler.Instance.StartExerciseStep(currentExercise.exercice.steps[currentExerciseStepIndex]); //TODO : fix the distinction between steps and exercise to be less convuluted, also multiple steps 
     }
 
-
+    //we go to the next exercise Step
+    void GoToNextExerciseStep()
+    {
+        if (currentExercise == null) return;
+        currentExerciseStepIndex++;
+        if (currentExerciseStepIndex >= currentExercise.exercice.steps.Count) EventHandler.Instance.EndExercise();
+        else EventHandler.Instance.StartExerciseStep(currentExercise.exercice.steps[currentExerciseStepIndex]);
+    }
     void StartTutorial()
     {
         if (currentExercise.tutorial == null || currentExercise.tutorial.steps.Count == 0)

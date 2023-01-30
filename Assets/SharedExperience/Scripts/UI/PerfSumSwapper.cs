@@ -17,6 +17,8 @@ public class PerfSumSwapper : MonoBehaviour
         EventHandler.OnTutorialStarted += TutorialUI;
         EventHandler.OnExerciseStarted += ExerciseUI;
         EventHandler.OnExerciseOver += ExerciseOverUI;
+        EventHandler.OnAppReset += StartupUI;
+        StartupUI(); //we disable most stuff on startup
     }
 
     private void OnDisable()
@@ -24,8 +26,12 @@ public class PerfSumSwapper : MonoBehaviour
         EventHandler.OnTutorialStarted -= TutorialUI;
         EventHandler.OnExerciseStarted -= ExerciseUI;
         EventHandler.OnExerciseOver -= ExerciseOverUI;
+        EventHandler.OnAppReset -= StartupUI;
     }
 
+
+    private void StartupUI() => SwapUI(new List<GameObject> { ScoreHideable, clockHideable, ObjectiveHideable },
+                 new List<GameObject> { });
 
     private void TutorialUI(TutorialData td) => SwapUI(new List<GameObject> { ScoreHideable, clockHideable, ObjectiveHideable }, 
                  new List<GameObject> { });

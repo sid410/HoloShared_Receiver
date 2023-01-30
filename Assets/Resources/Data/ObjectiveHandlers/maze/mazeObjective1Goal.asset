@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67e3273ddbd52c3488985cd4dd321bbf, type: 3}
-  m_Name: mazeObjective
+  m_Name: mazeObjective1Goal
   m_EditorClassIdentifier: 

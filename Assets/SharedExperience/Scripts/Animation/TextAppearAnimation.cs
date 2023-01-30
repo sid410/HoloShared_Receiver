@@ -5,7 +5,7 @@ using System.Linq;
 
 public class TextAppearAnimation : MonoBehaviour
 {
-    private const float totalTime = 0.8f;
+    [SerializeField] private float totalTime = 0.8f;
 
     public List<TextMesh> animatedTexts = new List<TextMesh>();
     // Start is called before the first frame update

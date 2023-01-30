@@ -102,7 +102,7 @@ public class localKinectReceiver : MonoBehaviour
     {
         baseClient.RegisterTopicHandler("M2MQTT/Matlab/DataResults", HandleMatlabResults);
         EventHandler.OnExerciseLoaded += LoadExerciseHandler; //we get the kinect handler from the exercise data //TODO : also destroy old one
-        EventHandler.OnExerciseOver += OnExerciseOver; 
+        EventHandler.OnExerciseStepOver += OnExerciseStepOver; 
         EventHandler.OnItemSpawned += RegisterSpawnedItem; //we register all spawned items in a local list
     }
 
@@ -110,7 +110,7 @@ public class localKinectReceiver : MonoBehaviour
     {
         baseClient.UnregisterTopicHandler("M2MQTT/Matlab/DataResults", HandleMatlabResults);
         EventHandler.OnExerciseLoaded -= LoadExerciseHandler; 
-        EventHandler.OnExerciseOver -= OnExerciseOver;
+        EventHandler.OnExerciseStepOver -= OnExerciseStepOver;
         EventHandler.OnItemSpawned -= RegisterSpawnedItem;
     }
     #endregion
@@ -122,7 +122,7 @@ public class localKinectReceiver : MonoBehaviour
         exerciseKinectDataHandler.Init();
     }
 
-    private void OnExerciseOver() => waiting_for_final_results = true; //when exercise is over, we wait for the final kinect results before going over to results, this is helpful for countdown exercises that need accurate final results
+    private void OnExerciseStepOver() => waiting_for_final_results = true; //when exercise is over, we wait for the final kinect results before going over to results, this is helpful for countdown exercises that need accurate final results
 
     private void RegisterSpawnedItem(GameObject item) => spawnedUtensils.Add(item.gameObject);
 

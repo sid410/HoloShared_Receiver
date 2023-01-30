@@ -43,6 +43,11 @@ public class ScoreCalculator : MonoBehaviour
     [SerializeField] Vector3 perfLine_initialPos = new Vector3(-0.141f, 0.075f, 0); //initial position of the first performance line
     [SerializeField] float perfLine_gap = -0.03f; //gap between performance entries
 
+    [Header("Numbers for animation steps")]
+    private float a_initialDelay = 0.5f;
+    private float a_performanceEntryDelay = 1f; //delay between every entry appearing
+    private float a_totalCalculationStartDelay = 0.8f;
+
     [Header("debug")]
     [SerializeField] private IScoreCalculator testScoreCalculator; //used for testing
     //spawned object trackers
@@ -86,7 +91,8 @@ public class ScoreCalculator : MonoBehaviour
         EventHandler.OnExerciseLoaded += OnExerciseLoaded;
         EventHandler.OnItemSpawned += OnItemSpawned;
         //EventHandler.OnExerciseStarted += OnExerciseStarted;
-        EventHandler.OnFinalMatlabDataReceived += CalculateAndDisplayResults; //we only calculate data after the final matlab results have come
+        EventHandler.OnExerciseOver += CalculateAndDisplayResults;
+        EventHandler.OnFinalMatlabDataReceived += SaveExerciseStepData; //we only calculate data after the final matlab results have come
         EventHandler.OnAppReset += ResetScoreDisplay;
     }
 
@@ -96,7 +102,8 @@ public class ScoreCalculator : MonoBehaviour
         EventHandler.OnExerciseLoaded -= OnExerciseLoaded;
         EventHandler.OnItemSpawned -= OnItemSpawned;
         //EventHandler.OnExerciseStarted -= OnExerciseStarted;
-        EventHandler.OnFinalMatlabDataReceived -= CalculateAndDisplayResults; //we only calculate data after the final matlab results have come
+        EventHandler.OnFinalMatlabDataReceived -= SaveExerciseStepData; //we only calculate data after the final matlab results have come
+        EventHandler.OnExerciseOver -= CalculateAndDisplayResults;
         EventHandler.OnAppReset -= ResetScoreDisplay;
     }
 
@@ -112,6 +119,12 @@ public class ScoreCalculator : MonoBehaviour
 
     //private void OnExerciseStarted(ExerciceData exercice) => performance_name_text.text = "Exercice is in progress !";
 
+    private void SaveExerciseStepData()
+    {
+        if (exerciseScoreCalculator == null) return;
+        exerciseScoreCalculator.AddStepResults(registeredSpawnedItems, exercice_clock);
+        registeredSpawnedItems = new List<GameObject>(); //we restet the list of registered items for next step
+    }
     //called when the exercice is 
     private void CalculateAndDisplayResults()
     {
@@ -119,20 +132,10 @@ public class ScoreCalculator : MonoBehaviour
         if (exerciseScoreCalculator == null) return;
 
         //performance_hideable.SetActive(true);
-        PerformanceSummary summary = exerciseScoreCalculator.CalculateScore(registeredSpawnedItems, exercice_clock);
+        PerformanceSummary summary = exerciseScoreCalculator.CalculateScore();
 
-        //individual summary
-        int numEntries = 0;
-        foreach (KeyValuePair<string, string> entry in summary.metricToValueList)
-        {
-            PerformanceEntry performanceEntry = Instantiate(performance_metric_line_prefab, this.gameObject.transform);
-            performanceEntry.transform.localPosition = perfLine_initialPos + new Vector3(0, perfLine_gap * numEntries++, 0); //we instantiate an entry line for every performance statistic
-            performanceEntry.UpdateUI(entry.Key, entry.Value);
-            spawnedPerfLineQueue.Enqueue(performanceEntry.gameObject); //we save the spawned lines to delete later
-        }
-
-        AnimateTotal(summary.totalPerformancePourcent);
-
+        //AnimateTotal(summary.totalPerformancePourcent);
+        StartCoroutine(StepByStepAnimator(summary)); //we animate the results display
     }
 
 
@@ -144,10 +147,37 @@ public class ScoreCalculator : MonoBehaviour
         StartCoroutine(AnimateTotalIncremental(totalValue, performance_total_text, gradient));
     }
 
+
+
+    //enables the parts of the UI step by step for display of the Elements
+    IEnumerator StepByStepAnimator(PerformanceSummary summary)
+    {
+        yield return new WaitForSeconds(a_initialDelay); //we wait a bit first
+
+        //we enable the entries one by one
+        int numEntries = 0;
+        foreach (KeyValuePair<string, string> entry in summary.metricToValueList)
+        {
+            PerformanceEntry performanceEntry = Instantiate(performance_metric_line_prefab, this.gameObject.transform);
+            performanceEntry.transform.localPosition = perfLine_initialPos + new Vector3(0, perfLine_gap * numEntries++, 0); //we instantiate an entry line for every performance statistic
+            performanceEntry.UpdateUI(entry.Key, entry.Value);
+            spawnedPerfLineQueue.Enqueue(performanceEntry.gameObject); //we save the spawned lines to delete later
+
+            yield return new WaitForSeconds(a_performanceEntryDelay); //we wait a bit first
+        }
+
+        StartCoroutine(AnimateTotalIncremental(summary.totalPerformancePourcent, performance_total_text, gradient));
+    }
+
+
     //this is for the total, also enables stars
     IEnumerator AnimateTotalIncremental(int totalValue, TextMesh animatedText, Gradient colorGradient)
     {
+        total_part.SetActive(true);
+        Stars_part.SetActive(true);
+        yield return new WaitForSeconds(a_totalCalculationStartDelay);
         int counter = 0;
+        EventHandler.Instance.StartScoreIncrease(); //we inform that score increase started
         while (counter < totalValue)
         {
             counter++;
@@ -159,12 +189,16 @@ public class ScoreCalculator : MonoBehaviour
 
                 //we enable a star depending on the stade we reached in the animation
                 int star = getYellowedStarByPercent(counter);
-                if (star != -1) starMeshes[star].material = yellowStarMaterial;
+                if (star != -1)
+                {
+                    starMeshes[star].material = yellowStarMaterial;
+                    EventHandler.Instance.TriggerStarAcquired();
+                }
             }
 
             yield return new WaitForSeconds(0.02f);
         }
-
+        EventHandler.Instance.EndScoreIncrease();
     }
 
 

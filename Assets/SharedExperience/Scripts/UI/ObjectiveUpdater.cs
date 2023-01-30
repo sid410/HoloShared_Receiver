@@ -93,7 +93,8 @@ public class ObjectiveUpdater : MonoBehaviour
     void OnObjectiveCompleted(int objectiveIndex, GameObject declarer)
     {
         ObjectiveBehaviour relatedObjective = objectiveList.Find(ob => ob.relatedObjective.objectiveIndex == objectiveIndex);
-        if (relatedObjective == null || relatedObjective.completed) return;
+        if (exerciseObjectiveHandler == null || relatedObjective == null || relatedObjective.completed) return;
+        if (!exerciseObjectiveHandler.CheckObjectiveDone(objectiveIndex, declarer)) return; //if the objective is not declared as completed we continue
         completedObjectives++;
         relatedObjective.SetObjectiveAsDone();
 
@@ -126,7 +127,7 @@ public class ObjectiveUpdater : MonoBehaviour
         if (completedObjectives >= objectiveList.Count) //if all objectives are done, we trigger the end of the exercice
         {
             EventHandler.Instance.LogMessage("All objectives are completed declaring exercice over in 2 seconds");
-            Invoke("InformAllObjectivesCompleted", 2f);
+            InformAllObjectivesCompleted();
         }
     }
 
@@ -150,8 +151,8 @@ public class ObjectiveUpdater : MonoBehaviour
     private void InformAllObjectivesCompleted()
     {
         if (completedObjectives < objectiveList.Count) return;
-        EventHandler.Instance.LogMessage("Objective completed ! exercice closing");
-        EventHandler.Instance.EndExercise();
+        EventHandler.Instance.LogMessage("Objective completed ! exercice step closing");
+        EventHandler.Instance.EndExerciseStep();
     }
 
     //intantiate an Objective object and append it to the objective list
@@ -168,6 +169,7 @@ public class ObjectiveUpdater : MonoBehaviour
     //resets the objectives and the display
     private void ResetObjectives()
     {
+        if (exerciseObjectiveHandler != null) exerciseObjectiveHandler.Cleanup();
         completedObjectives = 0;
         if (objectiveList == null) return;
         foreach(ObjectiveBehaviour objective in objectiveList)

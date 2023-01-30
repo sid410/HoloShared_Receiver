@@ -7,7 +7,7 @@ public class MazeObstacle : MonoBehaviour
 
     public enum MazeObstacleType
     {
-        WALL, MIRROR, GOAL, LAZER_SOURCE
+        WALL, MIRROR, REFRACTOR, GOAL, LAZER_SOURCE
     }
 
     public MazeObstacleType type;

@@ -25,14 +25,16 @@ public class ClockHandler : MonoBehaviour
     #region subscriptions
     private void OnEnable()
     {
-        EventHandler.OnExerciseStarted += StartClock;
-        EventHandler.OnExerciseOver += EndClock;
+        EventHandler.OnExerciseStepStarted += StartClock;
+        EventHandler.OnExerciseStepOver += EndClock;
+        EventHandler.OnAppReset += EndClock;
     }
 
     private void OnDisable()
     {
-        EventHandler.OnExerciseStarted -= StartClock;
-        EventHandler.OnExerciseOver -= EndClock;
+        EventHandler.OnExerciseStepStarted -= StartClock;
+        EventHandler.OnExerciseStepOver -= EndClock;
+        EventHandler.OnAppReset += EndClock;
     }
     #endregion
     private void Update()
@@ -42,7 +44,7 @@ public class ClockHandler : MonoBehaviour
         UpdateDisplay();
     }
 
-    void StartClock(ExerciceData exercice)
+    void StartClock(ExerciceData.ExerciceStep es)
     {
         exercice_timer = 0f;
         exercice_in_progress = true;
@@ -58,7 +60,7 @@ public class ClockHandler : MonoBehaviour
         time_display.text = getCurrentTimeString();
     }
 
-    public String getCurrentTimeString()
+    public string getCurrentTimeString()
     {
         TimeSpan timeSpan = TimeSpan.FromSeconds(exercice_timer);
         return string.Format("{0:D2}:{1:D2}", timeSpan.Minutes, timeSpan.Seconds);

@@ -21,13 +21,21 @@ public class EventHandler : MonoBehaviour
     public static event Action<TutorialStep> OnTutorialStepStarted;
 
     //exercice steps
-    public static event Action OnExerciseOver;
+    
     public static event Action<ExerciceData> OnExerciseStarted;
     public static event Action<ExerciceStep> OnExerciseStepStarted;
+    public static event Action OnExerciseStepOver;
+    public static event Action OnExerciseOver;
+
     //kinect events
     public static event Action OnBeforeMatlabDataReceived; //called every time we get matlab resutls
     public static event Action OnAfterMatlabDataReceived; //called every time we get matlab resutls
     public static event Action OnFinalMatlabDataReceived; //this is called for matlab results that happen after an exercice is over. Which basically marks the official end of the exercice
+
+    //score calculation Event
+    public static event Action OnScoreIncreaseStarted;
+    public static event Action OnScoreIncreaseEnded;
+    public static event Action OnStarAcquired;
 
     //debug events
     public static event Action<string> OnLog;
@@ -66,11 +74,7 @@ public class EventHandler : MonoBehaviour
 
     #endregion
     #region Exercice step events
-    public virtual void EndExercise() //called to inform that the current exercice is over.
-    {
-        OnExerciseOver?.Invoke();
-    }
-
+    
     public virtual void StartExercise(ExerciceData exerciseData)// ExerciceData exerciceData // called when an exercice is started
     {
         OnExerciseStarted?.Invoke(exerciseData);
@@ -79,6 +83,16 @@ public class EventHandler : MonoBehaviour
     public virtual void StartExerciseStep(ExerciceStep exerciceStep)
     {
         OnExerciseStepStarted?.Invoke(exerciceStep);
+    }
+
+    public virtual void EndExerciseStep()
+    {
+        OnExerciseStepOver?.Invoke();
+    }
+
+    public virtual void EndExercise() //called to inform that the current exercice is over.
+    {
+        OnExerciseOver?.Invoke();
     }
 
 
@@ -124,6 +138,22 @@ public class EventHandler : MonoBehaviour
     }
     #endregion
 
+    #region score calculation
+    public virtual void TriggerStarAcquired() //does not pass any data. Called when matlab results have been received and correctly applied to all utensils.
+    {
+        OnStarAcquired?.Invoke();
+    }
+
+    public virtual void StartScoreIncrease() //called with the start of the increase of score pourcentage in results
+    {
+        OnScoreIncreaseStarted?.Invoke();
+    }
+
+    public virtual void EndScoreIncrease()
+    {
+        OnScoreIncreaseEnded?.Invoke();
+    }
+    #endregion
     #region Debug
     public virtual void LogMessage(string logMessage) // called to log data, maybe in the future send it for display
     {

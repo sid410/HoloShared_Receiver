@@ -14,6 +14,9 @@ public abstract class IScoreCalculator : ScriptableObject
 
     public abstract void Cleanup(); //called before item is discarded/replaced
 
-    //calculate score and returns the string to display
-    public abstract ScoreCalculator.PerformanceSummary CalculateScore(List<GameObject> spawnedItemList, ClockHandler exercice_clock);
+    //saves the results from a previous step
+    public abstract void AddStepResults(List<GameObject> spawnedItemList, ClockHandler exercice_clock);
+
+    //calculate the score from all step results
+    public abstract ScoreCalculator.PerformanceSummary CalculateScore();
 }

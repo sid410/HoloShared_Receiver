@@ -8,7 +8,12 @@ using UnityEngine;
 //test class, all values are hardcoded
 public class TestScoreCalculator : IScoreCalculator
 {
-    public override ScoreCalculator.PerformanceSummary CalculateScore(List<GameObject> spawnedItemList, ClockHandler exercice_clock)
+    public override void AddStepResults(List<GameObject> spawnedItemList, ClockHandler exercice_clock)
+    {
+        //nothing
+    }
+
+    public override ScoreCalculator.PerformanceSummary CalculateScore()
     {
         ScoreCalculator.PerformanceSummary summary = new ScoreCalculator.PerformanceSummary();
         summary.metricToValueList = new Dictionary<string, string>();

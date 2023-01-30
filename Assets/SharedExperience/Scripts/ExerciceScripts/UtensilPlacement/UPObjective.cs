@@ -8,7 +8,16 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Assets/Resources/Data/ObjectiveHandlers/UtensilObjectiveH.asset", menuName = "ScriptableObjects/Objective Handlers/Utensil Exercise", order = 100)]
 public class UPObjective : IObjectiveHandler
 {
-    
+    public override bool CheckObjectiveDone(int index, GameObject caller)
+    {
+        return true;
+    }
+
+    public override void Cleanup()
+    {
+        //nothing
+    }
+
     public override ObjectiveUpdater.ObjectiveData getExerciseInitObjective()
     {
         return null; //we have no special objective for start of exercise

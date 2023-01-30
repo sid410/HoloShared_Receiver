@@ -16,6 +16,6 @@ public class MazeUtensil : UtensilAbs
     {
         EventHandler.Instance.LogMessage("Repositioning real gameobject ! " + gameObject.name);
         gameObject.transform.localPosition = tablePos;
-        gameObject.transform.localEulerAngles = new Vector3(0, tableRot, 0);
+        if (tableRot != 0) gameObject.transform.localEulerAngles = new Vector3(0, tableRot, 0);
     }
 }

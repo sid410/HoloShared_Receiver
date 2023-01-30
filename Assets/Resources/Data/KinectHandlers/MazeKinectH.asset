@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   utensilMirrorPrefab: {fileID: 20117258758369177, guid: 9b656c35af405ea4ea5e7ae318fa789e,
     type: 3}
+  utensilRefactorPrefab: {fileID: 6383089534287656071, guid: 6407b81b66fe7bf4497f06d3b2c38adb,
+    type: 3}
