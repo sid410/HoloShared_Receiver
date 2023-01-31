@@ -1,0 +1,13 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: XScaler
+  m_Controller: {fileID: 9100000, guid: 0c68d59e5e8638d4e9e01be12c43c6d8, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: c16a6003e17aaea42a812a4cee4d1a68, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: db428a0eb90550243a576f53830c2ae3, type: 2}

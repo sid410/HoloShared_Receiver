@@ -11,6 +11,10 @@ public abstract class KinectResultsAbs : ScriptableObject
     
     public abstract void Init(); //called when a new exercise happens (called by the localKinectReceiverScript)
 
-    //TODO : disable by unregestering
+
+    //gets all kinect locations and uses it for the exercise
     public abstract void HandleKinectData(List<localKinectReceiver.KinectUtensilData> kinectResults);
+
+    //called before removing the impelmentation 
+    public abstract void Cleanup();
 }

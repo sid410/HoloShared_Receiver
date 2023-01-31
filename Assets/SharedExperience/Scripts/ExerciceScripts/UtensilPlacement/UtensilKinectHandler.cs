@@ -9,8 +9,11 @@ public class UtensilKinectHandler : KinectResultsAbs
     List<GameObject> spawnedItems = new List<GameObject>();
     public override void Init() //initializes the data by registering to events
     {
-        EventHandler.OnItemSpawned += (item) => spawnedItems.Add(item);
+        EventHandler.OnItemSpawned += SaveSpawnedItem;
     }
+
+    //we track spawned items
+    private void SaveSpawnedItem(GameObject item) => spawnedItems.Add(item);
 
     public override void HandleKinectData(List<localKinectReceiver.KinectUtensilData> kinectResults)
     {
@@ -56,5 +59,8 @@ public class UtensilKinectHandler : KinectResultsAbs
         utensilBehaviour.RepositionRealGameobject(tablePos, tableRot);
     }
 
-
+    public override void Cleanup()
+    {
+        EventHandler.OnItemSpawned -= SaveSpawnedItem;
+    }
 }

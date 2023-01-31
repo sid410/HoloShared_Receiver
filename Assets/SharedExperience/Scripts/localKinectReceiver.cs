@@ -118,6 +118,7 @@ public class localKinectReceiver : MonoBehaviour
     //load the new exercise kinect logic 
     private void LoadExerciseHandler(FullExerciceData fed)
     {
+        if (exerciseKinectDataHandler != null) exerciseKinectDataHandler.Cleanup();
         exerciseKinectDataHandler = fed.kinectResultHandler;
         exerciseKinectDataHandler.Init();
     }

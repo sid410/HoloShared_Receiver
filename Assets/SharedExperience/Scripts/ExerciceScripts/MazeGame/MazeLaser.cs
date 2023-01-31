@@ -120,7 +120,7 @@ public class MazeLaser
             case MazeObstacleType.REFRACTOR:
                 Vector3 posi = hitInfo.point;
                 Vector3 newDirection = Quaternion.Euler(0, -40, 0) * direction;
-                SplitLasers.Add(new MazeLaser(hitInfo.point, Quaternion.Euler(0, 40, 0) * direction, material)); //we split off a second laser. we pass the current hit object to not cause insta collision.
+                SplitLasers.Add(new MazeLaser(hitInfo.point, Quaternion.Euler(0, 40, 0) * direction, material, laserCastRange)); //we split off a second laser. we pass the current hit object to not cause insta collision.
                 CastRay(posi, newDirection, laser);
                 break;
 

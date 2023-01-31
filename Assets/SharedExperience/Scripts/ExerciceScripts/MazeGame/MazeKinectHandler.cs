@@ -14,13 +14,28 @@ public class MazeKinectHandler : KinectResultsAbs
 
     private GameObject StoneOrigin;
     Queue<GameObject> spawnedMirrors = new Queue<GameObject>();
+
+    private bool blockKinectResults = false;
+
     public override void Init()
     {
         StoneOrigin = GameObject.Find("StonesOrigin");
+        EventHandler.OnExerciseStepOver += OnExerciseStepOver;
+        EventHandler.OnExerciseStepStarted += OnExerciseStepStarted; 
     }
+
+    //setters for subscriptions
+    private void OnExerciseStepStarted(ExerciceData.ExerciceStep es) => SetBlockKinectResults(false);
+
+    private void OnExerciseStepOver() => SetBlockKinectResults(true); //we don't want the final kinect results to affect our items, we want the change of items to stop when the objectives are reached
+    private void SetBlockKinectResults(bool newVal) => blockKinectResults = newVal;
+
+
 
     public override void HandleKinectData(List<localKinectReceiver.KinectUtensilData> kinectResults)
     {
+        if (blockKinectResults) return;
+
         DestroyOldMirrors(); //destroy old mirrors
 
         //we spawn new mirrors.
@@ -65,5 +80,9 @@ public class MazeKinectHandler : KinectResultsAbs
         }
     }
 
-   
+    public override void Cleanup()
+    {
+        EventHandler.OnExerciseStepOver -= OnExerciseStepOver;
+        EventHandler.OnExerciseStepStarted -= OnExerciseStepStarted;
+    }
 }

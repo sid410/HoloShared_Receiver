@@ -103,6 +103,23 @@ public class LocalItemSpawner : MonoBehaviour
         //StartCoroutine(InitializeTransformDelayed(0.2f));
     }
 
+    //debug function : triggers multiple events to try to reach the end of an exercise
+    IEnumerator TriggerMazeSolution(int goals)
+    {
+        yield return new WaitForSeconds(1f);
+        EventHandler.Instance.TriggerBeforeMatlabReceived();
+        yield return new WaitForSeconds(1f);
+        for (int i = 0; i < goals; i++)
+        {
+            EventHandler.Instance.SetObjectiveAsComplete(MazeObjectives.INIT_OBJECTIVE_INDEX, null);
+            yield return new WaitForSeconds(1f);
+        }
+        yield return new WaitForSeconds(1f);
+        EventHandler.Instance.TriggerFinalMatlabReceived();
+
+
+    }
+
 
     public void TriggerExerciseStart(ExerciseType exerciseType)
     {

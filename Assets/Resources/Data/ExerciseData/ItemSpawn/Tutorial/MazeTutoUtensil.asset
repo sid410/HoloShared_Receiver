@@ -10,27 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19a5e5a5675fd774b8e68b435794915a, type: 3}
-  m_Name: MazeTutorialItemIntro
+  m_Name: MazeTutoUtensil
   m_EditorClassIdentifier: 
   spawnPoints:
-  - itemPrefab: {fileID: 256208684268569453, guid: 305ab49a8d5c9534386d6fb2f208c8e7,
+  - itemPrefab: {fileID: 3454895879859385409, guid: 4f52b0f7fddbafd499c1d03db2ce9645,
       type: 3}
     PosX: 0.7
     PosY: 0.2
     scale: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
-    message: Walls
-  - itemPrefab: {fileID: 8926353160044528426, guid: adeb9e525e94cd34d93dc737fb254b15,
+    message: Cups/Bottles split the light in 2 paths.
+  - itemPrefab: {fileID: 2380362806126383617, guid: 325cc09931a87204190aff443f096b8b,
       type: 3}
-    PosX: 0.4
+    PosX: 0.1
     PosY: 0.3
     scale: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
-    message: Mirrors
-  - itemPrefab: {fileID: 9138465391868353107, guid: 958a4b8df31f67b4caff12b0095799ea,
-      type: 3}
-    PosX: 0.1
-    PosY: 0.2
-    scale: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0}
-    message: Goal !
+    message: Forks, spoons and knifes act as mirrors
