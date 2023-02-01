@@ -103,19 +103,27 @@ public class LocalItemSpawner : MonoBehaviour
         //StartCoroutine(InitializeTransformDelayed(0.2f));
     }
 
-    //debug function : triggers multiple events to try to reach the end of an exercise
-    IEnumerator TriggerMazeSolution(int goals)
+    //hardcoded way of triggering the mazes being over
+    public void TriggerExerciseOver()
     {
-        yield return new WaitForSeconds(1f);
+        StartCoroutine(TriggerMazeSolutionCoroutine(1, 1f));
+        //StartCoroutine(TriggerMazeSolutionCoroutine(2, 10f));
+    }
+
+    //debug function : triggers multiple events to try to reach the end of an exercise
+    IEnumerator TriggerMazeSolutionCoroutine(int goals, float initialWaitTime)
+    {
+        yield return new WaitForSeconds(initialWaitTime);
         EventHandler.Instance.TriggerBeforeMatlabReceived();
         yield return new WaitForSeconds(1f);
         for (int i = 0; i < goals; i++)
         {
-            EventHandler.Instance.SetObjectiveAsComplete(MazeObjectives.INIT_OBJECTIVE_INDEX, null);
+            EventHandler.Instance.SetObjectiveAsComplete(MazeObjectives.INIT_OBJECTIVE_INDEX, this.gameObject);
             yield return new WaitForSeconds(1f);
         }
         yield return new WaitForSeconds(1f);
         EventHandler.Instance.TriggerFinalMatlabReceived();
+        EventHandler.Instance.TriggerFinalMatlabProcessed(); //used to announce data was processed (for results)
 
 
     }

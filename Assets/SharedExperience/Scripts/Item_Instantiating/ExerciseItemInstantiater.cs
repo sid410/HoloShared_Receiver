@@ -10,7 +10,7 @@ public class ExerciseItemInstantiater : MonoBehaviour
 {
     #region calibration
     private float Xcalibration = -0.02f; //negligeable ignore;
-    private float rotationCalibrationY = 30f; //changed by the calibration result of the stone image, so exercise maps spawned are correctly oriented on the table
+    private float rotationCalibrationY = 0f; //changed by the calibration result of the stone image, so exercise maps spawned are correctly oriented on the table
     #endregion
 
     [SerializeField] private GameObject stonesOrigin;

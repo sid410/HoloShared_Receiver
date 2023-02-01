@@ -23,7 +23,7 @@ MonoBehaviour:
   - itemPrefab: {fileID: 8926353160044528426, guid: adeb9e525e94cd34d93dc737fb254b15,
       type: 3}
     PosX: 0.4
-    PosY: 0.3
+    PosY: 0.15
     scale: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
     message: Mirrors

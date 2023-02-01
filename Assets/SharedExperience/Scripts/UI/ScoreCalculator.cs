@@ -19,10 +19,13 @@ public class ScoreCalculator : MonoBehaviour
     }
 
     [Header("Dependencies")]
+
     [SerializeField] private ClockHandler exercice_clock; //Instance to object that keeps track of the exercice time, the time can be used for results calculation
-    [SerializeField] private GameObject performance_hideable; //to hide results until all score come in
+
 
     [Header("Parts of the UI")]
+    [SerializeField] private GameObject parentHideable; //main hideable (used to hide the full UI)
+    [SerializeField] private GameObject performance_hideable; //to hide results until all score come in
     [SerializeField] private GameObject total_part;
     [SerializeField] private GameObject Stars_part;
 
@@ -121,7 +124,9 @@ public class ScoreCalculator : MonoBehaviour
 
     private void SaveExerciseStepData()
     {
+        Debug.Log("Saving exerciseData");
         if (exerciseScoreCalculator == null) return;
+        Debug.Log("Final matlab results received : passing data");
         exerciseScoreCalculator.AddStepResults(registeredSpawnedItems, exercice_clock);
         registeredSpawnedItems = new List<GameObject>(); //we restet the list of registered items for next step
     }
@@ -139,15 +144,6 @@ public class ScoreCalculator : MonoBehaviour
     }
 
 
-    private void AnimateTotal(int totalValue)
-    {
-        performance_total_text.text = "0"; //we first set to 0%
-        total_part.SetActive(true);
-        Stars_part.SetActive(true);
-        StartCoroutine(AnimateTotalIncremental(totalValue, performance_total_text, gradient));
-    }
-
-
 
     //enables the parts of the UI step by step for display of the Elements
     IEnumerator StepByStepAnimator(PerformanceSummary summary)
@@ -158,7 +154,7 @@ public class ScoreCalculator : MonoBehaviour
         int numEntries = 0;
         foreach (KeyValuePair<string, string> entry in summary.metricToValueList)
         {
-            PerformanceEntry performanceEntry = Instantiate(performance_metric_line_prefab, this.gameObject.transform);
+            PerformanceEntry performanceEntry = Instantiate(performance_metric_line_prefab, parentHideable.transform);
             performanceEntry.transform.localPosition = perfLine_initialPos + new Vector3(0, perfLine_gap * numEntries++, 0); //we instantiate an entry line for every performance statistic
             performanceEntry.UpdateUI(entry.Key, entry.Value);
             spawnedPerfLineQueue.Enqueue(performanceEntry.gameObject); //we save the spawned lines to delete later

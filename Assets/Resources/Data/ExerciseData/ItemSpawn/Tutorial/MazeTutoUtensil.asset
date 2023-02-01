@@ -23,7 +23,7 @@ MonoBehaviour:
   - itemPrefab: {fileID: 2380362806126383617, guid: 325cc09931a87204190aff443f096b8b,
       type: 3}
     PosX: 0.1
-    PosY: 0.3
+    PosY: 0.2
     scale: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
     message: Forks, spoons and knifes act as mirrors

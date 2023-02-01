@@ -10,15 +10,7 @@ public class ObjectiveUpdater : MonoBehaviour
     public class ObjectiveData
     {
         public int objectiveIndex; //used to track the objective and correctly recognize the item when ending the objective (must be unique !!)
-        public UtensilBehaviour utensilBehaviour;
         public string objectiveText { get; private set; }
-
-        //TODO : deprecate this constructor
-        public ObjectiveData(UtensilBehaviour utensilBehaviour)
-        {
-            this.utensilBehaviour = utensilBehaviour;
-            this.objectiveText = "Set " + utensilBehaviour.type.ToString() + " At the correct location";
-        }
 
         public ObjectiveData(int index, string objectiveText)
         {
@@ -101,7 +93,7 @@ public class ObjectiveUpdater : MonoBehaviour
         if (completedObjectives >= objectiveList.Count) //if all objectives are done, we trigger the end of the exercice
         {
             EventHandler.Instance.LogMessage("All objectives are completed declaring exercice over in 2 seconds");
-            Invoke("InformAllObjectivesCompleted", 2f);
+            InformAllObjectivesCompleted();
         }
     }
 
@@ -114,38 +106,6 @@ public class ObjectiveUpdater : MonoBehaviour
         relatedObjective.SetObjectiveAsFailed();
     }
 
-    /************************************************************** OLD ******************************************************************/
-
-    //Called when An objective is done, updates the display
-    public void SetObjectiveAsComplete(UtensilBehaviour doneUtensil)
-    {
-        ObjectiveBehaviour relatedObjective = objectiveList.Find(ob => ob.relatedObjective.utensilBehaviour.itemID == doneUtensil.itemID);
-        if (relatedObjective == null || relatedObjective.completed) return;
-        completedObjectives++;
-        relatedObjective.SetObjectiveAsDone();
-
-        if (completedObjectives >= objectiveList.Count) //if all objectives are done, we trigger the end of the exercice
-        {
-            EventHandler.Instance.LogMessage("All objectives are completed declaring exercice over in 2 seconds");
-            InformAllObjectivesCompleted();
-        }
-    }
-
-    //called when objective failed (for example an item was removed from its slot), we cancel it
-    public void SetObjectiveAsFailed(UtensilBehaviour doneUtensil)
-    {
-        ObjectiveBehaviour relatedObjective = objectiveList.Find(ob => ob.relatedObjective.utensilBehaviour.itemID == doneUtensil.itemID);
-        if (relatedObjective == null || !relatedObjective.completed) return;
-        completedObjectives--;
-        relatedObjective.SetObjectiveAsFailed();
-    }
-
-    //registers an new intansiated utensil to generate an appropriate objective related
-    public void RegisterObjectiveUtensil(UtensilBehaviour newUtensil)
-    {
-        InstantiateObjectivePrefab(new ObjectiveData(newUtensil));
-        gridObjectCollection.UpdateCollection();
-    }
 
     //called after all objectives have been completed, we inform that the exercice is over
     private void InformAllObjectivesCompleted()
@@ -176,6 +136,7 @@ public class ObjectiveUpdater : MonoBehaviour
         {
             Destroy(objective.gameObject);
         }
-        objectiveList = new List<ObjectiveBehaviour>(); ;
+        objectiveList = new List<ObjectiveBehaviour>();
+        gridObjectCollection.UpdateCollection();
     }
 }

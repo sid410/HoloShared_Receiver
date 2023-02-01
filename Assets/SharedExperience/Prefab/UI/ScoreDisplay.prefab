@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   exercice_clock: {fileID: 0}
+  parentHideable: {fileID: 1295484872674135553}
   performance_hideable: {fileID: 2280789341055866162}
   total_part: {fileID: 3915804796071321553}
   Stars_part: {fileID: 8213732412643543249}

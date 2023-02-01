@@ -56,10 +56,10 @@ public class localKinectReceiver : MonoBehaviour
     private const float p20_Fy = 8.108e-07f; //- 9.061e-07f;
     private const float p11_Fy = -1.521e-06f; //9.17e-06f;
     private const float p02_Fy = 2.178e-05f; //3.99e-06f;
-     
 
 
-      
+
+
     //constants to reproject the correction of objects with height
     private const float camHeight = 0.63f; //-------------- (IN EXPERIMENT ROOM)
     private const float bottleHeight = 0.305f;
@@ -85,7 +85,7 @@ public class localKinectReceiver : MonoBehaviour
     List<GameObject> spawnedUtensils = new List<GameObject>();
     //this is a boolean set to true after an exercice is completed, it then waits for the fina matlab results to set the final score for the utensils
     private bool waiting_for_final_results = false;
-
+    private bool in_exercise = false;
 
     private KinectResultsAbs exerciseKinectDataHandler = null; //EXERCISE DEPENDANT, handles incoming kinect data
     private void Start()
@@ -102,15 +102,17 @@ public class localKinectReceiver : MonoBehaviour
     {
         baseClient.RegisterTopicHandler("M2MQTT/Matlab/DataResults", HandleMatlabResults);
         EventHandler.OnExerciseLoaded += LoadExerciseHandler; //we get the kinect handler from the exercise data //TODO : also destroy old one
-        EventHandler.OnExerciseStepOver += OnExerciseStepOver; 
+        EventHandler.OnExerciseStepStarted += OnExerciseStepStarted;
+        EventHandler.OnExerciseStepOver += OnExerciseStepOver;
         EventHandler.OnItemSpawned += RegisterSpawnedItem; //we register all spawned items in a local list
     }
 
     private void OnDisable()
     {
         baseClient.UnregisterTopicHandler("M2MQTT/Matlab/DataResults", HandleMatlabResults);
-        EventHandler.OnExerciseLoaded -= LoadExerciseHandler; 
+        EventHandler.OnExerciseLoaded -= LoadExerciseHandler;
         EventHandler.OnExerciseStepOver -= OnExerciseStepOver;
+        EventHandler.OnExerciseStepStarted -= OnExerciseStepStarted;
         EventHandler.OnItemSpawned -= RegisterSpawnedItem;
     }
     #endregion
@@ -123,7 +125,9 @@ public class localKinectReceiver : MonoBehaviour
         exerciseKinectDataHandler.Init();
     }
 
-    private void OnExerciseStepOver() => waiting_for_final_results = true; //when exercise is over, we wait for the final kinect results before going over to results, this is helpful for countdown exercises that need accurate final results
+    private void OnExerciseStepOver(){waiting_for_final_results = true; in_exercise = true;} //when exercise is over, we wait for the final kinect results before going over to results, this is helpful for countdown exercises that need accurate final results
+
+    private void OnExerciseStepStarted(ExerciceData.ExerciceStep es) => in_exercise = true;
 
     private void RegisterSpawnedItem(GameObject item) => spawnedUtensils.Add(item.gameObject);
 
@@ -131,7 +135,7 @@ public class localKinectReceiver : MonoBehaviour
     {
         EventHandler.Instance.LogMessage("Matlab results came in !");
         //ClearKinectUtensils(); //we clear the old utensils
-        if (!waiting_for_final_results && (AppStateHandler.appState != AppStateHandler.AppState.EXERCICE)) return; //TODO : enable this, block any kinect result usage if its not an exercice
+        if (!waiting_for_final_results && !in_exercise) return; //TODO : enable this, block any kinect result usage if its not an exercice
         EventHandler.Instance.LogMessage("Matlab results accepted !");
         EventHandler.Instance.TriggerBeforeMatlabReceived(); //we inform listeners that matlab results are going to be parsed
         string[] results = message.Split('\n');
@@ -156,7 +160,8 @@ public class localKinectReceiver : MonoBehaviour
         if (waiting_for_final_results)
         {
             waiting_for_final_results = false;
-            EventHandler.Instance.TriggerFinalMatlabReceived();
+            EventHandler.Instance.TriggerFinalMatlabReceived(); //used to process the data received 
+            EventHandler.Instance.TriggerFinalMatlabProcessed(); //used to announce data was processed (for results)
             return;
         }
         EventHandler.Instance.TriggerAfterMatlabReceived(); //we inform that matlab results have been received and all utensils updated

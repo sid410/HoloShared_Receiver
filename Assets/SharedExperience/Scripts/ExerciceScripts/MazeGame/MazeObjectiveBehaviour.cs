@@ -37,7 +37,8 @@ public class MazeObjectiveBehaviour : MonoBehaviour
     //called when a laser touches the goal. called by the laser when hitting the collider
     public void GoalTouchedByBeam()
     {
-        //if (objectiveCode != MazeObjectives.INIT_OBJECTIVE_INDEX) return;
+        //this is to prevent double laser on same goal triggering a gg for multiple goal maps
+        if (EventHandler.Instance != null) EventHandler.Instance.SetObjectiveAsComplete(MazeObjectives.INIT_OBJECTIVE_INDEX, this.gameObject);
         foreach (MeshRenderer mesh in childrenMeshes)
         {
             mesh.material = goalReachedMaterial;

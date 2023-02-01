@@ -13,9 +13,14 @@ public class TutorialMazeLaserShot : MonoBehaviour
 
     void Start()
     {
-        laserInstance = new MazeLaser(gameObject.transform.position, -gameObject.transform.up, laserMaterial, 0.2f);
+        StartCoroutine(LateStart());
     }
 
+    IEnumerator LateStart()
+    {
+        yield return new WaitForSeconds(0.5f);
+        laserInstance = new MazeLaser(gameObject.transform.position, -gameObject.transform.up, laserMaterial, 0.2f);
+    }
     // Update is called once per frame
     void OnDisable()
     {

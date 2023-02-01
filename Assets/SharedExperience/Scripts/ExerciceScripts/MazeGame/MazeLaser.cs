@@ -131,7 +131,7 @@ public class MazeLaser
                 MazeObjectiveBehaviour mazeObjectiveBehaviour = hitInfo.collider.gameObject.GetComponent<MazeObjectiveBehaviour>();
                 if (mazeObjectiveBehaviour != null) mazeObjectiveBehaviour.GoalTouchedByBeam();
                 //we trigger the objective completed event
-                if (EventHandler.Instance != null) EventHandler.Instance.SetObjectiveAsComplete(MazeObjectives.INIT_OBJECTIVE_INDEX, null);
+                //if (EventHandler.Instance != null) EventHandler.Instance.SetObjectiveAsComplete(MazeObjectives.INIT_OBJECTIVE_INDEX, null);
                 UpdateLaser(); 
                 break;
 

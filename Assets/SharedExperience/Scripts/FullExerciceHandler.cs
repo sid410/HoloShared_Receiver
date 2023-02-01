@@ -48,14 +48,14 @@ public class FullExerciceHandler : MonoBehaviour
     private void OnEnable()
     {
         EventHandler.OnTutorialOver += StartExercise;
-        EventHandler.OnFinalMatlabDataReceived += GoToNextExerciseStep; //the order is stepOver => Kinect results received => New step (so we can calculate scores effectively)
+        EventHandler.OnFinalMatlabDataProcessed += GoToNextExerciseStep; //the order is stepOver => Kinect results received => New step (so we can calculate scores effectively)
 
     }
 
     private void OnDisable()
     {
         EventHandler.OnTutorialOver -= StartExercise;
-        EventHandler.OnFinalMatlabDataReceived -= GoToNextExerciseStep;
+        EventHandler.OnFinalMatlabDataProcessed -= GoToNextExerciseStep;
     }
     #endregion
 

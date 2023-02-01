@@ -5336,35 +5336,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 763937224}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!21 &792071950
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 'stonesMaterial
-
-    29506'
-  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: c6bea73e06394c1a9ec91a252654b367, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats: []
-    m_Colors:
-    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &792332410
 GameObject:
   m_ObjectHideFlags: 0
@@ -5533,22 +5504,22 @@ PrefabInstance:
     - target: {fileID: 2091276957577273988, guid: 6938961d17e308b4dbd094e73d938b1e,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.014208468
+      value: -0.014208469
       objectReference: {fileID: 0}
     - target: {fileID: 2091276957577273988, guid: 6938961d17e308b4dbd094e73d938b1e,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.01770875
+      value: -0.017708752
       objectReference: {fileID: 0}
     - target: {fileID: 2091276957577274008, guid: 6938961d17e308b4dbd094e73d938b1e,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.02437098
+      value: 0.024370981
       objectReference: {fileID: 0}
     - target: {fileID: 2091276957577274008, guid: 6938961d17e308b4dbd094e73d938b1e,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.008131703
+      value: -0.008131704
       objectReference: {fileID: 0}
     - target: {fileID: 2091276957577274018, guid: 6938961d17e308b4dbd094e73d938b1e,
         type: 3}
@@ -5653,12 +5624,12 @@ PrefabInstance:
     - target: {fileID: 2091276957577274216, guid: 6938961d17e308b4dbd094e73d938b1e,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0027491862
+      value: 0.0027491865
       objectReference: {fileID: 0}
     - target: {fileID: 2091276957577274216, guid: 6938961d17e308b4dbd094e73d938b1e,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.004609379
+      value: 0.0046093795
       objectReference: {fileID: 0}
     - target: {fileID: 2091276957577274228, guid: 6938961d17e308b4dbd094e73d938b1e,
         type: 3}
@@ -6428,6 +6399,35 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 926696481}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!21 &939117387
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 'stonesMaterial
+
+    49794'
+  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: c6bea73e06394c1a9ec91a252654b367, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1001 &955145246
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9759,7 +9759,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1084116006}
         m_TargetAssemblyTypeName: LocalItemSpawner, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: TriggerExerciseOver
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9768,7 +9768,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 0
+        m_CallState: 2
   ButtonReleased:
     m_PersistentCalls:
       m_Calls:
@@ -13149,7 +13149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 504128022f7e7a04dbcad8fa8ba790bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brokerAddress: 163.221.127.66
+  brokerAddress: 163.221.124.122
   brokerPort: 8000
   isEncrypted: 0
   connectionDelay: 500
@@ -15214,7 +15214,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 792071950}
+  - {fileID: 939117387}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

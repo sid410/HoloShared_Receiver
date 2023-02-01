@@ -31,6 +31,7 @@ public class EventHandler : MonoBehaviour
     public static event Action OnBeforeMatlabDataReceived; //called every time we get matlab resutls
     public static event Action OnAfterMatlabDataReceived; //called every time we get matlab resutls
     public static event Action OnFinalMatlabDataReceived; //this is called for matlab results that happen after an exercice is over. Which basically marks the official end of the exercice
+    public static event Action OnFinalMatlabDataProcessed; //called when the exercise officially finished parsing all necessary data
 
     //score calculation Event
     public static event Action OnScoreIncreaseStarted;
@@ -132,6 +133,11 @@ public class EventHandler : MonoBehaviour
         OnFinalMatlabDataReceived?.Invoke();
     }
 
+    public virtual void TriggerFinalMatlabProcessed() //does not pass any data. Called when matlab results have been received and correctly applied to all utensils.
+    {
+        OnFinalMatlabDataProcessed?.Invoke();
+    }
+    
     public virtual void TriggerCalibrationEnded(Vector3 position, Quaternion rotation) //does not pass any data. Called when matlab results have been received and correctly applied to all utensils.
     {
         OnCalibrationDone?.Invoke(position, rotation);

@@ -38,7 +38,7 @@ public class ObjectiveBehaviour : MonoBehaviour
             string actualWord = words[i];
 
             //if this word will overflow we go to next line
-            if (lineLetterEnum + actualWord.Length > MAX_LETTERS_PER_LINE)
+            if (lineLetterEnum > 0 && lineLetterEnum + actualWord.Length > MAX_LETTERS_PER_LINE)
             {
                 textdisplay.text += '\n'; //we go to the next line
                 lineLetterEnum = 0; //we reset the counter
