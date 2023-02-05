@@ -26,7 +26,15 @@ public class ItemsSpawnEntry : ScriptableObject
         public Vector3 rotation;
 
         public string message = null; //used for tutorial for now, spawns a billboard with a message on top of the spawned item
+        public float spawnDelay = 0f;
     }
 
     public List<SpawnPoint> spawnPoints = new List<SpawnPoint>();
+
+
+    //we want smallest spawn delays to be called first so we can spawn incrementally.
+    private void OnValidate()
+    {
+        spawnPoints.Sort((sp1, sp2) => sp1.spawnDelay.CompareTo(sp2.spawnDelay));
+    }
 }

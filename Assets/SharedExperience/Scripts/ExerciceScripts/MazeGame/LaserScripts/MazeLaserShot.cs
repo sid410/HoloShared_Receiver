@@ -6,7 +6,7 @@ using UnityEngine;
 
 
 //handles spawning and the behaviour of the beam
-public class MazeLaserShot : MonoBehaviour
+public class MazeLaserShot : MazeLazerAbs
 {
     //public Transform beamSpawnPosition;
     MazeLaser laserInstance;
@@ -16,27 +16,29 @@ public class MazeLaserShot : MonoBehaviour
     private void OnEnable()
     {
         EventHandler.OnExerciseStepOver += EndLaser;
-        EventHandler.OnAfterMatlabDataReceived += UpdateLaser;
-        UpdateLaser();
+        EventHandler.OnAfterMatlabDataReceived += RecastLaser;
+        UpdateLaser(5f);
     }
 
     private void OnDisable()
     {
         EventHandler.OnExerciseStepOver -= EndLaser;
-        EventHandler.OnAfterMatlabDataReceived -= UpdateLaser;
+        EventHandler.OnAfterMatlabDataReceived -= RecastLaser;
         if (laserInstance != null) Destroy(laserInstance.Cleanup()); //we destroy the laser if this is ever disabled
     }
 
     private void EndLaser(){exerciseStarted = false;}
 
 
-    private void Update()
-    {
-        UpdateLaser(); //remove after
-    }
+    /* private void Update()
+     {
+         UpdateLaser(); //remove after
+     }*/
 
     //update the laser 
-    private void UpdateLaser()
+
+    private void RecastLaser() => UpdateLaser(5f);
+    public override void UpdateLaser(float laserWidth)
     {
         if (!exerciseStarted) return;
         if (laserInstance != null) Destroy(laserInstance.Cleanup());

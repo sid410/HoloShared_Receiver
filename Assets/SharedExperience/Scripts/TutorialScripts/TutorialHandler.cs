@@ -11,8 +11,8 @@ public class TutorialHandler : MonoBehaviour
 {
 
     //constants for calculating the duration a tutorial step should be displayed
-    private const float timePerLetter = 0.09f;
-    private const float extraTime = 2f;
+    private const float timePerLetter = 0.1f;
+    private const float extraTime = 3f;
 
     //Current Tutorial information. This is used to handle transitionning steps from steps in the tutorial and inform all the parts of the exercice
     private int currentStepIndex = -1;

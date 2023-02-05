@@ -20,13 +20,7 @@ MonoBehaviour:
     scale: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
     message: Walls
-  - itemPrefab: {fileID: 8926353160044528426, guid: adeb9e525e94cd34d93dc737fb254b15,
-      type: 3}
-    PosX: 0.4
-    PosY: 0.15
-    scale: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0}
-    message: Mirrors
+    spawnDelay: 0
   - itemPrefab: {fileID: 9138465391868353107, guid: 958a4b8df31f67b4caff12b0095799ea,
       type: 3}
     PosX: 0.1
@@ -34,3 +28,12 @@ MonoBehaviour:
     scale: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
     message: Goal !
+    spawnDelay: 0
+  - itemPrefab: {fileID: 8926353160044528426, guid: adeb9e525e94cd34d93dc737fb254b15,
+      type: 3}
+    PosX: 0.4
+    PosY: 0.15
+    scale: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+    message: Mirrors
+    spawnDelay: 0

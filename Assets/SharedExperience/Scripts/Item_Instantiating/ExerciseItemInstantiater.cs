@@ -18,6 +18,8 @@ public class ExerciseItemInstantiater : MonoBehaviour
 
     private Queue<GameObject> spawnedItems = new Queue<GameObject>();
 
+    private Coroutine spawnCoroutine;
+
     private void OnEnable()
     {
         EventHandler.OnCalibrationDone += SaveCalibrationData;
@@ -36,18 +38,29 @@ public class ExerciseItemInstantiater : MonoBehaviour
 
     private void SaveCalibrationData(Vector3 positionOffset, Quaternion rotation) => rotationCalibrationY = rotation.eulerAngles.y;
 
-    private void SpawnTutorialItems(TutorialData.TutorialStep ts) => SpawnStepItems(ts.tutorialitems);
+    private void SpawnTutorialItems(TutorialData.TutorialStep ts) => spawnCoroutine = StartCoroutine(SpawnStepItems(ts.tutorialitems));
 
-    private void SpawnExerciseItems(ExerciceData.ExerciceStep es) => SpawnStepItems(es.spawnEntry);
+    private void SpawnExerciseItems(ExerciceData.ExerciceStep es) => spawnCoroutine = StartCoroutine(SpawnStepItems(es.spawnEntry));
 
-    void SpawnStepItems(ItemsSpawnEntry spawnEntrys)
+    IEnumerator SpawnStepItems(ItemsSpawnEntry spawnEntrys)
     {
         //For the purpose of exercises, it is preferable to use full maps, since its better for rotation everything on the table with the same rotation vector
         //For maps and for Flexibility
         DeleteSpawnedItems(); //we remove previous items
-        if (spawnEntrys == null) return;
+        if (spawnEntrys == null) yield return null;
+
+        //we want the waited time to be incremental, so that if different spawns have different delays we don't wait for the full time for each entry.
+        //the list is already ordered by delays using the OnValidate() function in ItemSpawnEntry.cs
+        float waitedTime = 0f;
+
         foreach (ItemsSpawnEntry.SpawnPoint spawn in spawnEntrys.spawnPoints)
         {
+            if (spawn.spawnDelay > waitedTime)
+            {
+                yield return new WaitForSeconds(spawn.spawnDelay - waitedTime);
+                waitedTime += spawn.spawnDelay;
+            }
+
             //we instantiate the prefab, set the stonesOrigin as parent and fix all rotations/transform problems
             GameObject spawnedObject = Instantiate(spawn.itemPrefab);
             spawnedObject.transform.parent = stonesOrigin.transform;
@@ -69,11 +82,13 @@ public class ExerciseItemInstantiater : MonoBehaviour
                 spawnedItems.Enqueue(itemText.gameObject);
             }
         }
+        yield return null;
     }
 
 
     void DeleteSpawnedItems()
     {
+        StopAllCoroutines();
         while (spawnedItems.Count > 0)
         {
             GameObject item = spawnedItems.Dequeue();
