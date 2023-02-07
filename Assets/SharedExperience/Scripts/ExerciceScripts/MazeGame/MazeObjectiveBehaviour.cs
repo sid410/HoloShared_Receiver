@@ -38,7 +38,7 @@ public class MazeObjectiveBehaviour : MonoBehaviour
     public void GoalTouchedByBeam()
     {
         //this is to prevent double laser on same goal triggering a gg for multiple goal maps
-        if (EventHandler.Instance != null) EventHandler.Instance.SetObjectiveAsComplete(MazeObjectives.INIT_OBJECTIVE_INDEX, this.gameObject);
+        if (EventHandler.Instance != null) EventHandler.Instance.SetObjectiveStepAsAchieved(MazeObjectives.INIT_OBJECTIVE_INDEX, this.gameObject);
         foreach (MeshRenderer mesh in childrenMeshes)
         {
             mesh.material = goalReachedMaterial;

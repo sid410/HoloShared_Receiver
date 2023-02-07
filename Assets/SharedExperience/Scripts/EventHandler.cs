@@ -9,6 +9,7 @@ public class EventHandler : MonoBehaviour
 
     public static event Action<Vector3, Quaternion> OnCalibrationDone; //called after the calibration using vuforia is done.
 
+    public static event Action<int, GameObject> OnObjectiveStepAchieved; //called when a certain objective step in completed. Objectives can have 1 step or be multi-step.
     public static event Action<int, GameObject> OnObjectiveCompleted;
     public static event Action<int, GameObject> OnObjectiveFailed; //when objective is failed after being completed (item moved out
     public static event Action<GameObject> OnItemSpawned;
@@ -105,6 +106,12 @@ public class EventHandler : MonoBehaviour
         OnItemSpawned?.Invoke(newItem);
     }
 
+    public virtual void SetObjectiveStepAsAchieved(int index, GameObject declarer)
+    {
+        OnObjectiveStepAchieved?.Invoke(index, declarer);
+    }
+
+    
     public virtual void SetObjectiveAsComplete(int index, GameObject declarer)
     {
         OnObjectiveCompleted?.Invoke(index, declarer);

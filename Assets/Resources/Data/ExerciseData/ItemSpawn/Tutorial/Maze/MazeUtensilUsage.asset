@@ -15,8 +15,8 @@ MonoBehaviour:
   spawnPoints:
   - itemPrefab: {fileID: 6329253029875658564, guid: 7125289e95831514c803aea78c399439,
       type: 3}
-    PosX: 0.5
-    PosY: 0.3
+    PosX: 0.2
+    PosY: 0.1
     scale: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
     message: 

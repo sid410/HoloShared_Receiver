@@ -38,9 +38,17 @@ public class ExerciseItemInstantiater : MonoBehaviour
 
     private void SaveCalibrationData(Vector3 positionOffset, Quaternion rotation) => rotationCalibrationY = rotation.eulerAngles.y;
 
-    private void SpawnTutorialItems(TutorialData.TutorialStep ts) => spawnCoroutine = StartCoroutine(SpawnStepItems(ts.tutorialitems));
+    private void SpawnTutorialItems(TutorialData.TutorialStep ts)
+    {
+        DeleteSpawnedItems(); //we clear all old coroutines and spawned items
+        spawnCoroutine = StartCoroutine(SpawnStepItems(ts.tutorialitems));
+    }
 
-    private void SpawnExerciseItems(ExerciceData.ExerciceStep es) => spawnCoroutine = StartCoroutine(SpawnStepItems(es.spawnEntry));
+    private void SpawnExerciseItems(ExerciceData.ExerciceStep es)
+    {
+        DeleteSpawnedItems(); //we clear all old coroutines and spawned items
+        spawnCoroutine = StartCoroutine(SpawnStepItems(es.spawnEntry));
+    }
 
     IEnumerator SpawnStepItems(ItemsSpawnEntry spawnEntrys)
     {
@@ -57,10 +65,12 @@ public class ExerciseItemInstantiater : MonoBehaviour
         {
             if (spawn.spawnDelay > waitedTime)
             {
+                Debug.Log("Waiting for " + (spawn.spawnDelay - waitedTime) + " and time scale" + Time.timeScale);
                 yield return new WaitForSeconds(spawn.spawnDelay - waitedTime);
+                Debug.Log("finished waiting");
                 waitedTime += spawn.spawnDelay;
             }
-
+            Debug.Log("passee waiting time");
             //we instantiate the prefab, set the stonesOrigin as parent and fix all rotations/transform problems
             GameObject spawnedObject = Instantiate(spawn.itemPrefab);
             spawnedObject.transform.parent = stonesOrigin.transform;
@@ -76,7 +86,7 @@ public class ExerciseItemInstantiater : MonoBehaviour
                 ItemTextHandler itemText = Instantiate(item3DTextPrefab);
 
                 //now we position the text, if the gameobject has a direct child that's name is "TextPosition", it is used to position the Text 3D display. Otherwise we put a default position of 0.1f on the Y
-                Transform textSpawnPoint = spawnedObject.transform.Find("TextPosition"); 
+                Transform textSpawnPoint = spawnedObject.transform.Find("TextPosition");
                 itemText.transform.position = spawnedObject.transform.position + ((textSpawnPoint == null) ? (new Vector3(0, 0.1f, 0)) : textSpawnPoint.localPosition);
                 itemText.DisplayText(spawn.message); //we finally set the text.
                 spawnedItems.Enqueue(itemText.gameObject);
@@ -88,7 +98,9 @@ public class ExerciseItemInstantiater : MonoBehaviour
 
     void DeleteSpawnedItems()
     {
-        StopAllCoroutines();
+        Debug.Log("reset called");
+        if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
+        spawnCoroutine = null;
         while (spawnedItems.Count > 0)
         {
             GameObject item = spawnedItems.Dequeue();

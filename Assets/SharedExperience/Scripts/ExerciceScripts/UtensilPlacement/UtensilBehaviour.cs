@@ -116,7 +116,7 @@ public class UtensilBehaviour : UtensilAbs
             //EventHandler.Instance.OnUtensilObjectiveCompleted(this);
 
             //new
-            EventHandler.Instance.SetObjectiveAsComplete(itemID, this.gameObject);
+            EventHandler.Instance.SetObjectiveStepAsAchieved(itemID, this.gameObject);
         }
     }
 

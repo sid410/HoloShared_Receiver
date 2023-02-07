@@ -20,8 +20,8 @@ MonoBehaviour:
     tutorialitems: {fileID: 0}
   - duration: 0
     faceExpression: 1
-    message: You can use the utensils placed on the left for the exercise, simply
-      place them on the laser beam path and see how it affects it !
+    message: Simply put the utensils on your left on the beam's path and see how
+      it affects it !
     tutorialitems: {fileID: 11400000, guid: bcfd295280a0b004ab9440c6d28b14e6, type: 2}
   - duration: 18
     faceExpression: 1
@@ -32,7 +32,7 @@ MonoBehaviour:
     message: You can use the utensils to create the following objects to help you
       reach the goal.
     tutorialitems: {fileID: 11400000, guid: 4fb60b75e25a1a24abe08c72bb1e8af5, type: 2}
-  - duration: 14
+  - duration: 20
     faceExpression: 1
     message: Use the different utensils to guide the beam while avoiding obstacles
       !
