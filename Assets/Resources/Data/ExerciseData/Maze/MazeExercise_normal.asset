@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d965c6b96edeebf448c9df86d482c0b2, type: 3}
-  m_Name: MazeExercise
+  m_Name: MazeExercise_normal
   m_EditorClassIdentifier: 
   steps:
   - faceExpression: 0

@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UtensilExtension;
 
+[CreateAssetMenu(fileName = "Assets/Resources/Data/KinectHandlers/UtensilKinectH.asset", menuName = "ScriptableObjects/Kinect Handlers/Utensil Kinect Handler", order = 3)]
 public class UtensilKinectHandler : KinectResultsAbs
 {
     List<GameObject> spawnedItems = new List<GameObject>();

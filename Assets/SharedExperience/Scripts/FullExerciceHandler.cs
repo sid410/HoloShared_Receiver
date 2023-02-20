@@ -2,6 +2,7 @@ using extOSC;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -34,6 +35,8 @@ public class FullExerciceHandler : MonoBehaviour
     private bool SkipTutorial = false; //Should be able to set a skip for the tutorial if possible.
 
     private FullExerciceData currentExercise = null;
+    private ExerciseDifficulty currentDifficulty = ExerciseDifficulty.NORMAL;
+    private ExerciceData startedExercise = null; //the exercise that was started based on diffculty
 
     private int currentExerciseStepIndex = 0;
 
@@ -42,6 +45,7 @@ public class FullExerciceHandler : MonoBehaviour
     {
         Receiver = GameObject.FindObjectOfType<OSCReceiver>();
         Receiver.Bind("/loadexercise", LoadExercice); //we bind to the receiver, this will trigger the exercise from the phone app eventually
+        Receiver.Bind("/resetapp", TriggerAppReset);
     }
 
     #region subscriptions
@@ -70,19 +74,29 @@ public class FullExerciceHandler : MonoBehaviour
     {
         //TODO : load if tutorial skip or not
         //TODO : load which type of exercise it is
-        ExerciseType exerciseType = ExerciseType.MAZE; //for debugging purposes we use the utensil exercise
-        if (message != null)
+        ExerciseType exerciseType = ExerciseType.MAZE; //if we receive no message, we start the simple 
+        currentDifficulty = ExerciseDifficulty.NORMAL;
+        startedExercise = null;
+
+        //we get the ee
+        if (message != null && message.Values.Count > 0)
         {
-            int utensilEnumInt = message.Values[0].IntValue;
-            exerciseType = (ExerciseType)utensilEnumInt;
+            //we get the exercise
+            int exerciseTypeInt = message.Values[0].IntValue;
+            exerciseType = (ExerciseType)exerciseTypeInt;
+
+            //if difficulty is also specified in the message, we use it.
+            if (message.Values.Count > 1)
+            {
+                int difficultyInt = message.Values[1].IntValue;
+                currentDifficulty = (ExerciseDifficulty)difficultyInt;
+            }
         } 
-        
-        //for now debug hardcded
-        
         
         ExercisePreset exercisePreset = loadedExercises.Find((ex) => ex.exerciseEnum == exerciseType); //we get the associated exercise data
         currentExercise = exercisePreset.exerciseDataObject;
         EventHandler.Instance.LoadExercise(currentExercise); //we inform all listeners of the loaded exercise
+
         //if we skip the tutorial, we start the exercise.
         if (!SkipTutorial) StartTutorial();
         else StartExercise();
@@ -93,11 +107,13 @@ public class FullExerciceHandler : MonoBehaviour
     void StartExercise()
     {
         //we announce the start of the exercise phase
-        EventHandler.Instance.StartExercise(currentExercise.exercice);
+        startedExercise = currentExercise.exercisesByDifficulty.First((ex) => ex.exerciseDifficulty == currentDifficulty).exercise; //we find the exercise depending on the 
+        if (startedExercise == null) startedExercise = currentExercise.exercisesByDifficulty.First().exercise; //if the difficulty is null (didn't have the difficulty needed) , we get the fiirst from the list for debugging 
+        EventHandler.Instance.StartExercise(startedExercise);
 
         //we start the first step
         currentExerciseStepIndex = 0;
-        EventHandler.Instance.StartExerciseStep(currentExercise.exercice.steps[currentExerciseStepIndex]); //TODO : fix the distinction between steps and exercise to be less convuluted, also multiple steps 
+        EventHandler.Instance.StartExerciseStep(startedExercise.steps[currentExerciseStepIndex]); //TODO : fix the distinction between steps and exercise to be less convuluted, also multiple steps 
     }
 
     //we go to the next exercise Step
@@ -105,8 +121,8 @@ public class FullExerciceHandler : MonoBehaviour
     {
         if (currentExercise == null) return;
         currentExerciseStepIndex++;
-        if (currentExerciseStepIndex >= currentExercise.exercice.steps.Count) EventHandler.Instance.EndExercise();
-        else EventHandler.Instance.StartExerciseStep(currentExercise.exercice.steps[currentExerciseStepIndex]);
+        if (currentExerciseStepIndex >= startedExercise.steps.Count) EventHandler.Instance.EndExercise();
+        else EventHandler.Instance.StartExerciseStep(startedExercise.steps[currentExerciseStepIndex]);
     }
     void StartTutorial()
     {
@@ -116,5 +132,11 @@ public class FullExerciceHandler : MonoBehaviour
             return;
         }
         EventHandler.Instance.StartTutorial(currentExercise.tutorial);
+    }
+
+    //Resets the app to the state it is at the start (no exercise loaded)
+    public void TriggerAppReset(OSCMessage message)
+    {
+        EventHandler.Instance.ResetApp();
     }
 }

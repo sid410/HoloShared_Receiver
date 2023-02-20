@@ -14,7 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   exerciseType: 1
   tutorial: {fileID: 11400000, guid: a993326a80912e746aab720701259ea5, type: 2}
-  exercice: {fileID: 11400000, guid: 213cfafafc6210049b1fb3dfdd439976, type: 2}
+  exercisesByDifficulty:
+  - exerciseDifficulty: 1
+    exercise: {fileID: 11400000, guid: 213cfafafc6210049b1fb3dfdd439976, type: 2}
+  - exerciseDifficulty: 0
+    exercise: {fileID: 11400000, guid: 213cfafafc6210049b1fb3dfdd439976, type: 2}
+  - exerciseDifficulty: 2
+    exercise: {fileID: 11400000, guid: 213cfafafc6210049b1fb3dfdd439976, type: 2}
   kinectResultHandler: {fileID: 11400000, guid: 182587fd1b6b87e40a71ffeb183a1ad9,
     type: 2}
   scoreCalculator: {fileID: 11400000, guid: f505de679d3168147a595d88c4900f29, type: 2}

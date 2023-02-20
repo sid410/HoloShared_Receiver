@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 255b1a5812e37f34ca4523e79e739edd, type: 3}
   m_Name: UtensilPlacementExercise
   m_EditorClassIdentifier: 
+  exerciseType: 0
   tutorial: {fileID: 11400000, guid: 9c279428552975b4d9691ca4cd8e68ad, type: 2}
-  exercice: {fileID: 11400000, guid: 6d8e241fdf338f3439ebf23cf9618a0d, type: 2}
+  exercisesByDifficulty:
+  - exerciseDifficulty: 1
+    exercise: {fileID: 11400000, guid: 6d8e241fdf338f3439ebf23cf9618a0d, type: 2}
+  kinectResultHandler: {fileID: 11400000, guid: 50f08b63f26a8c74bb42ca4ae4ac4af7,
+    type: 2}
   scoreCalculator: {fileID: 11400000, guid: cda44021a57d8be45b6ba9d1c1bafde4, type: 2}

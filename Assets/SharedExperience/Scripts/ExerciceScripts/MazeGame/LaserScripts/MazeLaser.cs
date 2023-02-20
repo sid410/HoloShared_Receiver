@@ -66,11 +66,14 @@ public class MazeLaser
 
         Ray ray = new Ray(pos, dir);
         RaycastHit hit;
+        if (lasthitObject != null) lasthitObject.GetComponent<Collider>().enabled = false; //we remove the collider from last hit object to prevent being stuck inside a collider for any reason
         if (Physics.Raycast(ray, out hit, laserCastRange, 1))
         {
+            lasthitObject.GetComponent<Collider>().enabled = true; //we reenable the colldier as soon as the raycast ends
             CheckHit(hit, dir, laser);
         } else
         {
+            lasthitObject.GetComponent<Collider>().enabled = true;
             laserIndices.Add(ray.GetPoint(laserCastRange));
 
         }
@@ -102,8 +105,8 @@ public class MazeLaser
             return;
         }
 
-
-        SetIgnoredObject(hitInfo.collider.gameObject); //we update the ignored object
+        lasthitObject = hitInfo.collider.gameObject; //we update the last hit object to the new one.
+        //SetIgnoredObject(hitInfo.collider.gameObject); //we update the ignored object
         switch (obstacleType.type)
         {
             case MazeObstacleType.MIRROR:
@@ -130,9 +133,8 @@ public class MazeLaser
                 //we tell the maze goal that it was hit, making it change color
                 MazeObjectiveBehaviour mazeObjectiveBehaviour = hitInfo.collider.gameObject.GetComponent<MazeObjectiveBehaviour>();
                 if (mazeObjectiveBehaviour != null) mazeObjectiveBehaviour.GoalTouchedByBeam();
-                //we trigger the objective completed event
-                //if (EventHandler.Instance != null) EventHandler.Instance.SetObjectiveAsComplete(MazeObjectives.INIT_OBJECTIVE_INDEX, null);
-                UpdateLaser(); 
+                CastRay(hitInfo.point, direction, laser); //goal doesn't stop ray
+                //UpdateLaser(); <
                 break;
 
         }
@@ -144,9 +146,9 @@ public class MazeLaser
     {
         if (newObj == null) return;
         //Debug.Log("Updating ignored object" + (lasthitObject == null));
-        if (lasthitObject != null) lasthitObject.GetComponent<Collider>().enabled = true; //TODO : problem is multiple objects disabling multiple colliders
+        //if (lasthitObject != null) lasthitObject.GetComponent<Collider>().enabled = true; //TODO : problem is multiple objects disabling multiple colliders
         lasthitObject = newObj;
-        lasthitObject.GetComponent<Collider>().enabled = false;
+        //lasthitObject.GetComponent<Collider>().enabled = false;
     }
 
     public GameObject Cleanup() 
