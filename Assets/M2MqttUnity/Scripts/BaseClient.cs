@@ -99,7 +99,7 @@ namespace M2MqttUnity
 
         protected override void DecodeMessage(string _topic, byte[] message)
         {
-            Debug.Log("Decoding a message");
+            Debug.Log("Decoding a message" + _topic);
             string msg = System.Text.Encoding.UTF8.GetString(message);
             foreach (string topicKey in m_messageHandlers.Keys)
             {

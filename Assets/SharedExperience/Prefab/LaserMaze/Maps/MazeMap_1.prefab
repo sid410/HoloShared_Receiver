@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8089617495207744575}
   m_Layer: 0
-  m_Name: MazeMap
+  m_Name: MazeMap_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,6 +47,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TutorialSpoon
+      objectReference: {fileID: 0}
+    - target: {fileID: 2546585473279265154, guid: 60d945d2308e23f45a203516b3ad17e0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2890353639510725432, guid: 60d945d2308e23f45a203516b3ad17e0,
         type: 3}

@@ -11,6 +11,9 @@ public class MazeLaserShot : MazeLazerAbs
     //public Transform beamSpawnPosition;
     MazeLaser laserInstance;
     public Material laserMaterial;
+
+    [Tooltip("recast the laser on update, this is for debugging purposes. With the exercise one, the laser update is called every time results are received")]
+    public bool debug_recastOnUpdate = false;
     private bool exerciseStarted = true;
 
     private void OnEnable()
@@ -30,10 +33,11 @@ public class MazeLaserShot : MazeLazerAbs
     private void EndLaser(){exerciseStarted = false;}
 
 
-    /* private void Update()
+     private void Update()
      {
-         UpdateLaser(); //remove after
-     }*/
+        if (!debug_recastOnUpdate) return;
+        UpdateLaser(5f); //remove after
+     }
 
     //update the laser 
 

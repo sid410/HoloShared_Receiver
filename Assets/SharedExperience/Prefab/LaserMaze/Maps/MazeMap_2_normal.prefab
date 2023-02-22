@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1428921516580578240}
   m_Layer: 0
-  m_Name: Maze3
+  m_Name: MazeMap_2_normal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

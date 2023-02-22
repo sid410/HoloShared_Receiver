@@ -26,9 +26,11 @@ public class MazeLaser
 
 
     //for split lasers (triggered by refactored light from bottle/cup)
-    public MazeLaser(Vector3 spawnPos, Vector3 direction, Material material, GameObject ignoredObject)
+    public MazeLaser(Vector3 spawnPos, Vector3 direction, Material material, float maxRange, GameObject ignoredObject)
     {
-        this.SetIgnoredObject(ignoredObject);
+        //this.SetIgnoredObject(ignoredObject);
+        lasthitObject = ignoredObject; //we update the last hit object to the new one.
+        laserCastRange = maxRange;
         InitializeLaser(spawnPos, direction, material);
     }
 
@@ -69,11 +71,11 @@ public class MazeLaser
         if (lasthitObject != null) lasthitObject.GetComponent<Collider>().enabled = false; //we remove the collider from last hit object to prevent being stuck inside a collider for any reason
         if (Physics.Raycast(ray, out hit, laserCastRange, 1))
         {
-            lasthitObject.GetComponent<Collider>().enabled = true; //we reenable the colldier as soon as the raycast ends
+            if (lasthitObject != null) lasthitObject.GetComponent<Collider>().enabled = true; //we reenable the colldier as soon as the raycast ends
             CheckHit(hit, dir, laser);
         } else
         {
-            lasthitObject.GetComponent<Collider>().enabled = true;
+            if (lasthitObject != null) lasthitObject.GetComponent<Collider>().enabled = true;
             laserIndices.Add(ray.GetPoint(laserCastRange));
 
         }
@@ -122,8 +124,8 @@ public class MazeLaser
 
             case MazeObstacleType.REFRACTOR:
                 Vector3 posi = hitInfo.point;
-                Vector3 newDirection = Quaternion.Euler(0, -40, 0) * direction;
-                SplitLasers.Add(new MazeLaser(hitInfo.point, Quaternion.Euler(0, 40, 0) * direction, material, laserCastRange)); //we split off a second laser. we pass the current hit object to not cause insta collision.
+                Vector3 newDirection = Quaternion.Euler(0, -30, 0) * direction;
+                SplitLasers.Add(new MazeLaser(hitInfo.point, Quaternion.Euler(0, 30, 0) * direction, material, laserCastRange, lasthitObject)); //we split off a second laser. we pass the current hit object to not cause insta collision.
                 CastRay(posi, newDirection, laser);
                 break;
 
@@ -139,16 +141,6 @@ public class MazeLaser
 
         }
 
-    }
-
-    //we don't want the ray to react to the same object twice, we disable its collider after the ray hits it
-    private void SetIgnoredObject(GameObject newObj)
-    {
-        if (newObj == null) return;
-        //Debug.Log("Updating ignored object" + (lasthitObject == null));
-        //if (lasthitObject != null) lasthitObject.GetComponent<Collider>().enabled = true; //TODO : problem is multiple objects disabling multiple colliders
-        lasthitObject = newObj;
-        //lasthitObject.GetComponent<Collider>().enabled = false;
     }
 
     public GameObject Cleanup() 
