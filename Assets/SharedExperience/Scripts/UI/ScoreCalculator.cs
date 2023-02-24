@@ -29,10 +29,14 @@ public class ScoreCalculator : MonoBehaviour
     [SerializeField] private GameObject total_part;
     [SerializeField] private GameObject Stars_part;
 
-    [Header("Total performance")]
+    [Header("Total performance old (with total pourcentage) disabled for now")]
     [SerializeField] private MeshRenderer[] starMeshes; //stars based on the performance
     [SerializeField] private TextMesh performance_total_text;
 
+    [Header("Total performance : with text performances that say 'well done' or other and do not display a number")]
+    [SerializeField] private GameObject performance_total_hideable;
+    [SerializeField] private TextMesh performance_string_text;
+    
     [Header("Prefabs")]
     [SerializeField] private PerformanceEntry performance_metric_line_prefab; //for a line of performance.
 
@@ -162,11 +166,14 @@ public class ScoreCalculator : MonoBehaviour
             yield return new WaitForSeconds(a_performanceEntryDelay); //we wait a bit first
         }
 
-        StartCoroutine(AnimateTotalIncremental(summary.totalPerformancePourcent, performance_total_text, gradient));
+        //re-enable this if you want pourcentage results
+        //StartCoroutine(AnimateTotalIncremental(summary.totalPerformancePourcent, performance_total_text, gradient));
+        DisplayResultText(summary.totalPerformancePourcent);
     }
 
 
-    //this is for the total, also enables stars
+    //this is for the total, also enables stars.
+    //THis was disabled while pourcentage performance Makes no sense, it can be used if it makes sense
     IEnumerator AnimateTotalIncremental(int totalValue, TextMesh animatedText, Gradient colorGradient)
     {
         total_part.SetActive(true);
@@ -198,13 +205,24 @@ public class ScoreCalculator : MonoBehaviour
     }
 
 
+    private void DisplayResultText(int totalPerf)
+    {
+        performance_string_text.text = getPerformanceTextByPourcent(totalPerf);
+        performance_total_hideable.SetActive(true);
+    }
+
+
     private void ResetScoreDisplay()
     {
+        //old
         Stars_part.SetActive(false);
         total_part.SetActive(false);
         performance_total_text.text = "";
+
+        //new
+        performance_total_hideable.SetActive(false);
         //we delete all spawned performance metric
-        while(spawnedPerfLineQueue.Count > 0)
+        while (spawnedPerfLineQueue.Count > 0)
         {
             GameObject perfLine = spawnedPerfLineQueue.Dequeue();
             Destroy(perfLine.gameObject);
@@ -224,6 +242,17 @@ public class ScoreCalculator : MonoBehaviour
             case 95: return 2;
             default: return -1;
         }
+    }
+
+
+    //return 
+    private string getPerformanceTextByPourcent(int pourcent)
+    {
+        if (pourcent == 100) return "Perfect !!!";
+        if (pourcent > 90) return "Amazing !!";
+        if (pourcent > 70) return "Excellent !";
+        if (pourcent > 10) return "Well done !";
+        return "Good";
     }
 
     //returns the amount of stars displayed based on pourcent performance

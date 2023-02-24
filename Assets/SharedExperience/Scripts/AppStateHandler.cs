@@ -12,7 +12,7 @@ public class AppStateHandler : MonoBehaviour
 {
     public enum AppState
     {
-        NONE, TUTORIAL, EXERCICE, RESULTS,
+        NONE = 0, TUTORIAL = 1, EXERCICE = 2, RESULTS = 3,
     }
 
     public static AppState appState = AppState.NONE;

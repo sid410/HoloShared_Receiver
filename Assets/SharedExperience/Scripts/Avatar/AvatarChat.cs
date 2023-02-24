@@ -38,9 +38,9 @@ public class AvatarChat : MonoBehaviour
 
     #endregion
      
-    private void DisplayTutorialStepMessage(TutorialData.TutorialStep step) => DisplayMessage(step.message); //each tutorial step has a message
+    private void DisplayTutorialStepMessage(TutorialData.TutorialStep step) => DisplayMessage(step.avatarText.message); //each tutorial step has a message
 
-    private void DisplayExerciseStepMessage(ExerciceData.ExerciceStep step) => DisplayMessage(step.message);
+    private void DisplayExerciseStepMessage(ExerciceData.ExerciceStep step) => DisplayMessage(step.avatarText.message);
     private void DisplayExerciseOverMessage() => DisplayMessage("Well done ! The exercise is over ! You can see your results on the right"); // we simply say the exercise is over
 
     private void DisplayMessage(string message)

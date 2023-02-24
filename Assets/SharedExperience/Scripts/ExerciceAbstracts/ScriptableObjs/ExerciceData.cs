@@ -24,8 +24,7 @@ public class ExerciceData : ScriptableObject
         //avatar data
         public FaceExpression faceExpression;
 
-        [TextArea(3, 1)]
-        public string message;
+        public AvatarMessage avatarText;
 
         public IObjectiveHandler objectives;
 

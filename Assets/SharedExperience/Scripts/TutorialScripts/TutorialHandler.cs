@@ -72,7 +72,7 @@ public class TutorialHandler : MonoBehaviour
     private void InitTutorialStep(TutorialStep tutorialStep)
     {
         if (currentStepIndex == -1) return;
-        currentStepDuration = tutorialStep.duration > 0 ? tutorialStep.duration : CalculateTutorialStepLength(tutorialStep.message); // we calculate the duration of this tutorial step.
+        currentStepDuration = tutorialStep.duration > 0 ? tutorialStep.duration : CalculateTutorialStepLength(tutorialStep.avatarText.message); // we calculate the duration of this tutorial step.
         EventHandler.Instance.StartTutorialStep(tutorialStep); //we inform all other listeners about the new step.
         countdown = currentStepDuration; //we start the countdown
     }

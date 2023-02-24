@@ -15,7 +15,11 @@ public class LocalItemSpawner : MonoBehaviour
     //Boolean used to disable enable behaviours related to single hololens
     public static bool SINGLE_HOLO_BEHAVIOUR = true;
 
+    [Header("Client M2QTT")]
+    public BaseClient client;
+
     [Header("UI swapping vars")]
+    public GameObject debug_buttons;
     public GameObject[] UIPrefabs; //Contains multiple types of prefab for testing different UI arrangements
     public int EnabledUIIndex = 0;
 
@@ -46,29 +50,10 @@ public class LocalItemSpawner : MonoBehaviour
         
         Transmitter = GameObject.FindObjectOfType<OSCTransmitter>();
         SetRemoteHost("127.0.0.1"); //try to send receiver to localHost
+        client.RegisterTopicHandler("M2MQTT/debugbtn", ChangeDebugButtonStatus); //we bind to the receiver, this will trigger the exercise from the phone app eventually
         SpawnUI();
-
-
-       //StartCoroutine(TriggerExerciceStart());
-
-        //EventHandler.OnCalibrationDone += (p,r) => { StartCoroutine(TriggerExerciceStart()); }; //for debugging purposes we trigger the exercice start after 4 seconds
-
     }
 
-    //Debug Coroutine to trigger an exercice starting 
-    IEnumerator TriggerExerciceStart()
-    {
-        if (!exercice_initialised)
-        {
-            exercice_initialised = true;
-            //yield return new WaitForSeconds(2f);
-            //SendSpawnUstensilsRequests(); //we spawn the utensils
-            //yield return new WaitForSeconds(2f);
-            //SendUpdatedTransform();
-            yield return new WaitForSeconds(2f);
-            exerciceHandler.DebugStartExercise(); 
-        }
-    }
 
     public void StartUtensilExercise() => TriggerExerciseStart(ExerciseType.UTENSIL);
 
@@ -81,6 +66,14 @@ public class LocalItemSpawner : MonoBehaviour
         Transmitter.RemotePort = 7000;
     }
 
+
+    //Received from the node-red web app, disables/enables the UI buttons
+    private void ChangeDebugButtonStatus(string topic, string message)
+    {
+        Debug.Log("received a message for debug buttons " + message);
+        bool displayDebugButtons = bool.Parse(message);
+        debug_buttons.SetActive(displayDebugButtons);
+    }
     /**
      * Spawns usensils without the Use of another hololive. This is a function purely for 1 hololens testing.
      * This basically sends a request to itself.

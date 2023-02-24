@@ -15,10 +15,10 @@ MonoBehaviour:
   exerciseType: 1
   tutorial: {fileID: 11400000, guid: a993326a80912e746aab720701259ea5, type: 2}
   exercisesByDifficulty:
-  - exerciseDifficulty: 1
-    exercise: {fileID: 11400000, guid: 213cfafafc6210049b1fb3dfdd439976, type: 2}
   - exerciseDifficulty: 0
-    exercise: {fileID: 11400000, guid: 213cfafafc6210049b1fb3dfdd439976, type: 2}
+    exercise: {fileID: 11400000, guid: c0fd1de53b0265a49afd7eac5548bd69, type: 2}
+  - exerciseDifficulty: 1
+    exercise: {fileID: 11400000, guid: c0fd1de53b0265a49afd7eac5548bd69, type: 2}
   - exerciseDifficulty: 2
     exercise: {fileID: 11400000, guid: 213cfafafc6210049b1fb3dfdd439976, type: 2}
   kinectResultHandler: {fileID: 11400000, guid: 182587fd1b6b87e40a71ffeb183a1ad9,

@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   steps:
   - faceExpression: 0
-    message: Place the utensils on the right positions !
+    avatarText:
+      position: {x: 0, y: 0, z: 0}
+      message: Place the utensils on the right positions !
     objectives: {fileID: 11400000, guid: 1d44864b4d9e19842beb4d3713dd9ecf, type: 2}
     spawnEntry: {fileID: 11400000, guid: 5a7e83f8a1a819e4480948f32c3d5ba3, type: 2}

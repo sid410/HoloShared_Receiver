@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mirrorObject: {fileID: 2746507940268045237}
-  laserHandler: {fileID: 1309103702470047688}
+  laserHandler: {fileID: 8706603866053517108}
 --- !u!1001 &3497501460719661469
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -363,7 +363,7 @@ PrefabInstance:
     - target: {fileID: 783538539967722364, guid: 4cf7cb1a6f7f53943ab4f9e522ab63f9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.12419999
+      value: -0.0698
       objectReference: {fileID: 0}
     - target: {fileID: 783538539967722364, guid: 4cf7cb1a6f7f53943ab4f9e522ab63f9,
         type: 3}
@@ -425,7 +425,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6432638730908872371}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1309103702470047688
+--- !u!114 &8706603866053517108
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -434,7 +434,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6024377035015686944}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 472da72122a912d40814031f1b98abf7, type: 3}
+  m_Script: {fileID: 11500000, guid: 9571094652170c34fadef30c5f823b64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   laserMaterial: {fileID: 2100000, guid: 46273a90532fa194fa0356b3f022a5a3, type: 2}

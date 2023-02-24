@@ -28,6 +28,8 @@ public class EventHandler : MonoBehaviour
     public static event Action OnExerciseStepOver;
     public static event Action OnExerciseOver;
 
+    //avatar events 
+    public static event Action OnAvatarReachedDestination;
     //kinect events
     public static event Action OnBeforeMatlabDataReceived; //called every time we get matlab resutls
     public static event Action OnAfterMatlabDataReceived; //called every time we get matlab resutls
@@ -98,6 +100,12 @@ public class EventHandler : MonoBehaviour
     }
 
 
+    #endregion
+    #region avatar events
+    public virtual void InformAvatarReachedDestination() // called when the avatar receives a new position and reaches it!
+    {
+        OnAvatarReachedDestination?.Invoke();
+    }
     #endregion
     #region reworked utensil stuff for extensibility
 

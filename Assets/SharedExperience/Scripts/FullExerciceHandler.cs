@@ -45,8 +45,7 @@ public class FullExerciceHandler : MonoBehaviour
     void Start()
     {
         //Receiver = GameObject.FindObjectOfType<OSCReceiver>();
-        baseClient.RegisterTopicHandler("M2MQTT/loadexercise", LoadExercice); //we bind to the receiver, this will trigger the exercise from the phone app eventually
-        baseClient.RegisterTopicHandler("M2MQTT/resetapp", TriggerAppReset);
+        
     }
 
     #region subscriptions
@@ -54,13 +53,16 @@ public class FullExerciceHandler : MonoBehaviour
     {
         EventHandler.OnTutorialOver += StartExercise;
         EventHandler.OnFinalMatlabDataProcessed += GoToNextExerciseStep; //the order is stepOver => Kinect results received => New step (so we can calculate scores effectively)
-
+        baseClient.RegisterTopicHandler("M2MQTT/loadexercise", LoadExercice); //we bind to the receiver, this will trigger the exercise from the phone app eventually
+        baseClient.RegisterTopicHandler("M2MQTT/resetapp", TriggerAppReset);
     }
 
     private void OnDisable()
     {
         EventHandler.OnTutorialOver -= StartExercise;
         EventHandler.OnFinalMatlabDataProcessed -= GoToNextExerciseStep;
+        baseClient.UnregisterTopicHandler("M2MQTT/loadexercise", LoadExercice);
+        baseClient.UnregisterTopicHandler("M2MQTT/resetapp", TriggerAppReset);
     }
     #endregion
 

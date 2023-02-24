@@ -20,6 +20,12 @@ public class MazeLaserShot : MazeLazerAbs
     {
         EventHandler.OnExerciseStepOver += EndLaser;
         EventHandler.OnAfterMatlabDataReceived += RecastLaser;
+        StartCoroutine(LateStart());
+    }
+
+    IEnumerator LateStart()
+    {
+        yield return new WaitForSeconds(0.5f);
         UpdateLaser(5f);
     }
 

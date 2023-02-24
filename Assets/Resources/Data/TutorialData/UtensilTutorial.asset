@@ -15,21 +15,29 @@ MonoBehaviour:
   steps:
   - duration: 0
     faceExpression: 1
-    message: Welcome to this exercice. I will be your guide for you to clearly understand
-      your tasks.
-    spawnables: []
+    avatarText:
+      position: {x: 0, y: 0, z: 0}
+      message: Welcome to this exercice. I will be your guide for you to clearly
+        understand your tasks.
+    tutorialitems: {fileID: 0}
   - duration: 0
     faceExpression: 1
-    message: This is a brief introduction. When the exercice starts, You will see
-      white utensil models spawn on the Table.
-    spawnables: []
+    avatarText:
+      position: {x: 0, y: 0, z: 0}
+      message: This is a brief introduction. When the exercice starts, You will see
+        white utensil models spawn on the Table.
+    tutorialitems: {fileID: 0}
   - duration: 0
     faceExpression: 1
-    message: Your task is to pick utensils from your left side and place them on
-      the correct location.
-    spawnables: []
+    avatarText:
+      position: {x: 0, y: 0, z: 0}
+      message: Your task is to pick utensils from your left side and place them on
+        the correct location.
+    tutorialitems: {fileID: 0}
   - duration: 0
     faceExpression: 1
-    message: The exercice will end when you finish placing all the utensils ! Take
-      your time and have fun.
-    spawnables: []
+    avatarText:
+      position: {x: 0, y: 0, z: 0}
+      message: The exercice will end when you finish placing all the utensils ! Take
+        your time and have fun.
+    tutorialitems: {fileID: 0}

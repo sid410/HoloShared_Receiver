@@ -22,9 +22,7 @@ public class TutorialData : ScriptableObject
         //avatar data
         public FaceExpression faceExpression;
 
-        [TextArea(3, 3)]
-        public string message;
-        //TODO : maybe also body animation
+        public AvatarMessage avatarText;
 
         public ItemsSpawnEntry tutorialitems;
     }

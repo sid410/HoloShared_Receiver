@@ -41,7 +41,7 @@ PrefabInstance:
     - target: {fileID: 3572564818818815534, guid: a7d03a6526e4b974d94bdaea1a6396a3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.113
+      value: 0.4572
       objectReference: {fileID: 0}
     - target: {fileID: 3572564818818815534, guid: a7d03a6526e4b974d94bdaea1a6396a3,
         type: 3}
@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: 3572564818818815534, guid: a7d03a6526e4b974d94bdaea1a6396a3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.3183
+      value: -0.432
       objectReference: {fileID: 0}
     - target: {fileID: 3572564818818815534, guid: a7d03a6526e4b974d94bdaea1a6396a3,
         type: 3}
@@ -77,6 +77,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 359.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 4242281356718017684, guid: a7d03a6526e4b974d94bdaea1a6396a3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6250999012287119402, guid: a7d03a6526e4b974d94bdaea1a6396a3,
         type: 3}
@@ -252,6 +257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   laserMaterial: {fileID: 2100000, guid: 46273a90532fa194fa0356b3f022a5a3, type: 2}
+  debug_recastOnUpdate: 0
 --- !u!95 &9041364182810684579
 Animator:
   serializedVersion: 5
@@ -284,6 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af34dcdab76e22b47ae1b13c6792b1e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 9041364182810684579}
   mirrorObject: {fileID: 915049453735818878}
   laserHandler: {fileID: 9041364182810684578}
 --- !u!1001 &9041364183744998786

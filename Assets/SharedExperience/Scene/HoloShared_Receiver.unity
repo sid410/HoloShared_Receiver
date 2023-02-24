@@ -2302,7 +2302,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &330513118
 Transform:
   m_ObjectHideFlags: 0
@@ -7136,6 +7136,35 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.032, y: 0.032, z: 0.016}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!21 &1004843955
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 'stonesMaterial
+
+    45814'
+  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: c6bea73e06394c1a9ec91a252654b367, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &1017179150
 GameObject:
   m_ObjectHideFlags: 0
@@ -7545,6 +7574,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c11ce6a86f6daa4aa74465fb76b83c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  client: {fileID: 1740927738}
+  debug_buttons: {fileID: 330513117}
   UIPrefabs:
   - {fileID: 6856445779312770646, guid: 36f189b820c11dd4b8425480c8d596b5, type: 3}
   - {fileID: 5007317831822180528, guid: 6938961d17e308b4dbd094e73d938b1e, type: 3}
@@ -13120,7 +13151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 504128022f7e7a04dbcad8fa8ba790bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brokerAddress: 163.221.126.255
+  brokerAddress: 163.221.127.47
   brokerPort: 8000
   isEncrypted: 0
   connectionDelay: 500
@@ -13866,6 +13897,19 @@ MonoBehaviour:
   stonesOrigin: {fileID: 1496562518}
   item3DTextPrefab: {fileID: 1039776852586252091, guid: 15f41f2352959e8489769a0c881aba07,
     type: 3}
+--- !u!114 &1830243669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830243667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6faeef55c43113c4c981a06410c8331f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  client: {fileID: 1740927738}
 --- !u!1 &1853175127
 GameObject:
   m_ObjectHideFlags: 0
@@ -15185,7 +15229,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2124156997}
+  - {fileID: 1004843955}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -15648,35 +15692,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!21 &2124156997
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 'stonesMaterial
-
-    31552'
-  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: c6bea73e06394c1a9ec91a252654b367, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats: []
-    m_Colors:
-    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &2131275289
 GameObject:
   m_ObjectHideFlags: 0

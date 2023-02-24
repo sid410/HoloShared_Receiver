@@ -85,6 +85,11 @@ namespace M2MqttUnity
             }
         }
 
+        public void PublishMessage(string topic, byte[] message, byte qosLevel, bool retain)
+        {
+            client.Publish(topic, message, qosLevel, retain);
+        }
+
 
         protected override void SubscribeTopics()
         {
