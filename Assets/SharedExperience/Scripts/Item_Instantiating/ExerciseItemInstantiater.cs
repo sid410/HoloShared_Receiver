@@ -80,6 +80,8 @@ public class ExerciseItemInstantiater : MonoBehaviour
             Vector3 rotation = (spawn.rotation.Equals(Vector3.zero)) ? spawn.itemPrefab.transform.rotation.eulerAngles : spawn.rotation;
             spawnedObject.transform.rotation = Quaternion.Euler(rotation + new Vector3(0, rotationCalibrationY, 0));
 
+            EventHandler.Instance.SpawnMap(spawnedObject); //we inform that a static map/object has been spawned for any interested
+
             spawnedItems.Enqueue(spawnedObject);
             if (spawn.message != null && spawn.message.Length != 0) //if the message is not null, we spawn a billboard on top the item and set the text
             {

@@ -12,7 +12,10 @@ public class EventHandler : MonoBehaviour
     public static event Action<int, GameObject> OnObjectiveStepAchieved; //called when a certain objective step in completed. Objectives can have 1 step or be multi-step.
     public static event Action<int, GameObject> OnObjectiveCompleted;
     public static event Action<int, GameObject> OnObjectiveFailed; //when objective is failed after being completed (item moved out
-    public static event Action<GameObject> OnItemSpawned;
+
+    //spawning / instantiatiing
+    public static event Action<GameObject> OnItemSpawned; //when an item is instantiated as part of the exercise ex: utensil
+    public static event Action<GameObject> OnMapSpawned; //when a map is spawned for the exercise
 
     //DATA LOADING STEP
     public static event Action<FullExerciceData> OnExerciseLoaded;
@@ -41,6 +44,8 @@ public class EventHandler : MonoBehaviour
     public static event Action OnScoreIncreaseEnded;
     public static event Action OnStarAcquired;
 
+    //simple events
+    public static event Action<string> displayMessage;
     //debug events
     public static event Action<string> OnLog;
     public static event Action OnAppReset;
@@ -107,12 +112,19 @@ public class EventHandler : MonoBehaviour
         OnAvatarReachedDestination?.Invoke();
     }
     #endregion
-    #region reworked utensil stuff for extensibility
 
+    #region item spawning/instantiation
     public virtual void SpawnItem(GameObject newItem)
     {
         OnItemSpawned?.Invoke(newItem);
     }
+
+    public virtual void SpawnMap(GameObject newMap)
+    {
+        OnMapSpawned?.Invoke(newMap);
+    }
+    #endregion
+    #region Objectives
 
     public virtual void SetObjectiveStepAsAchieved(int index, GameObject declarer)
     {
@@ -173,6 +185,13 @@ public class EventHandler : MonoBehaviour
     public virtual void EndScoreIncrease()
     {
         OnScoreIncreaseEnded?.Invoke();
+    }
+    #endregion
+
+    #region other simple events
+    public virtual void DisplayMessage(string text) // called when the avatar receives a new position and reaches it!
+    {
+        displayMessage?.Invoke(text);
     }
     #endregion
     #region Debug

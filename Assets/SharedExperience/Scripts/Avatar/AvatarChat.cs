@@ -26,6 +26,7 @@ public class AvatarChat : MonoBehaviour
         EventHandler.OnTutorialOver += HideChatBox; //we hide the chatbox if the tutorial is over
         EventHandler.OnExerciseStepStarted += DisplayExerciseStepMessage;
         EventHandler.OnExerciseOver += DisplayExerciseOverMessage;
+        EventHandler.displayMessage += DisplayMessage;
     }
 
     private void OnDisable()
@@ -34,6 +35,7 @@ public class AvatarChat : MonoBehaviour
         EventHandler.OnTutorialOver -= HideChatBox; //we hide the chatbox if the tutorial is over
         EventHandler.OnExerciseStepStarted -= DisplayExerciseStepMessage;
         EventHandler.OnExerciseOver -= DisplayExerciseOverMessage;
+        EventHandler.displayMessage -= DisplayMessage;
     }
 
     #endregion
@@ -41,6 +43,7 @@ public class AvatarChat : MonoBehaviour
     private void DisplayTutorialStepMessage(TutorialData.TutorialStep step) => DisplayMessage(step.avatarText.message); //each tutorial step has a message
 
     private void DisplayExerciseStepMessage(ExerciceData.ExerciceStep step) => DisplayMessage(step.avatarText.message);
+
     private void DisplayExerciseOverMessage() => DisplayMessage("Well done ! The exercise is over ! You can see your results on the right"); // we simply say the exercise is over
 
     private void DisplayMessage(string message)
@@ -59,7 +62,7 @@ public class AvatarChat : MonoBehaviour
 
     private void HideChatBox()
     {
-        //chatDisplayPanel.SetActive(false);
+        chatDisplayPanel.SetActive(false);
     }
 
     private void ShowChatBox()
@@ -69,6 +72,7 @@ public class AvatarChat : MonoBehaviour
 
 
     //coroutine that handles displaying the message. We display letter by letter and for each end line we handle it differently
+    //Unused for now
     IEnumerator DisplayMessageStepByStep(string message)
     {
         int LineLetterENum = 0; //calculates number of letter per line (so to know when to jump to next line)

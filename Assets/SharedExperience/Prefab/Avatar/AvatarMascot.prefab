@@ -846,6 +846,7 @@ Transform:
   - {fileID: 4835806400627015433}
   - {fileID: 4831353367486261348}
   - {fileID: 4831353367798648943}
+  - {fileID: 2167843062681246734}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2565,6 +2566,9 @@ MonoBehaviour:
   BubbleBaseEmissionRate: 10
   BubbleMaxEmissionRate: 10
   defaultLocation: {x: 0, y: 0, z: 0}
+  avatarChatPanel: {fileID: 2167843062681246733}
+  default_chatPanel_localpos: {x: -0.06, y: 0.016, z: 0.139}
+  alternate_chatPanel_localpos: {x: -0.352, y: 0.168, z: -0.003}
 --- !u!114 &4831353367380705080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4711,3 +4715,84 @@ Transform:
   m_Father: {fileID: 4828729467592882853}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &4831353368228255839
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4836244595698458533}
+    m_Modifications:
+    - target: {fileID: 6708625726486660177, guid: aa159819f96c16845b4dc383c7585be7,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6708625726486660177, guid: aa159819f96c16845b4dc383c7585be7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.352
+      objectReference: {fileID: 0}
+    - target: {fileID: 6708625726486660177, guid: aa159819f96c16845b4dc383c7585be7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.168
+      objectReference: {fileID: 0}
+    - target: {fileID: 6708625726486660177, guid: aa159819f96c16845b4dc383c7585be7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.003
+      objectReference: {fileID: 0}
+    - target: {fileID: 6708625726486660177, guid: aa159819f96c16845b4dc383c7585be7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6708625726486660177, guid: aa159819f96c16845b4dc383c7585be7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6708625726486660177, guid: aa159819f96c16845b4dc383c7585be7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6708625726486660177, guid: aa159819f96c16845b4dc383c7585be7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6708625726486660177, guid: aa159819f96c16845b4dc383c7585be7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6708625726486660177, guid: aa159819f96c16845b4dc383c7585be7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 6708625726486660177, guid: aa159819f96c16845b4dc383c7585be7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6708625726486660178, guid: aa159819f96c16845b4dc383c7585be7,
+        type: 3}
+      propertyPath: m_Name
+      value: 'Chat '
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: aa159819f96c16845b4dc383c7585be7, type: 3}
+--- !u!1 &2167843062681246733 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6708625726486660178, guid: aa159819f96c16845b4dc383c7585be7,
+    type: 3}
+  m_PrefabInstance: {fileID: 4831353368228255839}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2167843062681246734 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6708625726486660177, guid: aa159819f96c16845b4dc383c7585be7,
+    type: 3}
+  m_PrefabInstance: {fileID: 4831353368228255839}
+  m_PrefabAsset: {fileID: 0}

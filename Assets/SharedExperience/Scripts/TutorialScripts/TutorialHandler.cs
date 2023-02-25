@@ -10,10 +10,6 @@ using static TutorialData;
 public class TutorialHandler : MonoBehaviour
 {
 
-    //constants for calculating the duration a tutorial step should be displayed
-    private const float timePerLetter = 0.1f;
-    private const float extraTime = 3f;
-
     //Current Tutorial information. This is used to handle transitionning steps from steps in the tutorial and inform all the parts of the exercice
     private int currentStepIndex = -1;
     private float currentStepDuration = 0f;
@@ -72,7 +68,7 @@ public class TutorialHandler : MonoBehaviour
     private void InitTutorialStep(TutorialStep tutorialStep)
     {
         if (currentStepIndex == -1) return;
-        currentStepDuration = tutorialStep.duration > 0 ? tutorialStep.duration : CalculateTutorialStepLength(tutorialStep.avatarText.message); // we calculate the duration of this tutorial step.
+        currentStepDuration = tutorialStep.duration > 0 ? tutorialStep.duration : Util.CalculateMessageDisplayTime(tutorialStep.avatarText.message); // we calculate the duration of this tutorial step.
         EventHandler.Instance.StartTutorialStep(tutorialStep); //we inform all other listeners about the new step.
         countdown = currentStepDuration; //we start the countdown
     }
@@ -83,11 +79,6 @@ public class TutorialHandler : MonoBehaviour
         currentStepIndex = -1;
         currentTutorial = null;
         EventHandler.Instance.EndTutorial();
-    }
-
-    private float CalculateTutorialStepLength(string message)
-    {
-        return message.Length * timePerLetter + extraTime;
     }
 
     //called when the app is reset

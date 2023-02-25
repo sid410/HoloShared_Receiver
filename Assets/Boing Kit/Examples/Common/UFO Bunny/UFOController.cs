@@ -51,7 +51,7 @@ namespace BoingKit
 
         private float m_motorAngle;
 
-        void Start()
+        protected void Start()
         {
             m_linearVelocity = Vector3.zero;
             m_angularVelocity = 0.0f;
@@ -72,7 +72,7 @@ namespace BoingKit
             }
         }
 
-        private void OnEnable()
+        protected void OnEnable()
         {
             Start();
         }

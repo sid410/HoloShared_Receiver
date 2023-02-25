@@ -5,6 +5,7 @@ using UnityEngine;
 
 /**
  * Debug class, displays logs. Disabled if no debug mode.
+ * TODO : send logs to node-red app for monitoring
  */
 public class LogDisplayer : MonoBehaviour
 {
