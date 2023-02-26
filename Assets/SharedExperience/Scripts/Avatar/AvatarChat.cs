@@ -18,7 +18,18 @@ public class AvatarChat : MonoBehaviour
 
     private Coroutine messageDisplayingCoroutine = null;
 
+    //for audio (following Trever Mock tutorial on youtube)
+    [Header("Dialogue sound data")]
+    public DialogueAudioData dialogueAudioInfo; //contains data about how the voice sounds
+    [Range(0f, 1f)]
+    public float volume;
+    private AudioSource audioSource; //for character talking
 
+
+    private void Awake()
+    {
+        audioSource = this.gameObject.AddComponent<AudioSource>();
+    }
     #region subscriptions
     private void OnEnable()
     {
@@ -39,7 +50,7 @@ public class AvatarChat : MonoBehaviour
     }
 
     #endregion
-     
+
     private void DisplayTutorialStepMessage(TutorialData.TutorialStep step) => DisplayMessage(step.avatarText.message); //each tutorial step has a message
 
     private void DisplayExerciseStepMessage(ExerciceData.ExerciceStep step) => DisplayMessage(step.avatarText.message);
@@ -87,14 +98,16 @@ public class AvatarChat : MonoBehaviour
             //We check how we want to end the line
             if (LineLetterENum + 1 == MAX_LETTER_PER_LINE) //this letter is going to be the last letter of the line, 
             {
-                if ( (i+2 < message.Length && (message[i+1] == ' ' || message[i + 2] == ' ')) || (i+2 == message.Length )) //if the next letter (or after that) is a whitespace, we put the actual letter and jump to the next line
+                if ((i + 2 < message.Length && (message[i + 1] == ' ' || message[i + 2] == ' ')) || (i + 2 == message.Length)) //if the next letter (or after that) is a whitespace, we put the actual letter and jump to the next line
                 {
                     chatDisplaytext.text += message[++i];
 
-                } else if (i+1 < message.Length)//else we put a - and jump to line and put the letter
+                }
+                else if (i + 1 < message.Length)//else we put a - and jump to line and put the letter
                 {
                     chatDisplaytext.text += '-';
-                } else
+                }
+                else
                 {
                     chatDisplaytext.text += message[++i]; // the next letter is the final one, we just put it and break (close the coroutine)
                     yield break;
@@ -111,6 +124,7 @@ public class AvatarChat : MonoBehaviour
     //different coroutine where words do not get split up if they don't fit. wastes space because of no word splitting but more consistent and easier to make work beautifully.
     IEnumerator DisplayMessageWordByWord(string message)
     {
+        int totalLettersDisplayed = 0;
         int LineLetterENum = 0; //calculates number of letter per line (so to know when to jump to next line)
         chatDisplaytext.text = ""; //we reset the chat box
         string[] words = message.Split(' ');
@@ -130,15 +144,62 @@ public class AvatarChat : MonoBehaviour
             for (int j = 0; j < actualWord.Length; j++) //we do all letters (with a delay)
             {
                 chatDisplaytext.text += actualWord[j];
-                LineLetterENum++; //we increase the letter count
+                LineLetterENum++; totalLettersDisplayed++; //we increase the letter count
+                PlayDialogueSound(totalLettersDisplayed, actualWord[j]);
                 yield return new WaitForSeconds(letterTimeDelay); //we put the same delay
             }
 
             //we add a space
             chatDisplaytext.text += ' ';
-            LineLetterENum++; //we increase the letter count
+            LineLetterENum++; totalLettersDisplayed++; //we increase the letter count
         }
         yield break;
+    }
+
+
+
+    //AUDIO : AUDIO For character speaking
+
+    private void PlayDialogueSound(int currentDisplayedCharacterCount, char currentCharacter)
+    {
+        // set variables for the below based on our config
+        AudioClip[] dialogueTypingSoundClips = dialogueAudioInfo.dialogueTypingSoundClips;
+        int frequencyLevel = dialogueAudioInfo.frequencyLevel;
+        float minPitch = dialogueAudioInfo.minPitch;
+        float maxPitch = dialogueAudioInfo.maxPitch;
+        bool stopAudioSource = dialogueAudioInfo.stopAudioSource;
+
+        // play the sound based on the config
+        if (currentDisplayedCharacterCount % frequencyLevel == 0)
+        {
+            if (stopAudioSource)
+            {
+                audioSource.Stop();
+            }
+
+            int hashCode = currentCharacter.GetHashCode();
+            // sound clip
+            int predictableIndex = hashCode % dialogueTypingSoundClips.Length;
+            AudioClip soundClip = dialogueTypingSoundClips[predictableIndex];
+            // pitch
+            int minPitchInt = (int)(minPitch * 100);
+            int maxPitchInt = (int)(maxPitch * 100);
+            int pitchRangeInt = maxPitchInt - minPitchInt;
+            // cannot divide by 0, so if there is no range then skip the selection
+            if (pitchRangeInt != 0)
+            {
+                int predictablePitchInt = (hashCode % pitchRangeInt) + minPitchInt;
+                float predictablePitch = predictablePitchInt / 100f;
+                audioSource.pitch = predictablePitch;
+            }
+            else
+            {
+                audioSource.pitch = minPitch;
+            }
+
+            // play sound
+            audioSource.PlayOneShot(soundClip);
+        }
     }
 
 }

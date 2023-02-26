@@ -195,6 +195,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chatDisplaytext: {fileID: 6661866141698851631}
   chatDisplayPanel: {fileID: 6708625725504680955}
+  dialogueAudioInfo: {fileID: 11400000, guid: 644d095daa18e1a4ab76523c73b6cc71, type: 2}
+  volume: 0.5
 --- !u!1 &6708778001270912429
 GameObject:
   m_ObjectHideFlags: 0

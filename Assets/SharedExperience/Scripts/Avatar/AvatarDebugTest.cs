@@ -16,5 +16,6 @@ public class AvatarDebugTest : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         avatarMouvement.SetDestination(new Vector3(0.473f, 0.224f, -0.288f));
+        EventHandler.Instance.DisplayMessage("Hi, i'm bunny chan you guide :3");
     }
 }
