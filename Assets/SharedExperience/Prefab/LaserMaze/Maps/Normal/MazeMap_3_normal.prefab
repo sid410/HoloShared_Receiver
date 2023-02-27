@@ -82,7 +82,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8464426880876576489}
   m_Layer: 0
-  m_Name: MazeMap3_normal
+  m_Name: MazeMap_3_normal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1195,7 +1195,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1097153681, guid: 4cf7cb1a6f7f53943ab4f9e522ab63f9, type: 3}
       propertyPath: debug_recastOnUpdate
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 783538539967722336, guid: 4cf7cb1a6f7f53943ab4f9e522ab63f9,
         type: 3}

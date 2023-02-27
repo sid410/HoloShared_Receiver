@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19a5e5a5675fd774b8e68b435794915a, type: 3}
-  m_Name: MazeLevel2_Hard
+  m_Name: MazeLevel2_easy
   m_EditorClassIdentifier: 
   spawnPoints:
-  - itemPrefab: {fileID: 4166485842406578033, guid: 5554982eda787b14a86a355be9eb4560,
+  - itemPrefab: {fileID: 1647821449561618417, guid: 490f61c766d720643a70e489c8f9c41c,
       type: 3}
     PosX: 0
     PosY: 0

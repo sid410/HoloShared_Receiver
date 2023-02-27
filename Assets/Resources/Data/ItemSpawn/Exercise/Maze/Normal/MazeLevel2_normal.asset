@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: MazeLevel2_normal
   m_EditorClassIdentifier: 
   spawnPoints:
-  - itemPrefab: {fileID: 1428921516580578300, guid: db26ae1e537bf33478e657a69b6a6c5f,
+  - itemPrefab: {fileID: 8482898309712854831, guid: a2dccee60f74d51419c4bc103d79778d,
       type: 3}
     PosX: 0
     PosY: 0
     scale: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
     message: 
+    spawnDelay: 0

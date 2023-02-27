@@ -74,7 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4020228ba3d4ed0419285427f64c12dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  message: This wall is blocking the light, maybe reflecting it can help !
+  message: This wall is blocking the light, maybe reflecting it before can help !
   countdown: 40
 --- !u!1 &8089617495207744515
 GameObject:
@@ -86,7 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8089617495207744575}
   m_Layer: 0
-  m_Name: MazeMap_1
+  m_Name: MazeMap_1_easy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

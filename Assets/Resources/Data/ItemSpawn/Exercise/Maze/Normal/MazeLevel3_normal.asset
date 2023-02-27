@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19a5e5a5675fd774b8e68b435794915a, type: 3}
-  m_Name: MazeLevel1_jard
+  m_Name: MazeLevel3_normal
   m_EditorClassIdentifier: 
   spawnPoints:
-  - itemPrefab: {fileID: 8089617495207744515, guid: a7d03a6526e4b974d94bdaea1a6396a3,
+  - itemPrefab: {fileID: 8464426880876576469, guid: 6f6e5b636828aa14298187fd9028dc68,
       type: 3}
     PosX: 0
     PosY: 0
     scale: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
     message: 
+    spawnDelay: 0

@@ -1,4 +1,6 @@
 using BoingKit;
+using M2MqttUnity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,11 +32,15 @@ public class AvatarMouvement : UFOController
     bool localDestination = true; 
 
     GameObject mainCamera; //camera used to always look at
+    BaseClient mttqclient; //client to communicate with webapp, this allows us to disable hints
 
+    //For hints
     List<AvatarHint> avatarHints = new List<AvatarHint>(); //used for in game hints, avatar periodically shows hints if user needs them
     private AvatarHint actualHint = null; //we keep track of the actual hint since it takes time to display
+    private bool enableHints = true; //can be disabled with webapp (still not working)
     float timeSinceExerciseStart = 0f;
 
+    
 
     //for hints
     private void Awake()
@@ -52,6 +58,7 @@ public class AvatarMouvement : UFOController
         EventHandler.OnMapSpawned += LoadMapHints;
         EventHandler.OnTutorialOver += ResetHints;
         EventHandler.OnAppReset += FullReset;
+        mttqclient.RegisterTopicHandler("M2MQTT/enableHints", ChangeHintState);
     }
 
     private void OnDisable()
@@ -60,8 +67,24 @@ public class AvatarMouvement : UFOController
         EventHandler.OnMapSpawned -= LoadMapHints;
         EventHandler.OnTutorialOver -= ResetHints;
         EventHandler.OnAppReset -= FullReset;
+        mttqclient.UnregisterTopicHandler("M2MQTT/enableHints", ChangeHintState);
     }
 
+    #region Hints and hints handlers
+
+    //used to disable hints from the webapp
+    private void ChangeHintState(string topic, string message)
+    {
+        try
+        {
+            enableHints = bool.Parse(message);
+        }
+        catch (InvalidCastException e)
+        {
+            Debug.Log("error when casting");
+        }
+
+    }
     //gets the spawned map's hints.
     private void LoadMapHints(GameObject map)
     {
@@ -69,6 +92,14 @@ public class AvatarMouvement : UFOController
         avatarHints.AddRange(map.transform.Find("Hints").GetComponentsInChildren<AvatarHint>().ToList()); //we add the list of possibles hints here
     }
 
+    //coroutine, resets the avatar after the hint has been displayed long enough
+    IEnumerator EndHintAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay); //we wait until the messagei s read
+        actualHint = null; //we reset the hint
+        ResetPosition(); //we go back to the source
+    }
+    #endregion
     #region destination settings
     public void SetDestination(Vector3 destination)
     {
@@ -133,13 +164,7 @@ public class AvatarMouvement : UFOController
         CalculateMouvement(linearInputVec);
     }
 
-    //coroutine, resets the avatar after the hint has been displayed long enough
-    IEnumerator EndHintAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay); //we wait until the messagei s read
-        actualHint = null; //we reset the hint
-        ResetPosition(); //we go back to the source
-    }
+    
 
     #region reset
 

@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d965c6b96edeebf448c9df86d482c0b2, type: 3}
-  m_Name: MazeExercise_normal
+  m_Name: MazeExercise_easy
   m_EditorClassIdentifier: 
   steps:
   - faceExpression: 0
     avatarText:
       position: {x: 0, y: 0, z: 0}
-      message: Guide the Beam towards the objective !
-    objectives: {fileID: 11400000, guid: 0c5360da634b1f947a4f352252ad9dc6, type: 2}
-    spawnEntry: {fileID: 11400000, guid: e380c42a6b24136479328a7cfa53247b, type: 2}
+      message: Try to guide the beam to the goals !
+    objectives: {fileID: 11400000, guid: 1b223806bf8f81840874d03b634f1cd3, type: 2}
+    spawnEntry: {fileID: 11400000, guid: 3e738cbfeb52efb499a51f582a5b7c7c, type: 2}
   - faceExpression: 1
     avatarText:
       position: {x: 0, y: 0, z: 0}
-      message: Now try to make the light Reach 2 objectives !
+      message: Now try to make the light Reach 3 objectives !
     objectives: {fileID: 11400000, guid: a2f8d3892eee059459008573b992e311, type: 2}
-    spawnEntry: {fileID: 11400000, guid: 96c3c1c1225b9f94ab3d533b9704de80, type: 2}
+    spawnEntry: {fileID: 11400000, guid: 8d670bc41413a9b4582f2a3e4f93eb9e, type: 2}
   - faceExpression: 1
     avatarText:
       position: {x: 0, y: 0, z: 0}
-      message: Now try to make the light Reach 2 objectives !
-    objectives: {fileID: 11400000, guid: a2f8d3892eee059459008573b992e311, type: 2}
-    spawnEntry: {fileID: 11400000, guid: 23bf5dce5070d5f4da3b1a1bdcae66f9, type: 2}
+      message: You're nearly done ! Good luck !
+    objectives: {fileID: 11400000, guid: 1b223806bf8f81840874d03b634f1cd3, type: 2}
+    spawnEntry: {fileID: 11400000, guid: 2c33764a5dfddd34f9c41d98e4018019, type: 2}

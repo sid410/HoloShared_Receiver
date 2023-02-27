@@ -16,7 +16,7 @@ MonoBehaviour:
   tutorial: {fileID: 11400000, guid: a993326a80912e746aab720701259ea5, type: 2}
   exercisesByDifficulty:
   - exerciseDifficulty: 0
-    exercise: {fileID: 11400000, guid: c0fd1de53b0265a49afd7eac5548bd69, type: 2}
+    exercise: {fileID: 11400000, guid: 534cc91859213f841b7f21f1fca67fcf, type: 2}
   - exerciseDifficulty: 1
     exercise: {fileID: 11400000, guid: c0fd1de53b0265a49afd7eac5548bd69, type: 2}
   - exerciseDifficulty: 2

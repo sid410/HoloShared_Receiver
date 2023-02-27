@@ -16,13 +16,18 @@ MonoBehaviour:
   - faceExpression: 0
     avatarText:
       position: {x: 0, y: 0, z: 0}
-      message: Guide the Beam towards the objective !
-    objectives: {fileID: 11400000, guid: 1b223806bf8f81840874d03b634f1cd3, type: 2}
+      message: The mazes are difficult now ! Try your best
+    objectives: {fileID: 11400000, guid: e7c0f21d88bfbed498cf09ac845bed93, type: 2}
     spawnEntry: {fileID: 11400000, guid: d531df479490f584b85c3c16b4b4a2e8, type: 2}
   - faceExpression: 1
     avatarText:
       position: {x: 0, y: 0, z: 0}
-      message: "\rNow try to make the light Reach all objectives !\nThink outside
-        the box !"
-    objectives: {fileID: 11400000, guid: 0c5360da634b1f947a4f352252ad9dc6, type: 2}
+      message: You're good, let's see how you do now !
+    objectives: {fileID: 11400000, guid: b727c21fe5afcea4d81f0c70f7ea4387, type: 2}
     spawnEntry: {fileID: 11400000, guid: 6fcf5035abfa4bc4894bbda0315b846b, type: 2}
+  - faceExpression: 1
+    avatarText:
+      position: {x: 0, y: 0, z: 0}
+      message: This is the final maze ! This won't be as easy as before
+    objectives: {fileID: 11400000, guid: a2f8d3892eee059459008573b992e311, type: 2}
+    spawnEntry: {fileID: 11400000, guid: 214f6374f6d3e8e4f8533546173110b8, type: 2}

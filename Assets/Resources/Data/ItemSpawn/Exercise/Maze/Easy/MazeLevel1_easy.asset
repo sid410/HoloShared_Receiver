@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19a5e5a5675fd774b8e68b435794915a, type: 3}
-  m_Name: MazeLevel1
+  m_Name: MazeLevel1_easy
   m_EditorClassIdentifier: 
   spawnPoints:
   - itemPrefab: {fileID: 8089617495207744515, guid: a7d03a6526e4b974d94bdaea1a6396a3,
@@ -20,3 +20,4 @@ MonoBehaviour:
     scale: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
     message: 
+    spawnDelay: 0
