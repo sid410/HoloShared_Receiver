@@ -654,13 +654,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 925584112}
+  - component: {fileID: 925584113}
   m_Layer: 0
   m_Name: Test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &925584112
 Transform:
   m_ObjectHideFlags: 0
@@ -677,6 +678,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &925584113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925584111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 504128022f7e7a04dbcad8fa8ba790bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brokerAddress: localhost
+  brokerPort: 1883
+  isEncrypted: 0
+  connectionDelay: 500
+  timeoutOnConnection: 30000
+  autoConnect: 0
+  autoTest: 0
+  stopConnection: 0
+  restart: 0
+  topic: M2MQTT_Unity/test
+  lastMsg: 
 --- !u!4 &1049118655 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9041364183331293080, guid: afe32ca1dbedcb845afb6b3c4df03c83,
@@ -1244,6 +1268,11 @@ PrefabInstance:
     - target: {fileID: 4830372849611756099, guid: 23d1c0206a4ef704a9ca71267c9e973a,
         type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831353367380705080, guid: 23d1c0206a4ef704a9ca71267c9e973a,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4836244595698458533, guid: 23d1c0206a4ef704a9ca71267c9e973a,

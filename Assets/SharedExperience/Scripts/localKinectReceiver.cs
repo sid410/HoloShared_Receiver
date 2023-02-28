@@ -88,6 +88,10 @@ public class localKinectReceiver : MonoBehaviour
     private bool in_exercise = false;
 
     private KinectResultsAbs exerciseKinectDataHandler = null; //EXERCISE DEPENDANT, handles incoming kinect data
+
+    //The timestamp is in the form of seconds since the start of the day ! edgecase where program is run around midnight is already considered.
+    private int lastKinectTimestamp = -1; //used to filter out images that come late in the 
+
     private void Start()
     {
         //calculate projected camera center on table
@@ -105,6 +109,7 @@ public class localKinectReceiver : MonoBehaviour
         EventHandler.OnExerciseStepStarted += OnExerciseStepStarted;
         EventHandler.OnExerciseStepOver += OnExerciseStepOver;
         EventHandler.OnItemSpawned += RegisterSpawnedItem; //we register all spawned items in a local list
+        lastKinectTimestamp = -1; //we reset the timestamps
     }
 
     private void OnDisable()
@@ -137,15 +142,28 @@ public class localKinectReceiver : MonoBehaviour
         //ClearKinectUtensils(); //we clear the old utensils
         if (!waiting_for_final_results && !in_exercise) return; //TODO : enable this, block any kinect result usage if its not an exercice
         EventHandler.Instance.LogMessage("Matlab results accepted !");
-        EventHandler.Instance.TriggerBeforeMatlabReceived(); //we inform listeners that matlab results are going to be parsed
+        
         string[] results = message.Split('\n');
 
+        //we parse the timestamp
+        try {
+            int timestamp = int.Parse(results[0]);
+
+            if (timestamp < 1000 && lastKinectTimestamp > 40000) lastKinectTimestamp = timestamp; //this is to cover the edgecase where it's midnight 
+            if (timestamp <= lastKinectTimestamp) return; //we stop parsing the results if they are old
+        } catch (Exception e)
+        {
+            Debug.Log("could not parse timestamp of kinect picture");
+        }
+
+        EventHandler.Instance.TriggerBeforeMatlabReceived(); //we inform listeners that matlab results are going to be parsed
         //we parse the data and pass it to the listener if needed
         if (exerciseKinectDataHandler != null)
         {
             List<KinectUtensilData> parsedData = new List<KinectUtensilData>();
-            foreach (string res in results)
+            for (int i = 1; i < results.Length; i++) //we ignore first entry because it's the timestamp
             {
+                string res = results[i];
                 if (res == "") continue;
 
                 string[] data = res.Split(';');
