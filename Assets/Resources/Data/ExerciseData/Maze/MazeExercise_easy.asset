@@ -23,7 +23,7 @@ MonoBehaviour:
     avatarText:
       position: {x: 0, y: 0, z: 0}
       message: Now try to make the light Reach 3 objectives !
-    objectives: {fileID: 11400000, guid: a2f8d3892eee059459008573b992e311, type: 2}
+    objectives: {fileID: 11400000, guid: b727c21fe5afcea4d81f0c70f7ea4387, type: 2}
     spawnEntry: {fileID: 11400000, guid: 8d670bc41413a9b4582f2a3e4f93eb9e, type: 2}
   - faceExpression: 1
     avatarText:

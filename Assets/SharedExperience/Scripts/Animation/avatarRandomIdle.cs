@@ -22,7 +22,6 @@ public class avatarRandomIdle : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log(" (SU) State is " + stateInfo.fullPathHash);
         if (animator.GetBool("Moving")) return; //if we're moving, ignore any special animation
 
         //we calculate the cooldown

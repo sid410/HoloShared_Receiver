@@ -137,7 +137,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4830146646293075871}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.0887, z: 0.001}
+  m_LocalPosition: {x: 0, y: 0.062, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4836244595698458533}
@@ -156,8 +156,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Shape: 1
-  Radius: 0.03
-  Height: 0.04
+  Radius: 0.0225
+  Height: 0.03
   Dimensions: {x: 0.1, y: 0.1, z: 0.1}
 --- !u!1 &4830161428561438347
 GameObject:
@@ -587,7 +587,7 @@ Transform:
   m_GameObject: {fileID: 4830267747328027987}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children:
   - {fileID: 4835945222138186203}
   - {fileID: 4828864582454362629}
@@ -2549,7 +2549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bf6b698c9aee3f4f82fc47d448ab80b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LinearThrust: 3
+  LinearThrust: 0.65
   MaxLinearSpeed: 3.5
   LinearDrag: 10
   Tilt: 15
@@ -2566,9 +2566,9 @@ MonoBehaviour:
   BubbleBaseEmissionRate: 10
   BubbleMaxEmissionRate: 10
   defaultLocation: {x: 0, y: 0, z: 0}
-  avatarChatPanel: {fileID: 2167843062681246733}
+  avatarChatPanel: {fileID: 2167843062681246735}
   default_chatPanel_localpos: {x: -0.06, y: 0.016, z: 0.139}
-  alternate_chatPanel_localpos: {x: -0.352, y: 0.168, z: -0.003}
+  alternate_chatPanel_localpos: {x: -0.352, y: 0.168, z: 0.03}
 --- !u!114 &4831353367380705080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3162,7 +3162,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4830551335760018653}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.1549, z: 0.0005}
+  m_LocalPosition: {x: 0, y: 0.1174, z: 0.0005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4836244595698458533}
@@ -3181,8 +3181,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Shape: 1
-  Radius: 0.04
-  Height: 0.02
+  Radius: 0.03
+  Height: 0.015
   Dimensions: {x: 0.1, y: 0.1, z: 0.1}
 --- !u!1 &4830567993374329691
 GameObject:
@@ -4740,7 +4740,7 @@ PrefabInstance:
     - target: {fileID: 6708625726486660177, guid: aa159819f96c16845b4dc383c7585be7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.003
+      value: 0.028
       objectReference: {fileID: 0}
     - target: {fileID: 6708625726486660177, guid: aa159819f96c16845b4dc383c7585be7,
         type: 3}
@@ -4784,15 +4784,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa159819f96c16845b4dc383c7585be7, type: 3}
---- !u!1 &2167843062681246733 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6708625726486660178, guid: aa159819f96c16845b4dc383c7585be7,
-    type: 3}
-  m_PrefabInstance: {fileID: 4831353368228255839}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2167843062681246734 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6708625726486660177, guid: aa159819f96c16845b4dc383c7585be7,
     type: 3}
   m_PrefabInstance: {fileID: 4831353368228255839}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2167843062681246735 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6708625726486660176, guid: aa159819f96c16845b4dc383c7585be7,
+    type: 3}
+  m_PrefabInstance: {fileID: 4831353368228255839}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fe5207afb33c94d9cef4ef8814afe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

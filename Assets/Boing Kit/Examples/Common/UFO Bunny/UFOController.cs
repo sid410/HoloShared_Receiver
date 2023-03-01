@@ -203,5 +203,101 @@ namespace BoingKit
                 Eyes.localPosition = m_eyePositionLsSpring.TrackDampingRatio(m_eyeInitPositionLs, 30.0f, 0.8f, dt);
             }
         }
+
+        protected void CalculateSimpleMovement(Vector3 linearInputVec)
+        {
+            float dt = Time.fixedDeltaTime;
+            bool linearThrustOn = linearInputVec.sqrMagnitude > MathUtil.Epsilon;
+            if (linearThrustOn)
+            {
+                linearInputVec = linearInputVec.normalized * LinearThrust;
+                m_linearVelocity += linearInputVec * dt;
+                m_linearVelocity = VectorUtil.ClampLength(m_linearVelocity, 0.0f, MaxLinearSpeed);
+            }
+            else
+            {
+                m_linearVelocity = VectorUtil.ClampLength(m_linearVelocity, 0.0f, Mathf.Max(0.0f, m_linearVelocity.magnitude - LinearDrag * dt));
+            }
+
+            float speed = m_linearVelocity.magnitude;
+            float tSpeed = speed * MathUtil.InvSafe(MaxLinearSpeed);
+
+            Quaternion tiltRot = Quaternion.identity;
+            float tHorizontal = 1.0f;
+            float tHorizontalSpeed = 0.0f;
+            if (speed > MathUtil.Epsilon)
+            {
+                Vector3 flatVel = m_linearVelocity;
+                flatVel.y = 0.0f;
+                tHorizontal =
+                  m_linearVelocity.magnitude > 0.01f
+                    ? 1.0f - Mathf.Clamp01(Mathf.Abs(m_linearVelocity.y) / m_linearVelocity.magnitude)
+                    : 0.0f;
+                tHorizontalSpeed = Mathf.Min(1.0f, speed / Mathf.Max(MathUtil.Epsilon, MaxLinearSpeed)) * tHorizontal;
+                Vector3 tiltAxis = Vector3.Cross(Vector3.up, flatVel).normalized;
+                float tiltAngle = Tilt * MathUtil.Deg2Rad * tHorizontalSpeed;
+                tiltRot = QuaternionUtil.AxisAngle(tiltAxis, tiltAngle);
+            }
+
+            float angularInput = 0.0f;
+            if (Input.GetKey(KeyCode.Q))
+                angularInput -= 1.0f;
+            if (Input.GetKey(KeyCode.E))
+                angularInput += 1.0f;
+
+            bool largerMaxAngularSpeed = Input.GetKey(KeyCode.LeftControl);
+
+            bool angularThurstOn = Mathf.Abs(angularInput) > MathUtil.Epsilon;
+            if (angularThurstOn)
+            {
+                float maxAngularSpeed = MaxAngularSpeed * (largerMaxAngularSpeed ? 2.5f : 1.0f);
+                angularInput *= AngularThrust * MathUtil.Deg2Rad;
+                m_angularVelocity += angularInput * dt;
+                m_angularVelocity = Mathf.Clamp(m_angularVelocity, -maxAngularSpeed * MathUtil.Deg2Rad, maxAngularSpeed * MathUtil.Deg2Rad);
+            }
+            else
+            {
+                m_angularVelocity -= Mathf.Sign(m_angularVelocity) * Mathf.Min(Mathf.Abs(m_angularVelocity), AngularDrag * MathUtil.Deg2Rad * dt);
+            }
+
+            //calculate mouvement simple
+            transform.position = transform.position + linearInputVec * dt * LinearThrust;
+
+
+            //add effects
+
+            if (Motor != null)
+            {
+                float motorAngularSpeedDeg = Mathf.Lerp(MotorBaseAngularSpeed, MotorMaxAngularSpeed, tHorizontalSpeed);
+                m_motorAngle += motorAngularSpeedDeg * MathUtil.Deg2Rad * dt;
+                Motor.localRotation = QuaternionUtil.AxisAngle(Vector3.up, m_motorAngle - m_yawAngle);
+            }
+
+            if (BubbleEmitter != null)
+            {
+                var emission = BubbleEmitter.emission;
+                emission.rateOverTime = Mathf.Lerp(BubbleBaseEmissionRate, BubbleMaxEmissionRate, tSpeed);
+            }
+
+            if (Eyes != null)
+            {
+                m_blinkTimer -= dt;
+                if (m_blinkTimer <= 0.0f)
+                {
+                    bool doubleBlink = !m_lastBlinkWasDouble && Random.Range(0.0f, 1.0f) > 0.75f;
+                    m_blinkTimer =
+                        doubleBlink
+                          ? 0.2f
+                          : BlinkInterval + Random.Range(1.0f, 2.0f);
+                    m_lastBlinkWasDouble = doubleBlink;
+
+                    m_eyeScaleSpring.Value.y = 0.0f;
+                    m_eyePositionLsSpring.Value.y -= 0.025f;
+                }
+
+                Eyes.localScale = m_eyeScaleSpring.TrackDampingRatio(m_eyeInitScale, 30.0f, 0.8f, dt);
+                Eyes.localPosition = m_eyePositionLsSpring.TrackDampingRatio(m_eyeInitPositionLs, 30.0f, 0.8f, dt);
+            }
+        }
     }
 }

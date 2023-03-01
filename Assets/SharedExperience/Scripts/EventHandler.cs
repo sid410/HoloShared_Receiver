@@ -33,6 +33,8 @@ public class EventHandler : MonoBehaviour
 
     //avatar events 
     public static event Action OnAvatarReachedDestination;
+    public static event Action<GameObject> OnNewAvatarDestination;
+
     //kinect events
     public static event Action OnBeforeMatlabDataReceived; //called every time we get matlab resutls
     public static event Action OnAfterMatlabDataReceived; //called every time we get matlab resutls
@@ -45,7 +47,7 @@ public class EventHandler : MonoBehaviour
     public static event Action OnStarAcquired;
 
     //simple events
-    public static event Action<string> displayMessage;
+    public static event Action<string, float> displayMessage;
     //debug events
     public static event Action<string> OnLog;
     public static event Action OnAppReset;
@@ -107,6 +109,11 @@ public class EventHandler : MonoBehaviour
 
     #endregion
     #region avatar events
+
+    public virtual void InformNewAvatarDestination(GameObject destination) // called when the avatar receives a new position and reaches it!
+    {
+        OnNewAvatarDestination?.Invoke(destination);
+    }
     public virtual void InformAvatarReachedDestination() // called when the avatar receives a new position and reaches it!
     {
         OnAvatarReachedDestination?.Invoke();
@@ -189,9 +196,9 @@ public class EventHandler : MonoBehaviour
     #endregion
 
     #region other simple events
-    public virtual void DisplayMessage(string text) // called when the avatar receives a new position and reaches it!
+    public virtual void DisplayMessage(string text, float duration) // called when the avatar receives a new position and reaches it!
     {
-        displayMessage?.Invoke(text);
+        displayMessage?.Invoke(text, duration);
     }
     #endregion
     #region Debug

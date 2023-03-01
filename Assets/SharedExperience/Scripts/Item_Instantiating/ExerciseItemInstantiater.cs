@@ -65,12 +65,11 @@ public class ExerciseItemInstantiater : MonoBehaviour
         {
             if (spawn.spawnDelay > waitedTime)
             {
-                Debug.Log("Waiting for " + (spawn.spawnDelay - waitedTime) + " and time scale" + Time.timeScale);
                 yield return new WaitForSeconds(spawn.spawnDelay - waitedTime);
-                Debug.Log("finished waiting");
+                Debug.Log("finished waiting, spawning delayed items");
                 waitedTime += spawn.spawnDelay;
             }
-            Debug.Log("passee waiting time");
+
             //we instantiate the prefab, set the stonesOrigin as parent and fix all rotations/transform problems
             GameObject spawnedObject = Instantiate(spawn.itemPrefab);
             spawnedObject.transform.parent = stonesOrigin.transform;
@@ -100,7 +99,7 @@ public class ExerciseItemInstantiater : MonoBehaviour
 
     void DeleteSpawnedItems()
     {
-        Debug.Log("reset called");
+        //Debug.Log("reset called");
         if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
         spawnCoroutine = null;
         while (spawnedItems.Count > 0)

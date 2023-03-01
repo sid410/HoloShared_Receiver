@@ -7,14 +7,22 @@ public class MazeTutorialEventHandler : MonoBehaviour
 {
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject mirrorObject; 
-    [SerializeField] private MazeLazerAbs laserHandler; 
-    
+    [SerializeField] private MazeLazerAbs laserHandler;
+    [SerializeField] private GameObject avatarPosition; //avatar plays a part in the animation
 
     
 
     private void Start()
     {
+
+        if (avatarPosition == null) return;
+        EventHandler.Instance.InformNewAvatarDestination(avatarPosition);
         EventHandler.OnAvatarReachedDestination += StartAnimation;
+    }
+
+    private void OnDisable()
+    {
+        EventHandler.OnAvatarReachedDestination -= StartAnimation;
     }
 
     //the animation is started when the Avatar is in position

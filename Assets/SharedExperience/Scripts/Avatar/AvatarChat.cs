@@ -29,12 +29,13 @@ public class AvatarChat : MonoBehaviour
     private void Awake()
     {
         audioSource = this.gameObject.AddComponent<AudioSource>();
+        audioSource.volume = volume;
     }
     #region subscriptions
     private void OnEnable()
     {
         EventHandler.OnTutorialStepStarted += DisplayTutorialStepMessage;
-        EventHandler.OnTutorialOver += HideChatBox; //we hide the chatbox if the tutorial is over
+        //EventHandler.OnTutorialOver += HideChatBox; //we hide the chatbox if the tutorial is over
         EventHandler.OnExerciseStepStarted += DisplayExerciseStepMessage;
         EventHandler.OnExerciseOver += DisplayExerciseOverMessage;
         EventHandler.displayMessage += DisplayMessage;
@@ -43,7 +44,7 @@ public class AvatarChat : MonoBehaviour
     private void OnDisable()
     {
         EventHandler.OnTutorialStepStarted -= DisplayTutorialStepMessage;
-        EventHandler.OnTutorialOver -= HideChatBox; //we hide the chatbox if the tutorial is over
+        //EventHandler.OnTutorialOver -= HideChatBox; //we hide the chatbox if the tutorial is over
         EventHandler.OnExerciseStepStarted -= DisplayExerciseStepMessage;
         EventHandler.OnExerciseOver -= DisplayExerciseOverMessage;
         EventHandler.displayMessage -= DisplayMessage;
@@ -51,31 +52,38 @@ public class AvatarChat : MonoBehaviour
 
     #endregion
 
-    private void DisplayTutorialStepMessage(TutorialData.TutorialStep step) => DisplayMessage(step.avatarText.message); //each tutorial step has a message
+    private void DisplayTutorialStepMessage(TutorialData.TutorialStep step) => DisplayMessage(step.avatarText.message, 0f); //each tutorial step has a message
 
-    private void DisplayExerciseStepMessage(ExerciceData.ExerciceStep step) => DisplayMessage(step.avatarText.message);
+    private void DisplayExerciseStepMessage(ExerciceData.ExerciceStep step) => DisplayMessage(step.avatarText.message, 3f);
 
-    private void DisplayExerciseOverMessage() => DisplayMessage("Well done ! The exercise is over ! You can see your results on the right"); // we simply say the exercise is over
+    private void DisplayExerciseOverMessage() => DisplayMessage("Well done ! The exercise is over ! You can see your results on the right", 0f); // we simply say the exercise is over
 
-    private void DisplayMessage(string message)
+    //duration after the end of the text display for the text to disapeear
+    private void DisplayMessage(string message, float duration)
     {
         if (message == null || message.Length == 0) //if no message, we hide the chatbox
         {
+            chatDisplaytext.text = "";
             HideChatBox();
             return;
         }
         if (messageDisplayingCoroutine != null) StopCoroutine(messageDisplayingCoroutine);
 
         //if this item is disabled for any reason, we don't start the coroutine but set the text directly
-        if (gameObject.activeSelf) messageDisplayingCoroutine = StartCoroutine(DisplayMessageWordByWord(message));
+        if (gameObject.activeSelf) messageDisplayingCoroutine = StartCoroutine(DisplayMessageWordByWord(message, duration));
         else chatDisplaytext.text = message;
     }
 
-    private void HideChatBox()
+    public void HideChatBox()
     {
         chatDisplayPanel.SetActive(false);
     }
 
+    public void ShowChatBoxIfText()
+    {
+        if (chatDisplaytext.text.Length == 0) return; //we prevent this is there is no text
+        ShowChatBox();
+    }
     private void ShowChatBox()
     {
         chatDisplayPanel.SetActive(true);
@@ -122,7 +130,7 @@ public class AvatarChat : MonoBehaviour
 
 
     //different coroutine where words do not get split up if they don't fit. wastes space because of no word splitting but more consistent and easier to make work beautifully.
-    IEnumerator DisplayMessageWordByWord(string message)
+    IEnumerator DisplayMessageWordByWord(string message, float duration)
     {
         int totalLettersDisplayed = 0;
         int LineLetterENum = 0; //calculates number of letter per line (so to know when to jump to next line)
@@ -152,6 +160,13 @@ public class AvatarChat : MonoBehaviour
             //we add a space
             chatDisplaytext.text += ' ';
             LineLetterENum++; totalLettersDisplayed++; //we increase the letter count
+        }
+
+        //if a duration is specified we hide the chatbox after that delay
+        if (duration > 0f)
+        {
+            yield return new WaitForSeconds(duration);
+            HideChatBox();
         }
         yield break;
     }

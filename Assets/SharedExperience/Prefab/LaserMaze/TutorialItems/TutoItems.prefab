@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6432638730732167348}
   - component: {fileID: 6432638730732167306}
-  - component: {fileID: 6432638730732167307}
+  - component: {fileID: 6648945283709520622}
   m_Layer: 0
   m_Name: MazeUtensil
   m_TagString: Untagged
@@ -87,7 +87,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!114 &6432638730732167307
+--- !u!114 &6648945283709520622
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,8 +99,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af34dcdab76e22b47ae1b13c6792b1e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   mirrorObject: {fileID: 2746507940268045237}
   laserHandler: {fileID: 8706603866053517108}
+  avatarPosition: {fileID: 0}
 --- !u!1001 &3497501460719661469
 PrefabInstance:
   m_ObjectHideFlags: 0

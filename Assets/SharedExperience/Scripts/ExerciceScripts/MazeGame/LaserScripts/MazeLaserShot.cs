@@ -47,7 +47,13 @@ public class MazeLaserShot : MazeLazerAbs
 
     //update the laser 
 
-    private void RecastLaser() => UpdateLaser(5f);
+    private void RecastLaser() => StartCoroutine(RecastLaserAfterDelay());
+
+    IEnumerator RecastLaserAfterDelay()
+    {
+        yield return new WaitForSeconds(0.1f);
+        UpdateLaser(5f);
+    }
     public override void UpdateLaser(float laserWidth)
     {
         if (!exerciseStarted) return;

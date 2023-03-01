@@ -20,18 +20,18 @@ public class AvatarMouvement : UFOController
     [SerializeField] private Vector3 defaultLocation;
 
     [Header("(optional) Chat box, used if you have a chat tied to the avatar (put a chat panel inside the UI)")]
-    [SerializeField] private GameObject avatarChatPanel;
+    [SerializeField] private AvatarChat avatarChatPanel;
     [SerializeField] private Vector3 default_chatPanel_localpos; //default location under the avatar
     [SerializeField] private Vector3 alternate_chatPanel_localpos; //alternate position on the side of the avatar
 
     //margin before we consider destination as reached
-    float distanceMargin = 0.1f;
+    float distanceMargin = 0.04f;
 
     //used for moving to a destination ! when we go to a gameobject, we use world position. When moving to a Vector3 position, we use local position
     Vector3 Destination = Vector3.zero;     //sets the destination of the Avatar ! This is a local position relative to the stones origin
     bool localDestination = true; 
 
-    GameObject mainCamera; //camera used to always look at
+    Camera mainCamera; //camera used to always look at
     BaseClient mttqclient; //client to communicate with webapp, this allows us to disable hints
 
     //For hints
@@ -46,7 +46,8 @@ public class AvatarMouvement : UFOController
     private void Awake()
     {
         if (avatarChatPanel != null) avatarChatPanel.transform.localPosition = default_chatPanel_localpos;
-        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        mainCamera = Camera.main;
+        mttqclient = GameObject.Find("BaseClient").GetComponent<BaseClient>();
         transform.LookAt(mainCamera.transform); //we look at the player
     }
 
@@ -54,20 +55,23 @@ public class AvatarMouvement : UFOController
     {
         base.OnEnable();
         //EventHandler.OnExerciseStepStarted += LoadMapHints;
-        EventHandler.OnExerciseStepOver += ResetHints;
+        EventHandler.OnExerciseStepOver += FullReset;
+        EventHandler.OnNewAvatarDestination += SetDestination;
         EventHandler.OnMapSpawned += LoadMapHints;
-        EventHandler.OnTutorialOver += ResetHints;
+        EventHandler.OnTutorialOver += FullReset;
         EventHandler.OnAppReset += FullReset;
         mttqclient.RegisterTopicHandler("M2MQTT/enableHints", ChangeHintState);
     }
 
     private void OnDisable()
     {
-        EventHandler.OnExerciseStepOver -= ResetHints;
+        EventHandler.OnExerciseStepOver -= FullReset;
         EventHandler.OnMapSpawned -= LoadMapHints;
-        EventHandler.OnTutorialOver -= ResetHints;
+        EventHandler.OnNewAvatarDestination -= SetDestination;
+        EventHandler.OnTutorialOver -= FullReset;
         EventHandler.OnAppReset -= FullReset;
         mttqclient.UnregisterTopicHandler("M2MQTT/enableHints", ChangeHintState);
+
     }
 
     #region Hints and hints handlers
@@ -96,6 +100,7 @@ public class AvatarMouvement : UFOController
     IEnumerator EndHintAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay); //we wait until the messagei s read
+        EventHandler.Instance.DisplayMessage("", 0f);
         actualHint = null; //we reset the hint
         ResetPosition(); //we go back to the source
     }
@@ -103,20 +108,37 @@ public class AvatarMouvement : UFOController
     #region destination settings
     public void SetDestination(Vector3 destination)
     {
-        this.Destination = destination;
         localDestination = true; //we use local position
+        SetupDestination(destination);
     }
 
     public void SetDestination(GameObject target)
     {
-        this.Destination = target.transform.position;
         localDestination = false; //we use world position
+        SetupDestination(target.transform.position);
+    }
+
+    //private function to avoid duplicate code for destinations
+    private void SetupDestination(Vector3 destination)
+    {
+        this.Destination = this.Destination = destination;
+        transform.LookAt(destination);
+        if (avatarChatPanel != null) //we put the chatbox in an alternate position to not block sight
+        {
+            avatarChatPanel.transform.localPosition = alternate_chatPanel_localpos;
+            avatarChatPanel.HideChatBox();
+        }
     }
 
     //puts the avatar back to default position
     public void ResetPosition()
     {
         this.Destination = defaultLocation; //we set the location as the default location
+        if (avatarChatPanel != null)
+        {
+            avatarChatPanel.transform.localPosition = default_chatPanel_localpos;
+            avatarChatPanel.HideChatBox();
+        }
         localDestination = true;
     }
     #endregion
@@ -130,7 +152,7 @@ public class AvatarMouvement : UFOController
 
 
         if (actualHint != null) return; //we stop double hints colliding
-        AvatarHint triggeredHint = avatarHints.First(hint => hint.countdown <= timeSinceExerciseStart);
+        AvatarHint triggeredHint = avatarHints.FirstOrDefault(hint => hint.countdown <= timeSinceExerciseStart);
         if (triggeredHint == null) return; //if no hint is ready we return
 
         //trigger hint here
@@ -143,17 +165,22 @@ public class AvatarMouvement : UFOController
     
     void FixedUpdate()
     {
-        if (Destination == Vector3.zero) return;
+        if (Destination == Vector3.zero)
+        {
+            transform.LookAt(mainCamera.transform);
+            return;
+        }
         Vector3 linearInputVec = Destination - (localDestination ?  transform.localPosition : transform.position);
         if (linearInputVec.magnitude <= distanceMargin) 
         {   //the avatar has reached its destination ! it will now do what must be done there
             Destination = Vector3.zero;
+            if (avatarChatPanel != null) avatarChatPanel.ShowChatBoxIfText();
             transform.LookAt(mainCamera.transform); //we look at the user
             if (EventHandler.Instance != null) EventHandler.Instance.InformAvatarReachedDestination(); //we inform anyone that needs to know that the avatar reached the destination
 
             if (actualHint != null)
             {
-                EventHandler.Instance.DisplayMessage(actualHint.message); //if this was for a hint, the hint is now displayed
+                EventHandler.Instance.DisplayMessage(actualHint.message, 0f); //if this was for a hint, the hint is now displayed
 
                 //we start a coroutine to stop the hint after a delay
                 StartCoroutine(EndHintAfterDelay(Util.CalculateMessageDisplayTime(actualHint.message)));
@@ -161,7 +188,7 @@ public class AvatarMouvement : UFOController
 
             return;
         }
-        CalculateMouvement(linearInputVec);
+        CalculateSimpleMovement(linearInputVec);
     }
 
     
