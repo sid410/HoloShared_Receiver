@@ -7,6 +7,14 @@ TagManager:
   - LeftMuscles
   - RightMuscles
   - Networking
+  - Spoon
+  - Cup
+  - Fork
+  - Knife
+  - Dish
+  - Minispoon
+  - Bottle
+  - Glass
   layers:
   - Default
   - TransparentFX
@@ -18,8 +26,8 @@ TagManager:
   - 
   - PostProcessing
   - 
-  - 
-  - 
+  - ally
+  - enemy
   - 
   - 
   - 

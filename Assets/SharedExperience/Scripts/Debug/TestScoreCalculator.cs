@@ -8,7 +8,7 @@ using UnityEngine;
 //test class, all values are hardcoded
 public class TestScoreCalculator : IScoreCalculator
 {
-    public override void AddStepResults(List<GameObject> spawnedItemList, ClockHandler exercice_clock)
+    public override void AddStepResults(ClockHandler exercice_clock)
     {
         //nothing
     }

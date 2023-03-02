@@ -58,7 +58,6 @@ public class ScoreCalculator : MonoBehaviour
     [Header("debug")]
     [SerializeField] private IScoreCalculator testScoreCalculator; //used for testing
     //spawned object trackers
-    private List<GameObject> registeredSpawnedItems = new List<GameObject>();
     private Queue<GameObject> spawnedPerfLineQueue = new Queue<GameObject>();
 
     //gradient for score color based on performance
@@ -96,8 +95,6 @@ public class ScoreCalculator : MonoBehaviour
     {
         //EventHandler.OnTutorialStarted += OnTutorialStarted;
         EventHandler.OnExerciseLoaded += OnExerciseLoaded;
-        EventHandler.OnItemSpawned += OnItemSpawned;
-        //EventHandler.OnExerciseStarted += OnExerciseStarted;
         EventHandler.OnExerciseOver += CalculateAndDisplayResults;
         EventHandler.OnFinalMatlabDataReceived += SaveExerciseStepData; //we only calculate data after the final matlab results have come
         EventHandler.OnAppReset += ResetScoreDisplay;
@@ -107,8 +104,6 @@ public class ScoreCalculator : MonoBehaviour
     {
         //EventHandler.OnTutorialStarted -= OnTutorialStarted;
         EventHandler.OnExerciseLoaded -= OnExerciseLoaded;
-        EventHandler.OnItemSpawned -= OnItemSpawned;
-        //EventHandler.OnExerciseStarted -= OnExerciseStarted;
         EventHandler.OnFinalMatlabDataReceived -= SaveExerciseStepData; //we only calculate data after the final matlab results have come
         EventHandler.OnExerciseOver -= CalculateAndDisplayResults;
         EventHandler.OnAppReset -= ResetScoreDisplay;
@@ -122,7 +117,7 @@ public class ScoreCalculator : MonoBehaviour
         exerciseScoreCalculator = exercise.scoreCalculator; //we updated the calculator to the one related to the exercise
     }
 
-    private void OnItemSpawned(GameObject item) => registeredSpawnedItems.Add(item); //we register spawned utensils
+    //private void OnItemSpawned(GameObject item) => registeredSpawnedItems.Add(item); //we register spawned utensils
 
     //private void OnExerciseStarted(ExerciceData exercice) => performance_name_text.text = "Exercice is in progress !";
 
@@ -131,8 +126,7 @@ public class ScoreCalculator : MonoBehaviour
         Debug.Log("Saving exerciseData");
         if (exerciseScoreCalculator == null) return;
         Debug.Log("Final matlab results received : passing data");
-        exerciseScoreCalculator.AddStepResults(registeredSpawnedItems, exercice_clock);
-        registeredSpawnedItems = new List<GameObject>(); //we restet the list of registered items for next step
+        exerciseScoreCalculator.AddStepResults(exercice_clock);
     }
     //called when the exercice is 
     private void CalculateAndDisplayResults()

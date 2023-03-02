@@ -186,7 +186,7 @@ public class localKinectReceiver : MonoBehaviour
     }
 
 
-    //DEPRECATED AND IS NOW IN UTENSILKINECTHANDLER (for the basic utensil exercise only)
+    //corrects the position of the item depending on the utensiltype
     private KinectUtensilData ParseKinectData(string[] uData)
     {
         float origin_Xmm = PixelToTableX(float.Parse(uData[0]), float.Parse(uData[1]));

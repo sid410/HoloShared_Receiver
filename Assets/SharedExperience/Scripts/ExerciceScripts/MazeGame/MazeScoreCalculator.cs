@@ -9,7 +9,7 @@ public class MazeScoreCalculator : IScoreCalculator
     private const float worstTimeInS = 600f; //worst time possible in seconds (basically a 0%)
     private const float bestTime = 30f;
 
-    List<GameObject> spawnedObjects = new List<GameObject>(); //TODO : remove responsibility of saving objects from the main score calculator
+    List<GameObject> spawnedObjects = new List<GameObject>(); 
 
     //a class to track each step's user performance
     private class StepResultData
@@ -33,11 +33,11 @@ public class MazeScoreCalculator : IScoreCalculator
 
 
     //called when an exercise step to store the results until the final score calculation phase
-    public override void AddStepResults(List<GameObject> spawnedItemList, ClockHandler exercice_clock)
+    public override void AddStepResults(ClockHandler exercice_clock)
     {
         Debug.Log("currently adding step results : time is " + exercice_clock.exercice_timer);
         StepResultData stepResult = new StepResultData();
-        stepResult.totalUsedItems = spawnedItemList.Count;
+        stepResult.totalUsedItems = spawnedObjects.Count;
         stepResult.timeTaken = exercice_clock.exercice_timer;
         float fixedTimeTaken = (stepResult.timeTaken - bestTime) < 0 ? 0 : stepResult.timeTaken - bestTime; //we give 100% if user made it in 20 seconds
         stepResult.performancePercent = 100 - Mathf.CeilToInt((fixedTimeTaken / worstTimeInS) * 100);

@@ -13,15 +13,22 @@ public class UtensilScoreCalculator : IScoreCalculator
     private const float WorstDistance = 5; //TO adjust
     private const float WorstAngle = 90;
 
-    private List<GameObject> spawnedItemList;
+    private List<GameObject> spawnedItemList = new List<GameObject>();
     private ClockHandler exercice_clock;
     //TODO : implement well the split steps
 
-    public override void AddStepResults(List<GameObject> spawnedItemList, ClockHandler exercice_clock)
+    public override void Init()
     {
-        this.spawnedItemList = spawnedItemList;
+        spawnedItemList = new List<GameObject>();
+        EventHandler.OnItemSpawned += RegisterItem;
+    }
+
+    public override void AddStepResults(ClockHandler exercice_clock)
+    {
         this.exercice_clock = exercice_clock;
     }
+
+    private void RegisterItem(GameObject item) => spawnedItemList.Add(item);
 
     public override ScoreCalculator.PerformanceSummary CalculateScore()
     {
@@ -72,7 +79,7 @@ public class UtensilScoreCalculator : IScoreCalculator
         return summary;
     }
 
-    public override void Cleanup(){ }
+    public override void Cleanup(){ EventHandler.OnItemSpawned -= RegisterItem; }
 
-    public override void Init(){ }
+    
 }
