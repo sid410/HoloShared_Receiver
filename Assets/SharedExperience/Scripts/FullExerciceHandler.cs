@@ -55,6 +55,7 @@ public class FullExerciceHandler : MonoBehaviour
         EventHandler.OnFinalMatlabDataProcessed += GoToNextExerciseStep; //the order is stepOver => Kinect results received => New step (so we can calculate scores effectively)
         baseClient.RegisterTopicHandler("M2MQTT/loadexercise", LoadExercice); //we bind to the receiver, this will trigger the exercise from the phone app eventually
         baseClient.RegisterTopicHandler("M2MQTT/resetapp", TriggerAppReset);
+        baseClient.RegisterTopicHandler("M2MQTT/swapdiff", SwapDifficulty);
     }
 
     private void OnDisable()
@@ -63,6 +64,7 @@ public class FullExerciceHandler : MonoBehaviour
         EventHandler.OnFinalMatlabDataProcessed -= GoToNextExerciseStep;
         baseClient.UnregisterTopicHandler("M2MQTT/loadexercise", LoadExercice);
         baseClient.UnregisterTopicHandler("M2MQTT/resetapp", TriggerAppReset);
+        baseClient.UnregisterTopicHandler("M2MQTT/swapdiff", SwapDifficulty);
     }
     #endregion
 
@@ -123,6 +125,44 @@ public class FullExerciceHandler : MonoBehaviour
         //we start the first step
         currentExerciseStepIndex = 0;
         EventHandler.Instance.StartExerciseStep(startedExercise.steps[currentExerciseStepIndex]); //TODO : fix the distinction between steps and exercise to be less convuluted, also multiple steps 
+    }
+
+    //swaps the diffculty of the exercise, can also specify what map to put (also can be used to change change current level)
+    void SwapDifficulty(string topic, string message)
+    {
+        if (currentExercise == null || message == null || message.Length == 0) return;
+        Debug.Log("received message: " + message);
+        string[] values = message.Split(';');
+
+        if (values.Length == 0) return;
+
+        currentDifficulty = ExerciseDifficulty.NORMAL;
+        startedExercise = null;
+
+
+        //we get the parameters: new difficulty and optionnal new exercise map
+        ExerciseDifficulty newDifficulty = (ExerciseDifficulty)Int32.Parse(values[0]);
+        currentDifficulty = newDifficulty; //we set the current new diffculty
+        int newLevel = currentExerciseStepIndex;
+        //if difficulty is also specified in the message, we use it.
+        if (values.Length > 1)
+        {
+            newLevel = Int32.Parse(values[1]); //we pick the new level
+
+        }
+
+        startedExercise = currentExercise.exercisesByDifficulty.Find(ex => ex.exerciseDifficulty == newDifficulty).exercise; //we get the new exercise difficulty map pack
+
+        //we get the level picked
+        if (newLevel >= startedExercise.steps.Count) newLevel = currentExerciseStepIndex; //if a bad level number was picked, we skip it
+
+        //we get the step
+        currentExerciseStepIndex = newLevel;
+        ExerciceData.ExerciceStep newStep = startedExercise.steps[currentExerciseStepIndex];
+
+        //TODO : maybe also call start exercise
+        EventHandler.Instance.StartExerciseStep(newStep); //we start the new step
+
     }
 
     //we go to the next exercise Step

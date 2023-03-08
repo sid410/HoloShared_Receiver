@@ -5,6 +5,7 @@ using UnityEngine;
 public class AvatarFaceAnimator : MonoBehaviour
 {
 
+    //UNUSED, CHANGED AVATAR WITH CUTE BUNNY
     public enum FaceExpression
     {
         DEFAULT, SMILE, CONFUSED, ANGRY, DISTRACTED, SURPRISED

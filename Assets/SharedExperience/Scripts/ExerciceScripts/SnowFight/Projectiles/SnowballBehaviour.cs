@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 //Snowball, when initiated 
-public class SnowballBehaviour : MonoBehaviour
+public class SnowballBehaviour : Projectile
 {
     
 

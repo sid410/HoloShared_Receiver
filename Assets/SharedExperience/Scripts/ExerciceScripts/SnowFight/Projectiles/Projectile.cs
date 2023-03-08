@@ -10,15 +10,19 @@ public abstract class Projectile : MonoBehaviour
     [SerializeField] private float projectileSpeed = 4f;
     [SerializeField] private AttackType projectileDamageType = AttackType.LIGHT;
 
-    protected Vector3 direction;
+    protected Damageable target = null;
     protected Rigidbody rb;
 
-    public void Init(Team team, Vector3 spawnPosition, Vector3 direction)
+    public void Init(Team team, Damageable target)
     {
-        rb = GetComponent<Rigidbody>();
+        this.target = target;
         this.gameObject.layer = SnowfightUtil.getTeamLayer(team);
-        this.transform.position = spawnPosition;
+    }
 
-        rb.velocity = direction * projectileSpeed;
+    private void FixedUpdate()
+    {
+        if (target == null) return;
+        Vector3 direction = target.transform.position - transform.position;
+        transform.position += direction * Time.fixedDeltaTime * projectileSpeed;
     }
 }

@@ -17,19 +17,30 @@ public class SnowGameManager : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private Damageable soldierPrefab;
 
-    [Header("Positions")]
-    [SerializeField] private Transform allySpawnPosition;
-    [SerializeField] private Transform enemySpawnPosition;
+    [Header("Positions (local)")]
+    [SerializeField] private float allySpawnPosition;
+    [SerializeField] private float enemySpawnPosition;
+
+    [Header("territory boundaries (local)")]
+    [SerializeField] private float allyTerritoryLimit;
+    [SerializeField] private float enemyTerritoryLimit;
+
+    //we get the origin of the stones calibration
+    private GameObject StonesOrigin;
 
     //we keep track of soldiers
     private List<Damageable> SpawnedEnemySoldiers = new List<Damageable>();
     private List<Damageable> SpawnedAllySoliders = new List<Damageable>();
 
+    //we keep track of structures
+    private List<GameObject> enemyStructures = new List<GameObject>();
+    private List<GameObject> allyStructures = new List<GameObject>();
+
     public SnowballDifficultyParamters gameParameters;
     private void Awake()
     {
         if (Instance == null) Instance = this;
-        StartGame();
+        //StartGame();
     }
     private void StartGame()
     {
@@ -38,9 +49,11 @@ public class SnowGameManager : MonoBehaviour
 
         for (int i = 0; i < allySoliders; i++)
         {
-            Damageable soldier = Instantiate(soldierPrefab);
-            soldier.Init(Team.ALLY, allySpawnPosition.position);
+            Damageable soldier = Instantiate(soldierPrefab, StonesOrigin.transform);
+            soldier.Init(Team.ALLY, new Vector3(-0.28f, -0.98f, allySpawnPosition)); //TODO: fix
             SpawnedAllySoliders.Add(soldier);
         }
     }
+
+    public float getEnemyTerritoryLimit() { return enemyTerritoryLimit; }
 }

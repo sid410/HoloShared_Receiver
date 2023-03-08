@@ -23,11 +23,17 @@ public class AllySoldierBehaviour : SoldierBehaviour
     }
 
 
-    private void Update()
-    {
-        
-    }
     protected override void Die()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override Damageable getTargetUnit()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override void InitialMouvement()
     {
         throw new System.NotImplementedException();
     }

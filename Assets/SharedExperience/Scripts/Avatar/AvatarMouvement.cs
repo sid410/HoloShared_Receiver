@@ -37,7 +37,6 @@ public class AvatarMouvement : UFOController
     //For hints
     List<AvatarHint> avatarHints = new List<AvatarHint>(); //used for in game hints, avatar periodically shows hints if user needs them
     private AvatarHint actualHint = null; //we keep track of the actual hint since it takes time to display
-    private bool enableHints = true; //can be disabled with webapp (still not working)
     float timeSinceExerciseStart = 0f;
 
     
@@ -60,7 +59,6 @@ public class AvatarMouvement : UFOController
         EventHandler.OnMapSpawned += LoadMapHints;
         EventHandler.OnTutorialOver += FullReset;
         EventHandler.OnAppReset += FullReset;
-        mttqclient.RegisterTopicHandler("M2MQTT/enableHints", ChangeHintState);
     }
 
     private void OnDisable()
@@ -70,25 +68,11 @@ public class AvatarMouvement : UFOController
         EventHandler.OnNewAvatarDestination -= SetDestination;
         EventHandler.OnTutorialOver -= FullReset;
         EventHandler.OnAppReset -= FullReset;
-        mttqclient.UnregisterTopicHandler("M2MQTT/enableHints", ChangeHintState);
 
     }
 
     #region Hints and hints handlers
-
-    //used to disable hints from the webapp
-    private void ChangeHintState(string topic, string message)
-    {
-        try
-        {
-            enableHints = bool.Parse(message);
-        }
-        catch (InvalidCastException e)
-        {
-            Debug.Log("error when casting");
-        }
-
-    }
+    
     //gets the spawned map's hints.
     private void LoadMapHints(GameObject map)
     {
@@ -146,8 +130,9 @@ public class AvatarMouvement : UFOController
 
     private void Update()
     {
-        //we check if we need to trigger the avatar to show a new hint or not
-        if (avatarHints == null || avatarHints.Count == 0) return;
+            //we check if we need to trigger the avatar to show a new hint or not
+            if (avatarHints == null || avatarHints.Count == 0 || (ExerciseSettings.Instance != null
+                && !ExerciseSettings.Instance.hintsEnabled )) return;
         timeSinceExerciseStart += Time.deltaTime;
 
 
