@@ -42,15 +42,16 @@ public class LocalItemSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!SINGLE_HOLO_BEHAVIOUR) //if we are not running in debug mode, we destroy this object
+        /*if (!SINGLE_HOLO_BEHAVIOUR) //if we are not running in debug mode, we destroy this object
         {
             Destroy(gameObject);
             return;
-        }
+        }*/
         
         Transmitter = GameObject.FindObjectOfType<OSCTransmitter>();
         SetRemoteHost("127.0.0.1"); //try to send receiver to localHost
         client.RegisterTopicHandler("M2MQTT/debugbtn", ChangeDebugButtonStatus); //we bind to the receiver, this will trigger the exercise from the phone app eventually
+        client.RegisterTopicHandler("M2MQTT/changeui", ChangeUIState);
         SpawnUI();
     }
 
@@ -208,6 +209,23 @@ public class LocalItemSpawner : MonoBehaviour
         EnabledUIIndex = ((EnabledUIIndex - 1) < 0) ? UIPrefabs.Length - 1 : EnabledUIIndex - 1;
         SpawnUI();
 
+    }
+
+    //function triggered by the node-red web app. Blocks all game UIs, the game becomes simplified with no tutorial / no score
+    private void ChangeUIState(string topic, string message)
+    {
+        bool enableUI = bool.Parse(message);
+
+        if (enableUI) //we instantiate the UI
+        {
+            if (currentEnabledUI != null) return;
+            SpawnUI();
+        } else
+        {
+            if (currentEnabledUI == null) return;
+            Destroy(currentEnabledUI.gameObject);
+            currentEnabledUI = null;
+        }
     }
 
     //Changed this to not spawn but disable enable UIs so subscriptions don't disppear and dada is passed

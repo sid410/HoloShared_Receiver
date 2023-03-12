@@ -7,8 +7,8 @@ using UnityEngine;
 public abstract class Projectile : MonoBehaviour
 {
     [Header("projectile data")]
-    [SerializeField] private float projectileSpeed = 4f;
-    [SerializeField] private AttackType projectileDamageType = AttackType.LIGHT;
+    [SerializeField] protected float projectileSpeed = 4f;
+    [SerializeField] protected AttackType projectileDamageType = AttackType.LIGHT;
 
     protected Damageable target = null;
     protected Rigidbody rb;

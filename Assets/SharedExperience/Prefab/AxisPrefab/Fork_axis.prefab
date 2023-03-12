@@ -320,4 +320,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 258e1d373b82efc4380ce94f87d5cb16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  liveModelType: 0
+  liveModelType: 2

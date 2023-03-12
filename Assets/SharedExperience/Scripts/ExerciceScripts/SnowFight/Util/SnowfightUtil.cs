@@ -8,6 +8,7 @@ public class SnowfightUtil : MonoBehaviour
     private static int enemyLayer = LayerMask.NameToLayer("enemy");
 
     public const string STRUCTURE_TAG = "structure";
+    public const string ENTITY_TAG = "entity";
     //gets the layer the object should be in depending on the layer
     public static int getTeamLayer(Team team)
     {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -33,8 +34,8 @@ public class SnowGameManager : MonoBehaviour
     private List<Damageable> SpawnedAllySoliders = new List<Damageable>();
 
     //we keep track of structures
-    private List<GameObject> enemyStructures = new List<GameObject>();
-    private List<GameObject> allyStructures = new List<GameObject>();
+    private List<SnowStructure> enemyStructures = new List<SnowStructure>();
+    private List<SnowStructure> allyStructures = new List<SnowStructure>();
 
     public SnowballDifficultyParamters gameParameters;
     private void Awake()
@@ -56,4 +57,14 @@ public class SnowGameManager : MonoBehaviour
     }
 
     public float getEnemyTerritoryLimit() { return enemyTerritoryLimit; }
+
+    public float getAllyTerritoryLimit() { return allySpawnPosition; }
+
+    //gets the closest structure to a position, used by ally soldiers only
+    public List<SnowStructure> getClosestStructures(Vector3 position)
+    {
+        if (allyStructures.Count == 0) return null;
+
+        return allyStructures.OrderBy(structure => Vector3.Magnitude(structure.gameObject.transform.position - position)).ToList();
+    }
 }

@@ -88,7 +88,8 @@ public class ObjectiveUpdater : MonoBehaviour
         if (exerciseObjectiveHandler == null || relatedObjective == null || relatedObjective.completed) return;
         if (!exerciseObjectiveHandler.CheckObjectiveDone(objectiveIndex, declarer)) return; //if the objective is not declared as completed we continue
         completedObjectives++;
-        EventHandler.Instance.SetObjectiveStepAsAchieved(objectiveIndex, declarer); // we declare the is over
+        EventHandler.Instance.LogMessage("An objective was done !");
+        EventHandler.Instance.SetObjectiveStepAsAchieved(objectiveIndex, declarer); // we declare the objective is over
         relatedObjective.SetObjectiveAsDone();
 
         if (completedObjectives >= objectiveList.Count) //if all objectives are done, we trigger the end of the exercice

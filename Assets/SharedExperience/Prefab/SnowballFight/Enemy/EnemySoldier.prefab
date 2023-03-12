@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 12375774572624503}
   m_Layer: 11
   m_Name: EnemySoldier
-  m_TagString: Untagged
+  m_TagString: entity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -217,13 +217,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 144f657504e7c8f46aa9a25529641a29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitType: 0
   max_health: 3
+  invulnerable: 0
   projectilePrefab: {fileID: 8973206903508307142, guid: 6f711f88e384d6d46b3150d7e08dacb3,
     type: 3}
   moveSpeed: 2
   windupTime: 3
   destinationDistanceMargin: 0.02
   projectileSpawnPosition: {fileID: 2902116701587573085}
+  halfBoxTarget: 0.2
   windupCircle: {fileID: 6663497518167343570}
 --- !u!1 &6663497518167343572
 GameObject:

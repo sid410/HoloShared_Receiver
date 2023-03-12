@@ -32,6 +32,8 @@ public class MazeKinectHandler : KinectResultsAbs
     public override void Init()
     {
         StoneOrigin = GameObject.Find("StonesOrigin");
+        spawnedUtensilItems = new Queue<GameObject>();
+        spawnedUtensilItemsV2 = new Dictionary<UtensilType, UtensilData>();
         EventHandler.OnExerciseStepOver += OnExerciseStepOver;
         EventHandler.OnExerciseStepStarted += OnExerciseStepStarted; 
     }
@@ -44,7 +46,7 @@ public class MazeKinectHandler : KinectResultsAbs
 
 
 
-    public override void HandleKinectData(List<localKinectReceiver.KinectUtensilData> kinectResults)
+    public  void HandleKinectDataV2(List<localKinectReceiver.KinectUtensilData> kinectResults)
     {
         if (blockKinectResults) return;
 
@@ -80,7 +82,7 @@ public class MazeKinectHandler : KinectResultsAbs
         }
     }
 
-    private void HandleKinectDataV2(List<localKinectReceiver.KinectUtensilData> kinectResults)
+    public override void HandleKinectData(List<localKinectReceiver.KinectUtensilData> kinectResults)
     {
         if (blockKinectResults) return;
 

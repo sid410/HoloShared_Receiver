@@ -78,11 +78,12 @@ public class FullExerciceHandler : MonoBehaviour
     void LoadExercice(string topic, string message)
     {
         Debug.Log("received message: " + message);
+        
         //TODO : load if tutorial skip or not
         //TODO : load which type of exercise it is
         string[] values = message.Split(';');
 
-        ExerciseType exerciseType = ExerciseType.MAZE; //if we receive no message, we start the simple 
+        ExerciseType exerciseType = ExerciseType.UTENSIL; //if we receive no message, we start the simple 
         currentDifficulty = ExerciseDifficulty.NORMAL;
         startedExercise = null;
 
@@ -101,8 +102,8 @@ public class FullExerciceHandler : MonoBehaviour
             }
 
             TutorialEnabled = values.Length > 2 ? bool.Parse(values[2]) : true;
-        } 
-        
+        }
+        EventHandler.Instance.LogMessage("Exercise " + exerciseType + " with diffculty " + currentDifficulty + " is being started !");
         ExercisePreset exercisePreset = loadedExercises.Find((ex) => ex.exerciseEnum == exerciseType); //we get the associated exercise data
         currentExercise = exercisePreset.exerciseDataObject;
         EventHandler.Instance.LoadExercise(currentExercise); //we inform all listeners of the loaded exercise
@@ -131,7 +132,7 @@ public class FullExerciceHandler : MonoBehaviour
     void SwapDifficulty(string topic, string message)
     {
         if (currentExercise == null || message == null || message.Length == 0) return;
-        Debug.Log("received message: " + message);
+        
         string[] values = message.Split(';');
 
         if (values.Length == 0) return;
@@ -160,6 +161,7 @@ public class FullExerciceHandler : MonoBehaviour
         currentExerciseStepIndex = newLevel;
         ExerciceData.ExerciceStep newStep = startedExercise.steps[currentExerciseStepIndex];
 
+        EventHandler.Instance.LogMessage("Swappind map to " + currentExerciseStepIndex + " in diffculty" + currentDifficulty);
         //TODO : maybe also call start exercise
         EventHandler.Instance.StartExerciseStep(newStep); //we start the new step
 

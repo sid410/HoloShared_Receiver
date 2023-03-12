@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4dd81d162e04e940bede94170fce3cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 3
+  type: 4
   objectiveComplete_Material: {fileID: 2100000, guid: fb53ba89426b949499f2d2714fc1f9d3,
     type: 2}
   realGoPrefab: {fileID: 4148752418957179594, guid: 9edbef87ba5f89a41993fcdb4010faca,

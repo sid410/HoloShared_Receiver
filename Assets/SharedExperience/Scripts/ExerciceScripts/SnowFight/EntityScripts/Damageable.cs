@@ -14,6 +14,7 @@ public abstract class Damageable : MonoBehaviour
     public DamageableType unitType = DamageableType.SOLDIER; 
 
     [SerializeField] private int max_health = 3;
+    [SerializeField] private bool invulnerable = false;
     protected int currentHealth;
 
     
@@ -26,10 +27,11 @@ public abstract class Damageable : MonoBehaviour
         this.transform.localPosition = startPosition;
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(AttackType attackType) //Todo attack type specific behaviour
     {
-        currentHealth -= damage;
-        if (damage <= 0) Die();
+        if (invulnerable) return;
+        currentHealth -= 1;
+        if (currentHealth <= 0) Die();
     }
 
     protected abstract void Die();

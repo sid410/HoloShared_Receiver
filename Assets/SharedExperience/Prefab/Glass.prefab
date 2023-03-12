@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4dd81d162e04e940bede94170fce3cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 8
   objectiveComplete_Material: {fileID: 0}
   realGoPrefab: {fileID: 0}
   angledUtensil: 1

@@ -1,4 +1,5 @@
 using M2MqttUnity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,12 +15,14 @@ public class DataBroadCaster : MonoBehaviour
     //consts
     //topics
     private const string appStateTopic = "M2MQTT/state";
+    private const string logsTopic = "M2MQTT/logs";
 
     private void OnEnable()
     {
         EventHandler.OnTutorialStarted += InformTutorialStarted;
         EventHandler.OnExerciseStarted += InformExerciseStarted;
         EventHandler.OnExerciseOver += InformResultsStarted;
+        EventHandler.OnLog += BroadCastLogs;
     }
 
     private void OnDisable()
@@ -27,6 +30,7 @@ public class DataBroadCaster : MonoBehaviour
         EventHandler.OnTutorialStarted -= InformTutorialStarted;
         EventHandler.OnExerciseStarted -= InformExerciseStarted;
         EventHandler.OnExerciseOver -= InformResultsStarted;
+        EventHandler.OnLog -= BroadCastLogs;
     }
 
     //we inform any listeners that the current status is the tutorial
@@ -37,4 +41,11 @@ public class DataBroadCaster : MonoBehaviour
     private void InformResultsStarted() => InformOfAppState("Displaying results");
 
     private void InformOfAppState(string state) => client.PublishMessage(appStateTopic, System.Text.Encoding.UTF8.GetBytes(state), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+
+
+    private void BroadCastLogs(string log)
+    {
+        Debug.Log("publishing log " + log);
+        client.PublishMessage(logsTopic, System.Text.Encoding.UTF8.GetBytes(DateTime.Now.TimeOfDay.ToString() + ": " + log), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+    }
 }

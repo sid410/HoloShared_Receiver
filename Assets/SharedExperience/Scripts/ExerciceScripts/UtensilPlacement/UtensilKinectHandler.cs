@@ -10,18 +10,26 @@ public class UtensilKinectHandler : KinectResultsAbs
     List<GameObject> spawnedItems = new List<GameObject>();
     public override void Init() //initializes the data by registering to events
     {
+        spawnedItems = new List<GameObject>();
         EventHandler.OnItemSpawned += SaveSpawnedItem;
     }
 
     //we track spawned items
-    private void SaveSpawnedItem(GameObject item) => spawnedItems.Add(item);
+    private void SaveSpawnedItem(GameObject item){
+        Debug.Log("registering item " + item.name);
+        spawnedItems.Add(item);
+    }
 
     public override void HandleKinectData(List<localKinectReceiver.KinectUtensilData> kinectResults)
     {
+        Debug.Log("Handling kinect data UKH" + spawnedItems.Count);
         List<GameObject> virtualObjectsList = new List<GameObject>(spawnedItems); //we copy the list of items
         foreach (localKinectReceiver.KinectUtensilData kinectResult in kinectResults)
         {
+            Debug.Log("found obj type is " + kinectResult.type);
             if (kinectResult.type == UtensilType.UNDETECTED) continue; //we ignore undetected items
+
+            Debug.Log("finding closest item to " + kinectResult.position);
             GameObject virtualGO = FindLeastDistanceSameObject(kinectResult.position, spawnedItems, kinectResult.type); //we find the cloesest item
             SetRealOriginAndAxis(virtualGO, kinectResult.position, kinectResult.orientation + (kinectResult.type == UtensilType.SPOON ? 180 : 0)); //we pass the data to the related script
             virtualObjectsList.Remove(virtualGO); //we remove from our cloned list so we don't contact the same utensil twice
@@ -33,10 +41,12 @@ public class UtensilKinectHandler : KinectResultsAbs
     {
         Dictionary<GameObject, float> sameTagObjects = new Dictionary<GameObject, float>();
 
+        Debug.Log("We have " + virtualObjects.Count + " size ! we look in them for " + utensilType);
         foreach (GameObject gObject in virtualObjects)
         {
             UtensilAbs utensilData = gObject.GetComponent<UtensilAbs>();
             if (utensilData == null) continue;
+            Debug.Log("found item has type " + utensilData.type);
             if (utensilData.type != utensilType) continue;
 
             float distance = Vector3.Distance(gObject.transform.position, realOrigin);
@@ -53,6 +63,7 @@ public class UtensilKinectHandler : KinectResultsAbs
     //uses data received from the kinect to repositino the position of the real object tied to the virtual one
     private void SetRealOriginAndAxis(GameObject virtualObject, Vector3 tablePos, float tableRot)
     {
+        Debug.Log("Virtual object is null ? " + (virtualObject == null));
         if (virtualObject == null) return;
         UtensilBehaviour utensilBehaviour = virtualObject.GetComponent<UtensilBehaviour>();
 

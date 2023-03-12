@@ -10,6 +10,8 @@ public class localKinectReceiver : MonoBehaviour
 {
 
     #region data pack classes
+
+    [Serializable]
     public struct KinectUtensilData
     {
         public UtensilType type;
@@ -77,9 +79,16 @@ public class localKinectReceiver : MonoBehaviour
 
     #endregion
 
+    [Header("Important dependencies ")]
     public BaseClient baseClient;
     public GameObject stonesOrigin;
     public GameObject tableBoundaryDelimiterPrefab;
+
+
+    [Header("Debug fake result parsing")]
+    public List<KinectUtensilData> fake_utensil_data;
+
+
 
     //store the generated items from kinect
     List<GameObject> spawnedUtensils = new List<GameObject>();
@@ -91,6 +100,8 @@ public class localKinectReceiver : MonoBehaviour
 
     //The timestamp is in the form of seconds since the start of the day ! edgecase where program is run around midnight is already considered.
     private int lastKinectTimestamp = -1; //used to filter out images that come late in the 
+
+
 
     private void Start()
     {
@@ -185,6 +196,36 @@ public class localKinectReceiver : MonoBehaviour
         EventHandler.Instance.TriggerAfterMatlabReceived(); //we inform that matlab results have been received and all utensils updated
     }
 
+
+
+    //Debug function for spawning fake items contained in a list filled at runtime
+    public void HandleMatlabResults_debug()
+    {
+        Debug.Log("Putting fake news " + fake_utensil_data.Count);
+        EventHandler.Instance.TriggerBeforeMatlabReceived(); //we inform listeners that matlab results are going to be parsed
+        //we parse the data and pass it to the listener if needed
+        if (exerciseKinectDataHandler != null)
+        {
+            Debug.Log("exercise handler not null");
+            List<KinectUtensilData> parsedData = new List<KinectUtensilData>();
+            for (int i = 0; i < fake_utensil_data.Count; i++) //we ignore first entry because it's the timestamp
+            {
+                parsedData.Add(fake_utensil_data[i]);
+            }
+            exerciseKinectDataHandler.HandleKinectData(parsedData);
+
+        }
+
+        //different behaviour for the final wave of results received from the kinect.
+        if (waiting_for_final_results)
+        {
+            waiting_for_final_results = false;
+            EventHandler.Instance.TriggerFinalMatlabReceived(); //used to process the data received 
+            EventHandler.Instance.TriggerFinalMatlabProcessed(); //used to announce data was processed (for results)
+            return;
+        }
+        EventHandler.Instance.TriggerAfterMatlabReceived(); //we inform that matlab results have been received and all utensils updated
+    }
 
     //corrects the position of the item depending on the utensiltype
     private KinectUtensilData ParseKinectData(string[] uData)
