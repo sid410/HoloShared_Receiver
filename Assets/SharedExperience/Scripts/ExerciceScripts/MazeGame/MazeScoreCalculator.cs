@@ -52,7 +52,8 @@ public class MazeScoreCalculator : IScoreCalculator
         ScoreCalculator.PerformanceSummary summary = new ScoreCalculator.PerformanceSummary();
         summary.metricToValueList = new Dictionary<string, string>();
         summary.metricToValueList.Add("Time taken", Util.FormatTimeFloat(allResults.Select(result => result.timeTaken).Aggregate((t1, t2) => t1 + t2)));
-        summary.metricToValueList.Add("total mirrors", "" + allResults.Select(result => result.totalUsedItems).Aggregate((t1, t2) => t1 + t2));
+        summary.metricToValueList.Add("Scoring calculation is still incomplete ! \n But good work finishing the game!", "");
+        //summary.metricToValueList.Add("total mirrors", "" + allResults.Select(result => result.totalUsedItems).Aggregate((t1, t2) => t1 + t2));
         //TODO : use number of used items as metric
 
         //we set the total performance

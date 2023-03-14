@@ -4,10 +4,10 @@ using UnityEditor;
 using UnityEngine;
 
 
-[CustomEditor(typeof(localKinectReceiver))]
-public class KinectDebugButtonEditor : Editor
+//[CustomEditor(typeof(localKinectReceiver))]
+public class KinectDebugButtonEditor
 {
-    public override void OnInspectorGUI()
+    /*public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
@@ -17,5 +17,5 @@ public class KinectDebugButtonEditor : Editor
         {
             ms.HandleMatlabResults_debug();
         }
-    }
+    }*/
 }

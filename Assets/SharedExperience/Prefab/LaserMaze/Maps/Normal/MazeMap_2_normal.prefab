@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   message: It seems like 1 laser beam must split off to reach both goals
-  countdown: 120
+  countdown: 300
 --- !u!1 &4064184052280574301
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   message: We need a way to have a laser beam go right and one to go left !
-  countdown: 60
+  countdown: 160
 --- !u!1 &7924088172954813768
 GameObject:
   m_ObjectHideFlags: 0

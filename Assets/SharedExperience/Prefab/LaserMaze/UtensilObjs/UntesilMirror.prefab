@@ -73,6 +73,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
+  mesh: {fileID: 0}
+  perfectAngleMargin: 5
 --- !u!1 &5645312929808866103
 GameObject:
   m_ObjectHideFlags: 0

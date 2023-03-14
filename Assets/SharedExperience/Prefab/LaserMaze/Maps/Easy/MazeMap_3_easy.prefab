@@ -121,7 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   message: There seems to be a pattern for the mirrors, but some seem like they're
     missing
-  countdown: 60
+  countdown: 160
 --- !u!1001 &1959358680162600814
 PrefabInstance:
   m_ObjectHideFlags: 0

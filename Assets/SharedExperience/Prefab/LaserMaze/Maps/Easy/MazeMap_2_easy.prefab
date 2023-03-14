@@ -113,8 +113,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4020228ba3d4ed0419285427f64c12dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  message: 'Only one ray of light seems impossible to '
-  countdown: 55
+  message: It'seems impossible to only use one ray of light here
+  countdown: 120
 --- !u!1001 &1647821448583759009
 PrefabInstance:
   m_ObjectHideFlags: 0

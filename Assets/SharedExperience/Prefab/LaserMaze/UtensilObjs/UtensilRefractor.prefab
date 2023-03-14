@@ -112,10 +112,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.026867911
-  m_Height: 0.13468553
+  m_Radius: 0.034361847
+  m_Height: 0.38240522
   m_Direction: 1
-  m_Center: {x: 0, y: 0.05940292, z: 0}
+  m_Center: {x: 0, y: 0.04328695, z: 0}
 --- !u!114 &6383089534287656069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,6 +129,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3
+  mesh: {fileID: 4869999151105250642}
+  perfectAngleMargin: 2.5
 --- !u!114 &6383089534287656070
 MonoBehaviour:
   m_ObjectHideFlags: 0

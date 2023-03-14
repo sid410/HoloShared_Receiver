@@ -64,10 +64,10 @@ public class localKinectReceiver : MonoBehaviour
 
     //constants to reproject the correction of objects with height
     private const float camHeight = 0.63f; //-------------- (IN EXPERIMENT ROOM)
-    private const float bottleHeight = 0.305f;
-    private const float glassHeight = 0.16f;
+    private const float bottleHeight = 0.26f;
+    private const float glassHeight = 0.078f;
     private const float cupHeight = 0.105f;
-    private const float dishHeight = 0.08f;
+    private const float dishHeight = 0.025f;
     //camera plane in xy space coordinate, projected to table
     private const float camCenterPixel_x = 960.0f;
     private const float camCenterPixel_y = 540.0f;

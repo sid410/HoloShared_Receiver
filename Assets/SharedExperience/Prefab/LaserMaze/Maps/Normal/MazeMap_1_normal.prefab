@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   message: This place is narrow but it seems to be the only way to reach the goal
-  countdown: 60
+  countdown: 160
 --- !u!1 &4179668649078468332
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   message: it seems impossible to use only one ray of lazer to reach both goal ...
-  countdown: 100
+  countdown: 260
 --- !u!1001 &346074536432687574
 PrefabInstance:
   m_ObjectHideFlags: 0

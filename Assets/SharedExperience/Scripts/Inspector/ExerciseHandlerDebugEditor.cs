@@ -4,10 +4,10 @@ using UnityEditor;
 using UnityEngine;
 
 
-[CustomEditor(typeof(FullExerciceHandler))]
-public class ExerciseHandlerDebugEditor : Editor
+//[CustomEditor(typeof(FullExerciceHandler))]
+public class ExerciseHandlerDebugEditor 
 {
-    public override void OnInspectorGUI()
+    /*public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
@@ -17,5 +17,5 @@ public class ExerciseHandlerDebugEditor : Editor
         {
             ms.DebugStartExercise();
         }
-    }
+    }*/
 }

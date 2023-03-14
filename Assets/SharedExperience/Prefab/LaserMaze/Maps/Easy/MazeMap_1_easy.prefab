@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   message: This wall is blocking the light, maybe reflecting it before can help !
-  countdown: 40
+  countdown: 120
 --- !u!1 &8089617495207744515
 GameObject:
   m_ObjectHideFlags: 0

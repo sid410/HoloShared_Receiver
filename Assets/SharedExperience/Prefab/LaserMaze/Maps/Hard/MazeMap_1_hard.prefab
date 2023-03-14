@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   message: Waw there are so many lasers ! but it seems we need even more to reach
     all goals !
-  countdown: 60
+  countdown: 200
 --- !u!1 &817324341012269421
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   message: It seems utilizing the interesection of these lasers is key to solving
     this game
-  countdown: 120
+  countdown: 300
 --- !u!1 &5424714109197765466
 GameObject:
   m_ObjectHideFlags: 0

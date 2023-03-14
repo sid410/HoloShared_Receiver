@@ -15,7 +15,7 @@ MonoBehaviour:
   spawnPoints:
   - itemPrefab: {fileID: 256208684268569453, guid: 305ab49a8d5c9534386d6fb2f208c8e7,
       type: 3}
-    PosX: 0.7
+    PosX: 0.6
     PosY: 0.2
     scale: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
@@ -31,9 +31,17 @@ MonoBehaviour:
     spawnDelay: 0
   - itemPrefab: {fileID: 8926353160044528426, guid: adeb9e525e94cd34d93dc737fb254b15,
       type: 3}
-    PosX: 0.4
+    PosX: 0.35
     PosY: 0.15
     scale: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
     message: Mirrors
+    spawnDelay: 0
+  - itemPrefab: {fileID: 3454895879859385409, guid: 47ac3f9a07e4f6149aec5d898e2bd009,
+      type: 3}
+    PosX: 0.85
+    PosY: 0.15
+    scale: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+    message: Prisms
     spawnDelay: 0

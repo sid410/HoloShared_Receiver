@@ -15,7 +15,7 @@ public class MazeKinectHandler : KinectResultsAbs
         public UtensilAbs utensilScript;
         public int timeSinceLastDetection = detectionTimeout; //to prevent problem with bad detections, we only remove an item if it was undetected in a certain number of successive resutls.
     }
-    private const int detectionTimeout = 5; 
+    private const int detectionTimeout = 3; 
 
     [Header("prefabs")]
     public GameObject utensilMirrorPrefab;
@@ -86,29 +86,42 @@ public class MazeKinectHandler : KinectResultsAbs
     {
         if (blockKinectResults) return;
 
+        int k = 0;
+        List<UtensilType> alreadySpawnedUtensilsThisRound = new List<UtensilType>();
+
         //we spawn new mirrors.
         foreach (localKinectReceiver.KinectUtensilData kr in kinectResults)
         {
-            if (kr.type == UtensilType.UNDETECTED) continue;
+            UtensilType utensilType = kr.type;
+            if (utensilType == UtensilType.DISH) utensilType = UtensilType.CUP;
+            if (utensilType == UtensilType.UNDETECTED) continue;
             UtensilData spawnedItemData;
             float rotation;
 
+            Debug.Log( k++ + " - Detected item of type " + utensilType);
             //we get the rotation based on the utensil type
-            switch (kr.type)
+            switch (utensilType)
             {
                 case UtensilType.CUP:
-                case UtensilType.BOTTLE: rotation = 0;  break;
+                case UtensilType.DISH:
+                case UtensilType.BOTTLE: 
+                    rotation = 0;  
+                    break;
                 default: rotation = kr.orientation; break;
             }
 
+
+
             //we now try to find if the object was already instantiated before
-            if (!spawnedUtensilItemsV2.TryGetValue(kr.type, out spawnedItemData))
+            if (!spawnedUtensilItemsV2.TryGetValue(utensilType, out spawnedItemData))
             {
                 GameObject itemSpawn;
-                switch (kr.type)
+                switch (utensilType)
                 {
                     case UtensilType.CUP:
                     case UtensilType.BOTTLE:
+                    case UtensilType.GLASS:
+                    case UtensilType.DISH:
                         itemSpawn = Instantiate(utensilRefactorPrefab);
                         itemSpawn.transform.parent = StoneOrigin.transform;
                         break;
@@ -120,9 +133,39 @@ public class MazeKinectHandler : KinectResultsAbs
 
                 spawnedItemData = new UtensilData();
                 spawnedItemData.utensilScript = itemSpawn.GetComponent<MazeUtensil>();
-                spawnedUtensilItemsV2.Add(kr.type, spawnedItemData);
+                spawnedUtensilItemsV2.Add(utensilType, spawnedItemData);
             } else
             {
+
+                /*Bandaid fix to problem of object recognition not correctly differntiating between cup and dish
+                if (kr.type == UtensilType.CUP || kr.type == UtensilType.DISH)
+                {
+                    //we check the closest item
+                    UtensilType otherType = kr.type == UtensilType.CUP ? UtensilType.DISH : UtensilType.CUP;
+                    UtensilData otherUtensil;
+                    bool otherTypeExists = spawnedUtensilItemsV2.TryGetValue(otherType, out otherUtensil); //we first get the other object
+
+                    if (alreadySpawnedUtensilsThisRound.Contains(kr.type)) //we already adjusted the cup this round, let's check the dish
+                    {
+                        if (otherTypeExists) //the other similar utensil was already spawned ! lets adjust it.
+                        {
+                            spawnedItemData = otherUtensil;
+                        } else
+                        {
+                            GameObject itemSpawn = Instantiate(utensilRefactorPrefab); // if we received double cup data, we spawn a dish instead.
+                            itemSpawn.transform.parent = StoneOrigin.transform;
+                            spawnedItemData = new UtensilData();
+                            spawnedItemData.utensilScript = itemSpawn.GetComponent<MazeUtensil>();
+                            spawnedUtensilItemsV2.Add(otherType, spawnedItemData);
+                            alreadySpawnedUtensilsThisRound.Add(otherType);
+                        }
+                    } else //we never received this type this round ! we do nothign
+                    {
+                        alreadySpawnedUtensilsThisRound.Add(kr.type);
+                    }
+        }*/
+
+
                 if (!spawnedItemData.utensilScript.gameObject.activeSelf) spawnedItemData.utensilScript.gameObject.SetActive(true); //we reenable the item if it is disabled
             }
 
@@ -132,17 +175,15 @@ public class MazeKinectHandler : KinectResultsAbs
             spawnedItemData.timeSinceLastDetection = detectionTimeout; //we reset the time since we last saw these items
 
 
-            //we now reduce all items by 1 => we disable those that have disappeared for too long
-            foreach(UtensilData udata in spawnedUtensilItemsV2.Values)
+        }
+
+        //we now reduce all items by 1 => we disable those that have disappeared for too long
+        foreach (UtensilData udata in spawnedUtensilItemsV2.Values)
+        {
+            if (--udata.timeSinceLastDetection <= 0)
             {
-                if (--udata.timeSinceLastDetection <= 0)
-                {
-                    udata.utensilScript.gameObject.SetActive(false);
-                }
+                udata.utensilScript.gameObject.SetActive(false);
             }
-
-
-
         }
     }
 

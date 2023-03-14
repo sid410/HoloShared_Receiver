@@ -18,9 +18,10 @@ public class MazeLaser
 
     List<MazeLaser> SplitLasers = new List<MazeLaser>(); //lasers can split up
 
-    private float laserCastRange = 5; //raycast maximum distance
+    private float laserCastRange = 1f; //raycast maximum distance
     public MazeLaser(Vector3 spawnPos, Vector3 direction, Material material)
     {
+        laserCastRange = 1f;
         InitializeLaser(spawnPos, direction, material);
     }
 

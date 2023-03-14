@@ -33,6 +33,7 @@ public class ExerciseSettings : MonoBehaviour
     //changes if hints are enabled or not in the exercise
     private void ChangeHintState(string topic, string message)
     {
+        Debug.Log("Hints changing to " + message);
         try
         {
             hintsEnabled = bool.Parse(message);

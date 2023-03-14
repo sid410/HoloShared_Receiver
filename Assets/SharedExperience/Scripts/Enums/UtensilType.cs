@@ -10,7 +10,7 @@ namespace UtensilExtension
 {
     public enum UtensilType
     {
-        UNDETECTED = 0, SPOON = 1, FORK = 2, CUP = 3, DISH = 5, KNIFE = 4, MINISPOON = 6, BOTTLE = 7, GLASS = 8
+        UNDETECTED = 0, SPOON = 1, FORK = 2, CUP = 3, DISH = 6, KNIFE = 4, MINISPOON = 5, BOTTLE = 8, GLASS = 7
     }
 
     public static class UtensilUtil
